@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7
+      - image: continuumio/miniconda3
 
     working_directory: ~/repo
 
@@ -16,7 +16,7 @@ jobs:
           command: |
             conda create --name portfolio_venv --file requirements.txt
             source activate portfolio_venv
-      # Step 3: run linter and tests
+      # Step 3: run tests
       - run:
           name: run tests
           command: |
