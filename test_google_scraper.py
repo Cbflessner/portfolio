@@ -70,7 +70,7 @@ class TestGoogleScraper:
         assert n == counter
 
     def test_remove_links(self):
-        soup = create_soup(test_url)
+        soup = gs.create_soup(test_url)
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
