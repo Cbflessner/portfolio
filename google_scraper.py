@@ -36,7 +36,7 @@ def google_top_results(n, ext):
     return news[:n]
 
 def remove_links(soup):
-    links = soup('a')
+    links = soup('h1')
     for link in links:
         link.decompose()
     return soup
