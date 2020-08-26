@@ -9,6 +9,12 @@ from bs4 import BeautifulSoup as bs
 
 class TestGoogleScraper:
 
+    def create_soup():
+        url = 'http://www.google.com'
+        page = requests.get(url)
+        soup = bs(page.content, 'lxml')
+        return soup
+
     def test_non_google_links(self):
         links = ['/search?q=chicago&ie=UTF-8&source=lnms&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUIBygA',
          'https://maps.google.com/maps?q=chicago&um=1&ie=UTF-8&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUICSgC',
@@ -67,9 +73,7 @@ class TestGoogleScraper:
         assert n == counter
 
     def test_remove_links(self):
-        url = 'http://www.google.com'
-        page = requests.get(url)
-        soup = bs(page.content, 'lxml')
+        soup = create_soup()
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
