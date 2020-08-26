@@ -8,6 +8,15 @@ import pprint
 import pandas as pd
 
 
+def create_soup(url):
+    try:
+        page = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print('the URL you passed to create_soup() had an issue\n', e)
+        return
+    soup = bs(page.content, 'lxml')
+    return soup
+
 def non_google_links(href):
     article = re.compile('http')
     google = re.compile('google')
@@ -21,8 +30,7 @@ def non_google_links(href):
 
 def google_top_results(n, ext):
     url = 'https://www.google.com' + ext
-    page = requests.get(url)
-    soup = bs(page.content, 'lxml')
+    soup = create_soup(url)
     main = soup.find(id='main')
     links = main.find_all(href=non_google_links)
     news = []
@@ -43,12 +51,11 @@ def remove_links(soup):
 
 def html_to_string(url):
     # connect to url and transrom to soup
-    page = requests.get(url)
-    soup = bs(page.content, 'lxml')
+    soup = create_soup(url)
     # Get rid of links in page
-    soup = remove_links(soup)
+    no_links = remove_links(soup)
     #extract the text
-    text = soup.text
+    text = no_links.text
     return text
 
 def clean_news(text, words4paragraph):

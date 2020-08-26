@@ -5,15 +5,12 @@ unit tests for the google scraper library
 import google_scraper as gs
 import requests
 from bs4 import BeautifulSoup as bs
+import pytest
 
 
 class TestGoogleScraper:
 
-    def create_soup(self):
-        url = 'http://www.google.com'
-        page = requests.get(url)
-        soup = bs(page.content, 'lxml')
-        return soup
+    test_url = 'https://www.google.com'
 
     def test_non_google_links(self):
         links = ['/search?q=chicago&ie=UTF-8&source=lnms&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUIBygA',
@@ -73,7 +70,7 @@ class TestGoogleScraper:
         assert n == counter
 
     def test_remove_links(self):
-        soup = create_soup()
+        soup = create_soup(test_url)
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
