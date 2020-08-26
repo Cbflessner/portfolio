@@ -35,14 +35,18 @@ def google_top_results(n, ext):
     news = pd.Series(news.unique())
     return news[:n]
 
+def remove_links(soup):
+    links = soup('a')
+    for link in links:
+        link.decompose()
+    return soup
+
 def html_to_string(url):
     # connect to url and transrom to soup
     page = requests.get(url)
     soup = bs(page.content, 'lxml')
     # Get rid of links in page
-    links = soup('a')
-    for link in links:
-        link.decompose()
+    soup = remove_links(soup)
     #extract the text
     text = soup.text
     return text

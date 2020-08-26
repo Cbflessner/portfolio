@@ -2,8 +2,9 @@
 unit tests for the google scraper library
 '''
 
-import google_scraper
+import google_scraper as gs
 import requests
+from bs4 import BeautifulSoup as bs
 
 
 class TestGoogleScraper:
@@ -52,15 +53,24 @@ class TestGoogleScraper:
 
         google_status = [] 
         for link in links:
-            google_status.append(google_scraper.non_google_links(link))
+            google_status.append(gs.non_google_links(link))
         assert 20 == sum(google_status)
 
     def test_valid_urls(self):
         n = 3
-        result = google_scraper.google_top_results(n, '/search?q=chicago&tbm=nws')
+        result = gs.google_top_results(n, '/search?q=chicago&tbm=nws')
         counter = 0
         for link in result:
             page = requests.get(link)
             if page.status_code == 200:
                 counter += 1
         assert n == counter
+
+    def text_remove_links(self):
+        url = 'http://www.google.com'
+        page = requests.get(url)
+        soup = bs(page.content, 'lxml')
+        clean_soup = gs.remove_links(soup)
+        links = soup('a')
+        assert len(links) == 0
+        
