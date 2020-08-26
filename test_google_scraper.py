@@ -57,7 +57,7 @@ class TestGoogleScraper:
 
     def test_valid_urls(self):
         n = 3
-        result = google_scraper.google_top_results(n)
+        result = google_scraper.google_top_results(n, '/search?q=chicago&tbm=nws')
         counter = 0
         for link in result:
             page = requests.get(link)
