@@ -11,6 +11,7 @@ import pytest
 class TestGoogleScraper:
 
     test_url = 'https://www.google.com'
+    broken_url = 'https://www.googl.com'
 
     def test_non_google_links(self):
         links = ['/search?q=chicago&ie=UTF-8&source=lnms&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUIBygA',
@@ -70,7 +71,7 @@ class TestGoogleScraper:
         assert n == counter
 
     def test_remove_links(self):
-        soup = gs.create_soup(test_url)
+        soup = gs.create_soup(TestGoogleScraper.test_url)
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
