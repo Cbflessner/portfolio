@@ -9,12 +9,18 @@ import pytest
 import re
 import pandas as pd
 import numpy as np
+from datetime import date
+import os
 
 
 class TestGoogleScraper:
 
     test_url = 'https://www.google.com'
     broken_url = 'https://www.googl.com'
+    test_text = pd.Series(['test', 'test', 'test'])
+    today = str(date.today())
+    gs.save_file('test/test_write', 0, test_url, test_text)
+    file_name = 'test/test_write_'+'1_'+today+'.txt'
 
     def test_create_soup(self):
         soup = gs.create_soup(self.test_url)
@@ -131,5 +137,17 @@ class TestGoogleScraper:
         expected = pd.Series(expected)
         f.close()
         assert np.array_equal(result.values, expected.values)
+
+    def test_save_file_correct_name(self):
+        assert os.path.isfile(self.file_name)
+
+    def test_save_file_correct_content(self):
+        f = open(self.file_name, 'r')
+        contents =f.read()
+        expected = self.test_url+'\n'
+        for i in self.test_text:
+            expected = expected + i +'\n\n'
+        f.close
+        assert contents == expected
 
         
