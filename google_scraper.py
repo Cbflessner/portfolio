@@ -12,7 +12,8 @@ def create_soup(url):
     try:
         page = requests.get(url)
     except requests.exceptions.RequestException as e:
-        print('the URL you passed to create_soup() had an issue\n', e)
+        print('the URL you passed to create_soup() had an issue\n')
+        raise(e)
         return
     soup = bs(page.content, 'lxml')
     return soup

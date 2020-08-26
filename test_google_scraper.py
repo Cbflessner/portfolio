@@ -13,6 +13,15 @@ class TestGoogleScraper:
     test_url = 'https://www.google.com'
     broken_url = 'https://www.googl.com'
 
+    def test_create_soup(self):
+        soup = gs.create_soup(self.test_url)
+        page = requests.get(self.test_url)
+        assert type(soup) is type(bs(page.content, 'lxml'))
+
+    def test_create_soup_broken_url(self):
+        with pytest.raises(requests.exceptions.RequestException):
+            gs.create_soup(self.broken_url)
+
     def test_non_google_links(self):
         links = ['/search?q=chicago&ie=UTF-8&source=lnms&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUIBygA',
          'https://maps.google.com/maps?q=chicago&um=1&ie=UTF-8&sa=X&ved=0ahUKEwi6s8zV4pvrAhXzdM0KHQVuBegQ_AUICSgC',
@@ -60,7 +69,7 @@ class TestGoogleScraper:
             google_status.append(gs.non_google_links(link))
         assert 20 == sum(google_status)
 
-    def test_valid_urls(self):
+    def test_google_top_results(self):
         n = 3
         result = gs.google_top_results(n, '/search?q=chicago&tbm=nws')
         counter = 0
@@ -71,11 +80,14 @@ class TestGoogleScraper:
         assert n == counter
 
     def test_remove_links(self):
-        soup = gs.create_soup(TestGoogleScraper.test_url)
+        soup = gs.create_soup(self.test_url)
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
 
-    # def test_html_to_string(self):
+    def test_html_to_string(self):
+        words = gs.html_to_string(self.test_url)
+        test = 'test'
+        assert type(words) is type(test)
 
         
