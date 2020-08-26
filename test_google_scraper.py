@@ -6,6 +6,9 @@ import google_scraper as gs
 import requests
 from bs4 import BeautifulSoup as bs
 import pytest
+import re
+import pandas as pd
+import numpy as np
 
 
 class TestGoogleScraper:
@@ -89,5 +92,44 @@ class TestGoogleScraper:
         words = gs.html_to_string(self.test_url)
         test = 'test'
         assert type(words) is type(test)
+
+    def test_clean_news_tabs(self):
+        regex = re.compile(r'\t')
+        f = open('google_news/test/google_news_2_2020-08-25.txt')
+        text = f.read()
+        clean = gs.clean_news(text, 5)
+        result = clean.str.findall(regex)
+        expected = []
+        for i in range(len(clean)):
+            expected.append([])
+        expected = pd.Series(expected)
+        f.close()
+        assert np.array_equal(result.values, expected.values)
+
+    def test_clean_news_newline(self):
+        regex = re.compile(r'\n|\r')
+        f = open('google_news/test/google_news_2_2020-08-25.txt')
+        text = f.read()
+        clean = gs.clean_news(text, 5)
+        result = clean.str.findall(regex)
+        expected = []
+        for i in range(len(clean)):
+            expected.append([])
+        expected = pd.Series(expected)
+        f.close()
+        assert np.array_equal(result.values, expected.values)
+
+    def test_clean_news_strip(self):
+        regex = re.compile(r'^\s|\s$')
+        f = open('google_news/test/google_news_2_2020-08-25.txt')
+        text = f.read()
+        clean = gs.clean_news(text, 5)
+        result = clean.str.findall(regex)
+        expected = []
+        for i in range(len(clean)):
+            expected.append([])
+        expected = pd.Series(expected)
+        f.close()
+        assert np.array_equal(result.values, expected.values)
 
         
