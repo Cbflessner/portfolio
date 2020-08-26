@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup as bs
 
 class TestGoogleScraper:
 
-    def create_soup():
+    def create_soup(self):
         url = 'http://www.google.com'
         page = requests.get(url)
         soup = bs(page.content, 'lxml')
@@ -77,4 +77,7 @@ class TestGoogleScraper:
         clean_soup = gs.remove_links(soup)
         links = clean_soup('a')
         assert len(links) == 0
+
+    # def test_html_to_string(self):
+
         
