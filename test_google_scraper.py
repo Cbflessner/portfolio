@@ -66,11 +66,11 @@ class TestGoogleScraper:
                 counter += 1
         assert n == counter
 
-    def text_remove_links(self):
+    def test_remove_links(self):
         url = 'http://www.google.com'
         page = requests.get(url)
         soup = bs(page.content, 'lxml')
         clean_soup = gs.remove_links(soup)
-        links = soup('a')
+        links = clean_soup('a')
         assert len(links) == 0
         
