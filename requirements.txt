@@ -1,30 +1,40 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
+_libgcc_mutex=0.1=main
 attrs=19.3.0=py_0
 beautifulsoup4=4.9.1=py38_0
 blas=1.0=mkl
 brotlipy=0.7.0=py38h7b6447c_1000
-ca-certificates=2020.6.24=0
-certifi=2020.6.20=py38_0
+ca-certificates=2020.6.20=hecda079_0
+certifi=2020.6.20=py38h32f6830_0
 cffi=1.14.1=py38he30daa8_0
 chardet=3.0.4=py38_1003
 coverage=5.0=py38h7b6447c_0
 cryptography=2.9.2=py38h1ba5d50_0
+cyrus-sasl=2.1.27=h063b49f_1
 flake8=3.8.3=py_0
+gettext=0.19.8.1=h5e8e0c9_1
 icu=58.2=he6710b0_3
 idna=2.10=py_0
 importlib-metadata=1.7.0=py38_0
 iniconfig=1.0.1=py_0
 intel-openmp=2020.1=217
+krb5=1.17.1=hfafb76e_3
 ld_impl_linux-64=2.33.1=h53a641e_7
 libedit=3.1.20191231=h14c3975_1
 libffi=3.3=he6710b0_2
 libgcc-ng=9.1.0=hdf63c60_0
+libgcrypt=1.8.4=hf484d3e_1000
+libgpg-error=1.36=he1b5a44_0
+libgsasl=1.8.0=2
+libntlm=1.4=h516909a_1002
+librdkafka=1.4.4=h40bdf00_0
 libstdcxx-ng=9.1.0=hdf63c60_0
 libxml2=2.9.10=he19cac6_1
 libxslt=1.1.34=hc22bd24_0
 lxml=4.5.2=py38hefd8a0e_0
+lz4-c=1.9.2=he1b5a44_3
 mccabe=0.6.1=py38_1
 mkl=2020.1=217
 mkl-service=2.3.0=py38he904b0f_0
@@ -34,7 +44,7 @@ more-itertools=8.4.0=py_0
 ncurses=6.2=he6710b0_1
 numpy=1.19.1=py38hbc911f0_0
 numpy-base=1.19.1=py38hfa32c7d_0
-openssl=1.1.1g=h7b6447c_0
+openssl=1.1.1g=h516909a_1
 packaging=20.4=py_0
 pandas=1.1.0=py38he6710b0_0
 pip=20.2.1=py38_0
@@ -49,7 +59,9 @@ pysocks=1.7.1=py38_0
 pytest=6.0.1=py38_0
 pytest-cov=2.10.0=py_0
 python=3.8.5=hcff3b4d_0
+python-confluent-kafka=1.3.0=py38h1e0a361_1
 python-dateutil=2.8.1=py_0
+python_abi=3.8=1_cp38
 pytz=2020.1=py_0
 readline=8.0=h7b6447c_0
 requests=2.24.0=py_0
