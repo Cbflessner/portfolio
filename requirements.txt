@@ -10,7 +10,6 @@ ca-certificates=2020.6.20=hecda079_0
 certifi=2020.6.20=py38h32f6830_0
 cffi=1.14.1=py38he30daa8_0
 chardet=3.0.4=py38_1003
-confluent-kafka=1.5.0=pypi_0
 coverage=5.0=py38h7b6447c_0
 cryptography=2.9.2=py38h1ba5d50_0
 cyrus-sasl=2.1.27=h063b49f_1
