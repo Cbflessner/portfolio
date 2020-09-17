@@ -10,7 +10,6 @@ ca-certificates=2020.6.20=hecda079_0
 certifi=2020.6.20=py38h32f6830_0
 cffi=1.14.1=py38he30daa8_0
 chardet=3.0.4=py38_1003
-confluent-kafka=1.5.0=pypi_0
 coverage=5.0=py38h7b6447c_0
 cryptography=2.9.2=py38h1ba5d50_0
 cyrus-sasl=2.1.27=h063b49f_1
@@ -60,6 +59,7 @@ pysocks=1.7.1=py38_0
 pytest=6.0.1=py38_0
 pytest-cov=2.10.0=py_0
 python=3.8.5=hcff3b4d_0
+python-confluent-kafka=1.3.0=py38h1e0a361_1
 python-dateutil=2.8.1=py_0
 python_abi=3.8=1_cp38
 pytz=2020.1=py_0
