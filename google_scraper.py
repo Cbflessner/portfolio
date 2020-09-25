@@ -53,10 +53,9 @@ def remove_links(soup):
 def html_to_string(url):
     # connect to url and transrom to soup
     soup = create_soup(url)
-    # Get rid of links in page
-    no_links = remove_links(soup)
+    #Optional: Get rid of links in page using remove_links() function above
     #extract the text
-    text = no_links.text
+    text = soup.text
     return text
 
 def clean_news(text, words4paragraph):
@@ -65,7 +64,7 @@ def clean_news(text, words4paragraph):
     clean_text = pd.Series(regex.split(text))
     cleaner = clean_text.str.replace('\t', '').str.replace('\n','').str.replace('\r', '').str.strip()
     clean = cleaner[cleaner.str.count(' ') >= words4paragraph]
-    return clean
+    return clean.to_string(index=False)
 
 
 def save_file(type_of_file, num, url, text):
