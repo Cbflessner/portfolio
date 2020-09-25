@@ -48,9 +48,10 @@ if __name__ == '__main__':
         url = google_news.iloc[num]
         text = gs.html_to_string(url)
         news = gs.clean_news(text, 20)
+        value = news.to_string(index=False)
         # gs.save_file('google_news/google_news', num, url, news)
-        key = str(hash(news))
-        print("Producing record: {}\t{}".format(key, news[:30]))
+        key = str(hash(value))
+        print("Producing record: {}\t{}".format(key, value[:10]))
         producer.produce(topic, key=key, value=news, on_delivery=acked)
         producer.poll(0)
 

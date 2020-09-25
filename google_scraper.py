@@ -64,7 +64,7 @@ def clean_news(text, words4paragraph):
     clean_text = pd.Series(regex.split(text))
     cleaner = clean_text.str.replace('\t', '').str.replace('\n','').str.replace('\r', '').str.strip()
     clean = cleaner[cleaner.str.count(' ') >= words4paragraph]
-    return clean.to_string(index=False)
+    return clean
 
 
 def save_file(type_of_file, num, url, text):
