@@ -23,4 +23,5 @@ jobs:
           name: run tests
           command: |
             source activate portfolio_venv
+            cd tests
             pytest -v --cov=google_scraper

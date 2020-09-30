@@ -5,7 +5,6 @@ unit tests for the google scraper library
 import sys
 sys.path.append('../')
 
-
 from web_scrapers import google_scraper as gs
 import requests
 from bs4 import BeautifulSoup as bs
