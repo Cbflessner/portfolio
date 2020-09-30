@@ -4,7 +4,7 @@ unit tests for the google scraper library
 #Add the portfolio directory to the PYPATH so it can see the web_scrapers pakcage
 import sys
 sys.path.append('../')
-
+print(sys.path)
 from web_scrapers import google_scraper as gs
 import requests
 from bs4 import BeautifulSoup as bs

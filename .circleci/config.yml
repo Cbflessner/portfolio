@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: continuumio/miniconda3
 
-    working_directory: ~/repo
+    working_directory: ~/repo/tests
 
     steps:
       # Step 1: obtain repo from GitHub
@@ -23,5 +23,4 @@ jobs:
           name: run tests
           command: |
             source activate portfolio_venv
-            cd tests
             pytest -v --cov=google_scraper
