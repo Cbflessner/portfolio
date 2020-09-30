@@ -1,0 +1,20 @@
+
+{
+  "namespace": "io.portfolio.googlescraper",
+  "type": "record",
+  "name": "GoogleScraper",
+  "fields": [
+    {
+      "name": "url",
+      "type": "string"
+    },
+    {
+      "name": "text",
+      "type": "string"
+    },
+    {
+      "name": "scraper_dt",
+      "type": "string"
+    }
+  ]
+}
