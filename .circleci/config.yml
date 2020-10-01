@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: continuumio/miniconda3
 
-    working_directory: ~/repo/tests
+    working_directory: ~/repo
 
     steps:
       # Step 1: obtain repo from GitHub
