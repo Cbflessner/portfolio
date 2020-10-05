@@ -1,9 +1,18 @@
 # Python CircleCI 2.0 configuration file
 version: 2
+workflows:
+  my-workflow:
+    jobs:
+      - build:
+          context:
+            - docker-hub-creds
 jobs:
   build:
     docker:
       - image: continuumio/miniconda3
+        auth:
+            username: xian8290
+            password: $DOCKERHUB_PASSWORD
 
     working_directory: ~/repo
 
