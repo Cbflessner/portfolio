@@ -16,6 +16,9 @@ class Key(object):
 
     def key_to_dict(self, ctx):
         return dict(key=self.key)
+
+    def dict_to_key(d, ctx):
+        return Key(d['key'])
         
 
 class Value(object):
@@ -48,4 +51,7 @@ class Value(object):
         return dict(url=self.url,
                     text=self.text,
                     scraper_dt=self.scraper_dt)
+
+    def dict_to_value(d, ctx):
+        return Value(url=d['url'], text=d['text'], scraper_dt=d['scraper_dt'])
 

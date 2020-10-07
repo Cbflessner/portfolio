@@ -4,11 +4,9 @@ import google_scraper as gs
 import os.path
 import kafka_utils
 from confluent_kafka import SerializingProducer
-from confluent_kafka.serialization import StringSerializer, IntegerSerializer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
 from data import google
-import time
 from datetime import datetime
 import pytz
 
@@ -24,9 +22,6 @@ if __name__ == '__main__':
 
     # Create topic if needed
     kafka_utils.create_topic(conf, topic) 
-
-    # time.sleep(1000)
-    # print('execution resumed')
 
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
