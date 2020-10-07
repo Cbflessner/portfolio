@@ -25,7 +25,6 @@ jobs:
       - run:
           name: run tests
           command: |
-            source activate portfolio_venv
             python -m pytest -v --cov=google_scraper
 workflows:
   version: 2
