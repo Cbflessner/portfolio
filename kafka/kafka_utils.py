@@ -25,7 +25,7 @@ def read_config(config_file):
 
     return conf
 
-def create_topic(conf, topic):
+def create_topic(conf, topic, num_partitions, replication_factor):
     """
         Create a topic if needed
         Examples of additional admin API functionality:
@@ -38,8 +38,8 @@ def create_topic(conf, topic):
 
     fs = a.create_topics([NewTopic(
          topic,
-         num_partitions=1,
-         replication_factor=1
+         num_partitions=num_partitions,
+         replication_factor=replication_factor
     )])
     for topic, f in fs.items():
         try:
@@ -69,21 +69,11 @@ def acked(err, msg):
         print("Produced record to topic {} partition [{}] @ offset {}"
               .format(msg.topic(), msg.partition(), msg.offset()))
 
-def load_avro_schema_from_file(schema_file):
-    key_schema = """
-        {
-          "namespace": "io.portfolio.googlescraper",
-          "type": "record",
-          "name": "GoogleScraper",
-          "fields": [
-            {
-              "name": "key",
-              "type": "string"
-            }
-          ]
-        }
-    """
-    with open(schema_file) as sf:
-        value_schema = sf.read()
+def load_avro_schema_from_file(key_schema_file, value_schema_file):
+    with open(key_schema_file) as ksf:
+        key_schema = ksf.read()
+
+    with open(value_schema_file) as vsf:
+        value_schema = vsf.read()
     
     return key_schema, value_schema        

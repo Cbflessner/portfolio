@@ -7,7 +7,7 @@ import os
 import pprint
 import pandas as pd
 
-
+#Transforms HTML into soup object from beautiful soup library
 def create_soup(url):
     try:
         page = requests.get(url)
@@ -18,6 +18,8 @@ def create_soup(url):
     soup = bs(page.content, 'lxml')
     return soup
 
+#excludes any link that doesn't contain http 
+#exclueds any link that does contain google
 def non_google_links(href):
     article = re.compile('http')
     google = re.compile('google')
@@ -28,7 +30,7 @@ def non_google_links(href):
     else:
         return False
 
-
+#Returns a panda series of URLs gotten from google
 def google_top_results(n, ext):
     url = 'https://www.google.com' + ext
     soup = create_soup(url)
@@ -44,12 +46,15 @@ def google_top_results(n, ext):
     news = pd.Series(news.unique())
     return news[:n]
 
+#removes all links from soup. 
+#might not actually want this at the end of the day as some links are embeded in the text of the article
 def remove_links(soup):
     links = soup('a')
     for link in links:
         link.decompose()
     return soup
 
+#extracts text from the html relying on the the create_soup function defined above
 def html_to_string(url):
     # connect to url and transrom to soup
     soup = create_soup(url)
@@ -58,6 +63,7 @@ def html_to_string(url):
     text = soup.text
     return text
 
+#removes whitespace from text scraped out of the HTML
 def clean_news(text, words4paragraph):
     #break text into elements based on blank lines
     regex = re.compile('^[\n\r]', re.MULTILINE)
@@ -66,15 +72,15 @@ def clean_news(text, words4paragraph):
     clean = cleaner[cleaner.str.count(' ') >= words4paragraph]
     return clean
 
-
-def save_file(type_of_file, num, url, text):
-    today = str(date.today())
-    num += 1
-    file_name = type_of_file+'_'+str(num)+'_'+today+'.txt'
-    if os.path.isfile(file_name):
-        os.remove(file_name)
-    f = open(file_name, 'a')
-    f.write(url+'\n')
-    for k in text:
-        f.write(k + '\n\n')
-    f.close
+#Used for debugging
+# def save_file(type_of_file, num, url, text):
+#     today = str(date.today())
+#     num += 1
+#     file_name = type_of_file+'_'+str(num)+'_'+today+'.txt'
+#     if os.path.isfile(file_name):
+#         os.remove(file_name)
+#     f = open(file_name, 'a')
+#     f.write(url+'\n')
+#     for k in text:
+#         f.write(k + '\n\n')
+#     f.close

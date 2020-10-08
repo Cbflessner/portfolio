@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import google_scraper as gs
-import os.path
-import kafka_utils
+import sys
+import kafka.kafka_utils as kafka_utils
 from confluent_kafka import SerializingProducer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     conf = kafka_utils.read_config(config_file)
 
     # Create topic if needed
-    kafka_utils.create_topic(conf, topic) 
+    kafka_utils.create_topic(conf=conf, topic=topic, num_partitions=1, replication_factor=1) 
 
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
     
-    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['schema.file'])
+    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['google.key.schema.file'], conf['google.value.schema.file'])
     
     key_avro_serializer = AvroSerializer(key_schema,
                                           schema_registry_client,

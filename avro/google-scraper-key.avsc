@@ -1,0 +1,12 @@
+
+{
+  "namespace": "io.portfolio.googlescraper",
+  "type": "record",
+  "name": "GoogleScraper",
+  "fields": [
+    {
+      "name": "key",
+      "type": "string"
+    }
+  ]
+}
