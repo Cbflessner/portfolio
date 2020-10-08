@@ -18,7 +18,7 @@ jobs:
           command: |
             conda config --append channels conda-forge
             conda create --name portfolio_venv --file requirements.txt
-            pip install confluent-kafka[avro]
+            pip install confluent-kafka
             pip install riak
       # Step 3: run tests
       - run:
