@@ -2,7 +2,7 @@
 jobs:
   build:
     docker:
-      - image: continuumio/miniconda3
+      - image: circleci/python:3.8
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
@@ -16,15 +16,14 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            conda config --append channels conda-forge
-            conda create --name portfolio_venv --file requirements.txt
-            pip install confluent-kafka
-            pip install riak
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
       # Step 3: run tests
       - run:
           name: run tests
           command: |
-            source activate portfolio_venv
+            . venv/bin/activate
             python -m pytest -v --cov
 workflows:
   version: 2

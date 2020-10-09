@@ -1,5 +1,5 @@
 from tests import test_kafka_utils as t
 
 test = t.TestKafkaUtils()
-test.test_load_avro_schema_from_file()
+test.test_create_kafka_topic()
 # print(result)

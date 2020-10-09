@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import google_scraper as gs
+from web_scrapers import google_scraper as gs
 import sys
 import kafka.kafka_utils as kafka_utils
 from confluent_kafka import SerializingProducer

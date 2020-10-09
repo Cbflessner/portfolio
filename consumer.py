@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os.path
-import kafka_utils
+from kafka import kafka_utils
 from confluent_kafka import DeserializingConsumer, TopicPartition
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
     
-    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['schema.file'])
+    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['google.key.schema.file'],conf['google.value.schema.file'])
     
     key_avro_deserializer = AvroDeserializer(key_schema,
                                           schema_registry_client,
