@@ -7,7 +7,7 @@ class TestKafkaUtils:
 
 
     def test_read_config(self):
-        config = kafka_utils.read_config('~/portfolio/tests/librdkafka.config')
+        config = kafka_utils.read_config('./tests/librdkafka.config')
         control_config = {'bootstrap.servers':'localhost:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
         assert config == control_config
 
@@ -26,7 +26,7 @@ class TestKafkaUtils:
         assert result == ('christian_test', 1)
 
     def test_load_avro_schema_from_file(self):
-        key_schema, value_schema = kafka_utils.load_avro_schema_from_file('~/portfolio/tests/key-schema-test.avsc', '~/portfolio/tests/value-schema-test.avsc')
+        key_schema, value_schema = kafka_utils.load_avro_schema_from_file('./tests/key-schema-test.avsc', './tests/value-schema-test.avsc')
         key_schema_control = '''
 {
   "namespace": "io.portfolio.googlescraper",
