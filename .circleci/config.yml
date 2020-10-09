@@ -2,7 +2,7 @@
 jobs:
   build:
     docker:
-      - image: cimg/python:3.8
+      - image: circleci/python:3.8
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
@@ -16,6 +16,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            sudo apt install python3.8-venv
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
