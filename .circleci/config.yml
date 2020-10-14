@@ -40,22 +40,24 @@ jobs:
           CONFLUENT_METRICS_ENABLE: 'true'
           CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
+      - image: confluentinc/cp-schema-registry:6.0.0
+        hostname: schema-registry
+        container_name: schema-registry
+        depends_on:
+          - broker
+        ports:
+          - "8081:8081"
+        environment:
+          SCHEMA_REGISTRY_HOST_NAME: schema-registry
+          SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
+
+
 
     working_directory: ~/repo
 
     steps:
       # Step 1: obtain repo from GitHub
       - checkout
-      #wait for zookeeper to be ready
-      - run:
-          name: Waiting for zookeeper to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z localhost 2181 && echo Success && exit 0
-              sleep 10
-            done
-            echo Failed waiting for zookeeper && exit 1
       # Step 2: create virtual env and install dependencies
       - run:
           name: install dependencies
