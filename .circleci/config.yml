@@ -6,7 +6,11 @@ jobs:
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
+
       - image: confluentinc/cp-zookeeper:6.0.0
+        auth:
+          username: xian8290
+          password: $DOCKERHUB_PASSWORD
         hostname: zookeeper
         container_name: zookeeper
         ports:
