@@ -11,8 +11,6 @@ jobs:
         auth:
           username: xian8290
           password: $DOCKERHUB_PASSWORD
-        hostname: zookeeper
-        container_name: zookeeper
         ports:
           - "2181:2181"
         environment:
