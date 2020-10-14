@@ -32,7 +32,7 @@ jobs:
             for i in `seq 1 10`;
             do
               nc -z localhost 2181 && echo Success && exit 0
-              sleep 1
+              sleep 10
             done
             echo Failed waiting for zookeeper && exit 1
       # Step 2: create virtual env and install dependencies
