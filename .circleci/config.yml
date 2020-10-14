@@ -18,15 +18,16 @@ jobs:
           ZOOKEEPER_TICK_TIME: 2000
 
       - image: confluentinc/cp-server:6.0.0
-        hostname: broker
-        container_name: broker
+        auth:
+            username: xian8290
+            password: $DOCKERHUB_PASSWORD
         depends_on:
           - zookeeper
         ports:
           - "9092:9092"
         environment:
           KAFKA_BROKER_ID: 1
-          KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+          KAFKA_ZOOKEEPER_CONNECT: 'localhost:2181'
           KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
           KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
@@ -41,8 +42,9 @@ jobs:
           CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
       - image: confluentinc/cp-schema-registry:6.0.0
-        hostname: schema-registry
-        container_name: schema-registry
+        auth:
+            username: xian8290
+            password: $DOCKERHUB_PASSWORD
         depends_on:
           - broker
         ports:
