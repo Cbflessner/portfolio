@@ -25,6 +25,16 @@ jobs:
     steps:
       # Step 1: obtain repo from GitHub
       - checkout
+      #wait for zookeeper to be ready
+      - run:
+          name: Waiting for zookeeper to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 2181 && echo Success && exit 0
+              sleep 1
+            done
+            echo Failed waiting for zookeeper && exit 1
       # Step 2: create virtual env and install dependencies
       - run:
           name: install dependencies
@@ -41,5 +51,4 @@ workflows:
     jobs:
       - build:
           context:
-            - docker-hub-creds    
-      - steps        
+            - docker-hub-creds            
