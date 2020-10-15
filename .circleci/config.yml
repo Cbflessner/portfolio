@@ -3,13 +3,13 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.8.5
-        hostname: zookeeper
-        container_name: zookeeper
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
 
       - image: confluentinc/cp-zookeeper:6.0.0
+        hostname: zookeeper
+        container_name: zookeeper
         auth:
           username: xian8290
           password: $DOCKERHUB_PASSWORD
@@ -31,7 +31,7 @@ jobs:
           - "9092:9092"
         environment:
           KAFKA_BROKER_ID: 1
-          KAFKA_ZOOKEEPER_CONNECT: 'localhost:2181'
+          KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
           KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_HOST://localhost:9092
           KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
