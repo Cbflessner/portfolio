@@ -16,7 +16,8 @@ class TestKafkaUtils:
         kafka_utils.create_topic(conf=conf, topic='christian_test', num_partitions=1, replication_factor=1) 
 
         p = Producer(conf)
-        info = p.list_topics()
+        info = p.list_topics(topic='christian_test')
+        print(info)
         topic = info.topics['christian_test'].topic
         partitions = info.topics['christian_test'].partitions
         num_partitions = list(partitions.keys())
