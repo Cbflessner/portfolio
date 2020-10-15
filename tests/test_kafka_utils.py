@@ -17,7 +17,6 @@ class TestKafkaUtils:
 
         p = Producer(conf)
         info = p.list_topics()
-        print(info.topics)
         topic = info.topics['christian_test'].topic
         partitions = info.topics['christian_test'].partitions
         num_partitions = list(partitions.keys())
