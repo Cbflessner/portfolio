@@ -1,5 +1,5 @@
 import argparse, sys
-from confluent_kafka import avro, KafkaError
+from confluent_kafka import avro, KafkaError, Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 from uuid import uuid4
 
@@ -54,6 +54,9 @@ def create_topic(conf, topic, num_partitions, replication_factor):
                 print("Failed to create topic {}: {}".format(topic, e))
                 sys.exit(1)
     print(f)
+    p = Producer(conf)
+    info = p.list_topics()
+    print(info.topics)
 
 
 # Optional per-message on_delivery handler (triggered by poll() or flush())
