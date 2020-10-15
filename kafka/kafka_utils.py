@@ -41,10 +41,12 @@ def create_topic(conf, topic, num_partitions, replication_factor):
          num_partitions=num_partitions,
          replication_factor=replication_factor
     )])
+    print(topic, f)
     for topic, f in fs.items():
         try:
             f.result()  # The result itself is None
             print("Topic {} created".format(topic))
+            print(topic, f)
         except Exception as e:
             # Continue if error code TOPIC_ALREADY_EXISTS, which may be true
             # Otherwise fail fast
