@@ -53,9 +53,8 @@ def create_topic(conf, topic, num_partitions, replication_factor):
             if e.args[0].code() != KafkaError.TOPIC_ALREADY_EXISTS:
                 print("Failed to create topic {}: {}".format(topic, e))
                 sys.exit(1)
-    print(topic, f)
     p = Producer(conf)
-    info = p.list_topics()
+    info = p.list_topics(topic='christian_test')
     print(info.topics)
 
 
