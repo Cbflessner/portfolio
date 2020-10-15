@@ -53,6 +53,7 @@ def create_topic(conf, topic, num_partitions, replication_factor):
             if e.args[0].code() != KafkaError.TOPIC_ALREADY_EXISTS:
                 print("Failed to create topic {}: {}".format(topic, e))
                 sys.exit(1)
+    print(f)
 
 
 # Optional per-message on_delivery handler (triggered by poll() or flush())
