@@ -43,6 +43,7 @@ def create_topic(conf, topic, num_partitions, replication_factor):
     )])
     for topic, f in fs.items():
         try:
+            print(topic, f)
             f.result()  # The result itself is None
             print("Topic {} created".format(topic))
             print(topic, f)
