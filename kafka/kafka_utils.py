@@ -43,8 +43,6 @@ def create_topic(conf, topic, num_partitions, replication_factor):
     )])
     for topic, f in fs.items():
         try:
-            print(topic)
-            print(f)
             f.result()  # The result itself is None
             print("Topic {} created".format(topic))
         except Exception as e:
@@ -53,10 +51,8 @@ def create_topic(conf, topic, num_partitions, replication_factor):
             if e.args[0].code() != KafkaError.TOPIC_ALREADY_EXISTS:
                 print("Failed to create topic {}: {}".format(topic, e))
                 sys.exit(1)
-    print(f)
     p = Producer(conf)
     info = p.list_topics()
-    print(info.topics)
 
 
 # Optional per-message on_delivery handler (triggered by poll() or flush())
