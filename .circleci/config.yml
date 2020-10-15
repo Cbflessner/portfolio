@@ -73,7 +73,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            python -m pytest -v --cov
+            python -m pytest -v --cov=portfolio tests/
 workflows:
   version: 2
   build:
