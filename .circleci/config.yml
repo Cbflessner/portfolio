@@ -21,7 +21,6 @@ jobs:
         environment:
           ZOOKEEPER_CLIENT_PORT: 2181
           ZOOKEEPER_TICK_TIME: 2000
-        network: cf
 
       - image: confluentinc/cp-server:6.0.0
         hostname: broker
@@ -35,7 +34,7 @@ jobs:
           - "9092:9092"
         environment:
           KAFKA_BROKER_ID: 1
-          KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+          KAFKA_ZOOKEEPER_CONNECT: 'localhost:2181'
           KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
           KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,PLAINTEXT_HOST://localhost:9092
           KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
@@ -48,7 +47,7 @@ jobs:
           CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
           CONFLUENT_METRICS_ENABLE: 'true'
           CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-        network: cf
+
 
       - image: confluentinc/cp-schema-registry:6.0.0
         auth:
@@ -61,8 +60,6 @@ jobs:
         environment:
           SCHEMA_REGISTRY_HOST_NAME: schema-registry
           SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'localhost:29092'
-        network: cf
-
 
 
     working_directory: ~/repo
