@@ -55,7 +55,6 @@ def create_topic(conf, topic, num_partitions, replication_factor):
                 sys.exit(1)
     p = Producer(conf)
     info = p.list_topics()
-    print(topic, f)
     print(info.topics)
 
 
