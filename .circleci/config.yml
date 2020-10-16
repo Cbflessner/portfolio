@@ -21,9 +21,9 @@ jobs:
             set -x
             docker-compose up -d
       - run:
-          name: clone code to python container
+          name: copy code to python container
           command: |
-            docker exec client git clone git@github.com:Cbflessner/portfolio.git
+            docker cp -R /repo client:/portfolio
       # Step 4: create virtual env and install dependencies
       - run:
           name: install dependencies
