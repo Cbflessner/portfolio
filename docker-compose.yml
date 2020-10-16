@@ -7,9 +7,11 @@ services:
     container_name: client
     ports: 
       - "5432:5432"
-    command: git clone git@github.com:Cbflessner/portfolio.git
-    command: tail -f /dev/null  
-    #this is only here to keep the container from exiting after the pyton command is executed      
+    #this second command is only here to keep the container from exiting after the pyton command is executed   
+    command: bash -c 
+    "git clone git@github.com:Cbflessner/portfolio.git
+    && tail -f /dev/null"
+       
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
