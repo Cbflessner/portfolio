@@ -12,7 +12,10 @@ import pandas as pd
 import numpy as np
 from datetime import date
 import os
+import sys, os
 
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/../')
 
 class TestGoogleScraper:
 
@@ -32,7 +35,7 @@ class TestGoogleScraper:
 
     def test_non_google_links(self):
         links =[]
-        with open('/~/portfolio/tests/google_links.txt') as l:
+        with open(myPath+'/google_links.txt') as l:
             for line in l:
                 line = line.replace('\n', '')
                 links.append(line)
