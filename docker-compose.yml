@@ -8,8 +8,7 @@ services:
     ports: 
       - "5432:5432"
     #this second command is only here to keep the container from exiting after the pyton command is executed   
-
-    command: sh -c "git clone git@github.com:Cbflessner/portfolio.git && tail -f /dev/null"
+    command: "tail -f /dev/null"
        
 
   zookeeper:
