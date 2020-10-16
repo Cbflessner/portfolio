@@ -1,6 +1,9 @@
 version: '2'
 
 services:
+  client:
+    image: circleci/python:3.8.5
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
     hostname: zookeeper

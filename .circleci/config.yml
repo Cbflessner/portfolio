@@ -2,7 +2,7 @@
 jobs:
   build:
     docker:
-      - image: circleci/python:3.8.5
+      - image: cimg/base:2020.01
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
@@ -16,7 +16,7 @@ jobs:
       - setup_remote_docker
       # step 3 start docker containers
       - run:
-          name: Start container 
+          name: Start containers 
           command: |
             set -x
             docker-compose up -d
@@ -29,7 +29,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            python -m pytest -v --cov=portfolio tests/
+            docker exec client python -m pytest -v --cov=portfolio tests/
 workflows:
   version: 2
   build:
