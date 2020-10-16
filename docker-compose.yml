@@ -2,13 +2,15 @@ version: '2'
 
 services:
   client:
-    image: circleci/python:3.8.5
+    image: cimg/python:3.8.5
     hostname: client
     container_name: client
     ports: 
       - "5432:5432"
-    #this is only here to keep the container from exiting after the pyton command is executed
-    command: tail -f /dev/null        
+    command: |
+      git clone git@github.com:Cbflessner/portfolio.git
+      tail -f /dev/null  
+    #this is only here to keep the container from exiting after the pyton command is executed      
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
