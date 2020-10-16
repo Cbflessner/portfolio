@@ -32,7 +32,7 @@ class TestGoogleScraper:
 
     def test_non_google_links(self):
         links =[]
-        with open('tests/google_links.txt') as l:
+        with open('/~/portfolio/tests/google_links.txt') as l:
             for line in l:
                 line = line.replace('\n', '')
                 links.append(line)
