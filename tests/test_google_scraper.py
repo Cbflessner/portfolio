@@ -15,7 +15,11 @@ import os
 import sys, os
 
 myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, myPath + '/../')
+path=myPath.split( '/')
+path.pop(len(path)-1)
+new = "/".join(path)
+sys.path.insert(0, new)
+print(sys.path)
 
 class TestGoogleScraper:
 

@@ -6,5 +6,11 @@
 
 import sys, os
 myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, myPath + '/../')
-print(sys.path)
+path=myPath.split( '/')
+path.pop(len(path)-1)
+new = "/".join(path)
+print(new)
+print(myPath)
+# print(type(myPath))
+# sys.path.insert(0, myPath + '/../')
+
