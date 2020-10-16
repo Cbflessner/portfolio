@@ -23,7 +23,7 @@ jobs:
       - run:
           name: copy code to python container
           command: |
-            docker cp -R /repo client:/portfolio
+            docker cp /repo client:/portfolio
       # Step 4: create virtual env and install dependencies
       - run:
           name: install dependencies
