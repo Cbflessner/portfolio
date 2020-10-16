@@ -5,8 +5,8 @@ services:
     image: circleci/python:3.8.5
     hostname: client
     container_name: client
-  ports: 
-    - "5432:5432"
+    ports: 
+      - "5432:5432"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
