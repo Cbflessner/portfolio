@@ -1,11 +1,14 @@
+import sys, os
+myPath = os.path.dirname(os.path.abspath(__file__))
+path=myPath.split( '/')
+path.pop(len(path)-1)
+new = "/".join(path)
+sys.path.insert(0, new)
+
 import kafka.kafka_utils as kafka_utils
 from confluent_kafka.admin import TopicMetadata
 from confluent_kafka import Producer, Consumer
 import pytest
-import sys, os
-
-myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, myPath + '/../')
 
 class TestKafkaUtils:
 
