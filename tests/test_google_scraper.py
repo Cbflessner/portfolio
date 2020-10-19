@@ -11,7 +11,6 @@ import re
 import pandas as pd
 import numpy as np
 from datetime import date
-import os
 import sys, os
 
 myPath = os.path.dirname(os.path.abspath(__file__))
