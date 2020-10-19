@@ -25,6 +25,7 @@ def read_config(config_file):
 
     return conf
 
+@pytest.mark.run(order=1)
 def create_topic(conf, topic, num_partitions, replication_factor):
     """
         Create a topic if needed

@@ -1,3 +1,5 @@
+
+#Add the portfolio directory to the PYPATH so it can see the web_scrapers pakcage
 import sys, os
 myPath = os.path.dirname(os.path.abspath(__file__))
 path=myPath.split( '/')

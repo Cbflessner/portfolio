@@ -19,7 +19,6 @@ import numpy as np
 from datetime import date
 
 
-
 class TestGoogleScraper:
 
     test_url = 'https://www.google.com'
@@ -69,6 +68,7 @@ class TestGoogleScraper:
         test = 'test'
         assert type(words) is type(test)
 
+    @pytest.mark.run(order=-3)
     def test_clean_news_tabs(self):
         regex = re.compile(r'\t')
         f = open('google_news/test/google_news_2_2020-08-25.txt')
@@ -82,6 +82,7 @@ class TestGoogleScraper:
         f.close()
         assert np.array_equal(result.values, expected.values)
 
+    @pytest.mark.run(order=-2)
     def test_clean_news_newline(self):
         regex = re.compile(r'\n|\r')
         f = open('google_news/test/google_news_2_2020-08-25.txt')
@@ -95,6 +96,7 @@ class TestGoogleScraper:
         f.close()
         assert np.array_equal(result.values, expected.values)
 
+    @pytest.mark.run(order=-1)
     def test_clean_news_strip(self):
         regex = re.compile(r'^\s|\s$')
         f = open('google_news/test/google_news_2_2020-08-25.txt')
