@@ -4,8 +4,8 @@ import sys, os
 myPath = os.path.dirname(os.path.abspath(__file__))
 path=myPath.split( '/')
 path.pop(len(path)-1)
-new = "/".join(path)
-sys.path.insert(0, new)
+new_path = "/".join(path)
+sys.path.insert(0, new_path)
 
 import kafka.kafka_utils as kafka_utils
 from confluent_kafka.admin import TopicMetadata
@@ -20,6 +20,7 @@ class TestKafkaUtils:
         control_config = {'bootstrap.servers':'localhost:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
         assert config == control_config
 
+    @pytest.mark.run(order=1)
     def test_create_kafka_topic(self):
         conf = {'bootstrap.servers':'localhost:9092'}
         kafka_utils.create_topic(conf=conf, topic='christian_test', num_partitions=1, replication_factor=1) 

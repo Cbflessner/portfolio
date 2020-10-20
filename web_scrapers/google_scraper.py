@@ -73,14 +73,13 @@ def clean_news(text, words4paragraph):
     return clean
 
 # Used for debugging
-def save_file(type_of_file, num, url, text):
-    today = str(date.today())
-    num += 1
-    file_name = type_of_file+'_'+str(num)+'_'+today+'.txt'
-    if os.path.isfile(file_name):
-        os.remove(file_name)
-    f = open(file_name, 'a')
-    f.write(url+'\n')
-    for k in text:
-        f.write(k + '\n\n')
-    f.close
+# def save_file(type_of_file, num, url, text):
+#     num += 1
+#     file_name = type_of_file+'_'+str(num)+'_'+'.txt'
+#     if os.path.isfile(file_name):
+#         os.remove(file_name)
+#     f = open(file_name, 'a')
+#     f.write(url+'\n')
+#     for k in text:
+#         f.write(k + '\n\n')
+#     f.close

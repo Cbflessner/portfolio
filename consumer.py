@@ -44,7 +44,7 @@ if __name__ == '__main__':
     consumer = DeserializingConsumer(consumer_config)
 
     partitions = []
-    partition = TopicPartition(topic='test', partition=0)
+    partition = TopicPartition(topic=topic, partition=0, offset=0)
     partitions.append(partition)
     consumer.assign(partitions)
 

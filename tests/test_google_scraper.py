@@ -6,8 +6,8 @@ import sys, os
 myPath = os.path.dirname(os.path.abspath(__file__))
 path=myPath.split( '/')
 path.pop(len(path)-1)
-new = "/".join(path)
-sys.path.insert(0, new)
+new_path = "/".join(path)
+sys.path.insert(0, new_path)
 
 from web_scrapers import google_scraper as gs
 import requests
