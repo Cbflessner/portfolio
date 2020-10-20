@@ -1,10 +1,10 @@
 #Add the portfolio directory to the PYPATH so it can see the web_scrapers pakcage
 import sys, os
-myPath = os.path.dirname(os.path.abspath(__file__))
-path=myPath.split( '/')
+this_path = os.path.dirname(os.path.abspath(__file__))
+path=this_path.split( '/')
 path.pop(len(path)-1)
-new_path = "/".join(path)
-sys.path.insert(0, new_path)
+portfolio_path = "/".join(path)
+sys.path.insert(0, portfolio_path)
 
 import kafka.kafka_utils as kafka_utils
 from web_scrapers import google_scraper as gs
@@ -21,11 +21,13 @@ class TestMessages:
     test_messages =['test message with newlines (backslash n) \n\n', 'test message with carriage retruns (backslash r)\r\r'
     ,'test message with \t\t\t tabs', '          test message with leading whitespace', 'test message with trailing whitespace       ']
     topic = 'christian_test'
-    conf = kafka_utils.read_config(new_path+'/kafka/librdkafka.config')
+    conf = kafka_utils.read_config(portfolio_path+'/kafka/librdkafka.config')
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
-    schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
-    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['google.key.schema.file'], conf['google.value.schema.file'])
+    schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
+    key_schema_file = portfolio_path + conf['google.key.schema.file']
+    value_schema_file =portfolio_path + conf['google.value.schema.file']  
+    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_file, value_schema_file)
     key_avro_serializer = AvroSerializer(key_schema,
                                           schema_registry_client,
                                           google.Key.key_to_dict)
@@ -49,7 +51,6 @@ class TestMessages:
         delivered_records = 0
         for text in self.test_messages:
             url = 'www.test.com'
-            news = gs.clean_news(text, 20)
             scraper_dt = datetime.now(pytz.timezone('America/Denver'))
             scraper_dt = scraper_dt.strftime("%Y/%m/%d %H:%M:%S %z")
             value_obj = google.Value(url=url, text=text, scraper_dt=scraper_dt)
@@ -68,39 +69,29 @@ class TestMessages:
             'value.deserializer': self.value_avro_deserializer,
             'group.id': '1',
             'auto.offset.reset': 'earliest' }
-
         consumer = DeserializingConsumer(consumer_config)
-
         partitions = []
-        partition = TopicPartition(topic=self.topic, partition=0)
+        partition = TopicPartition(topic=self.topic, partition=0, offset=0)
         partitions.append(partition)
         consumer.assign(partitions)
-
         # Process messages
-        result = []
-        print('entering loop for topic', self.topic)        
+        result = []  
         while True:
             try:
                 msg = consumer.poll(1.0)
                 if msg is None:
-                    print("No messages to consume")
                     break
                 elif msg.error():
-                    print('error: {}'.format(msg.error()))
                     break
                 else:
                     value_object = msg.value()
                     text = value_object.text
                     result.append(text)
-                    print('message retrieved')
             except KeyboardInterrupt:
-                print('user exit')
                 break
             except SerializerError as e:
-                # Report malformed record, discard results, continue polling
-                print("Message deserialization failed {}".format(e))
                 break
-
         # Leave group and commit final offsets
         consumer.close()
-        return result
+        
+        assert result == self.test_messages

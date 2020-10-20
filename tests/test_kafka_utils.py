@@ -1,11 +1,11 @@
 
 #Add the portfolio directory to the PYPATH so it can see the web_scrapers pakcage
 import sys, os
-myPath = os.path.dirname(os.path.abspath(__file__))
-path=myPath.split( '/')
+this_path = os.path.dirname(os.path.abspath(__file__))
+path=this_path.split( '/')
 path.pop(len(path)-1)
-new_path = "/".join(path)
-sys.path.insert(0, new_path)
+portfolio_path = "/".join(path)
+sys.path.insert(0, portfolio_path)
 
 import kafka.kafka_utils as kafka_utils
 from confluent_kafka.admin import TopicMetadata
@@ -16,7 +16,7 @@ class TestKafkaUtils:
 
 
     def test_read_config(self):
-        config = kafka_utils.read_config(myPath + '/librdkafka.config')
+        config = kafka_utils.read_config(this_path + '/librdkafka.config')
         control_config = {'bootstrap.servers':'localhost:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
         assert config == control_config
 
@@ -35,7 +35,7 @@ class TestKafkaUtils:
         assert result == ('christian_test', 1)
 
     def test_load_avro_schema_from_file(self):
-        key_schema, value_schema = kafka_utils.load_avro_schema_from_file(myPath + '/key-schema-test.avsc', myPath + '/value-schema-test.avsc')
+        key_schema, value_schema = kafka_utils.load_avro_schema_from_file(this_path + '/key-schema-test.avsc', this_path + '/value-schema-test.avsc')
         key_schema_control = '''
 {
   "namespace": "io.portfolio.googlescraper",

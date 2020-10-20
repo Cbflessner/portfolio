@@ -3,11 +3,11 @@ unit tests for the google scraper library
 '''
 #Add the portfolio directory to the PYPATH so it can see the web_scrapers pakcage
 import sys, os
-myPath = os.path.dirname(os.path.abspath(__file__))
-path=myPath.split( '/')
+this_path = os.path.dirname(os.path.abspath(__file__))
+path=this_path.split( '/')
 path.pop(len(path)-1)
-new_path = "/".join(path)
-sys.path.insert(0, new_path)
+portfolio_path = "/".join(path)
+sys.path.insert(0, portfolio_path)
 
 from web_scrapers import google_scraper as gs
 import requests
@@ -37,7 +37,7 @@ class TestGoogleScraper:
 
     def test_non_google_links(self):
         links =[]
-        with open(myPath+'/google_links.txt') as l:
+        with open(this_path+'/google_links.txt') as l:
             for line in l:
                 line = line.replace('\n', '')
                 links.append(line)
