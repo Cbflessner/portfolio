@@ -37,7 +37,7 @@ jobs:
             docker exec client pytest -v --cov=portfolio $HOME/portfolio/
       #Step 6: Start test Kafka topic
       - run:
-          name: run tests
+          name: start test kafka topic
           command: |
             docker exec client python $HOME/portfolio/tests/setup_test_topic.py
       # Step 7: run tests
