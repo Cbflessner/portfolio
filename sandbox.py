@@ -12,11 +12,11 @@
 # print(topic)
 
 #############################test_producer()################################
-# import tests.test_messages as tm
+import tests.test_messages as tm
 
-# messageController = tm.TestMessages
-# result = messageController.test_producer(messageController)
-# print(result)
+messageController = tm.TestMessages
+result = messageController.test_producer(messageController)
+print(result)
 
 
 #############################test_consumer()################################

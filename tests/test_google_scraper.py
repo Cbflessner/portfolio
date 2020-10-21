@@ -25,6 +25,8 @@ class TestGoogleScraper:
     broken_url = 'https://www.googl.com'
     test_text = pd.Series(['test', 'test', 'test'])
     today = str(date.today())
+    test_messages ='''test message with newlines (backslash n) \n\ntest message with carriage retruns (backslash r)\r\r
+    test message with \t\t\t tabs\n      test message with leading whitespace\n test message with trailing whitespace       \n'''
 
     def test_create_soup(self):
         soup = gs.create_soup(self.test_url)
@@ -68,46 +70,34 @@ class TestGoogleScraper:
         test = 'test'
         assert type(words) is type(test)
 
-    @pytest.mark.run(order=-3)
     def test_clean_news_tabs(self):
         regex = re.compile(r'\t')
-        f = open('google_news/test/google_news_2_2020-08-25.txt')
-        text = f.read()
-        clean = gs.clean_news(text, 5)
+        clean = gs.clean_news(self.test_messages, 5)
         result = clean.str.findall(regex)
         expected = []
         for i in range(len(clean)):
             expected.append([])
         expected = pd.Series(expected)
-        f.close()
         assert np.array_equal(result.values, expected.values)
 
-    @pytest.mark.run(order=-2)
     def test_clean_news_newline(self):
         regex = re.compile(r'\n|\r')
-        f = open('google_news/test/google_news_2_2020-08-25.txt')
-        text = f.read()
-        clean = gs.clean_news(text, 5)
+        clean = gs.clean_news(self.test_messages, 5)
         result = clean.str.findall(regex)
         expected = []
         for i in range(len(clean)):
             expected.append([])
         expected = pd.Series(expected)
-        f.close()
         assert np.array_equal(result.values, expected.values)
 
-    @pytest.mark.run(order=-1)
     def test_clean_news_strip(self):
         regex = re.compile(r'^\s|\s$')
-        f = open('google_news/test/google_news_2_2020-08-25.txt')
-        text = f.read()
-        clean = gs.clean_news(text, 5)
+        clean = gs.clean_news(self.test_messages, 5)
         result = clean.str.findall(regex)
         expected = []
         for i in range(len(clean)):
             expected.append([])
         expected = pd.Series(expected)
-        f.close()
         assert np.array_equal(result.values, expected.values)
 
     # def test_save_file_correct_name(self):

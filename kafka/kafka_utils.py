@@ -58,16 +58,19 @@ def create_topic(conf, topic, num_partitions, replication_factor):
 # Optional per-message on_delivery handler (triggered by poll() or flush())
 # when a message has been successfully delivered or
 # permanently failed delivery (after retries).
+offset = 0
 def acked(err, msg):
     """Delivery report handler called on 
     successful or failed delivery of message
     """
+    global offset
     if err is not None:
         print("Failed to deliver message: {}".format(err))
     else:
         print("Produced record to topic {} partition [{}] @ offset {}"
               .format(msg.topic(), msg.partition(), msg.offset()))
-    return 'test'
+    offset = msg.offset()
+
 
 def load_avro_schema_from_file(key_schema_file, value_schema_file):
     with open(key_schema_file) as ksf:

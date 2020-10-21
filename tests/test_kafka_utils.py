@@ -20,11 +20,9 @@ class TestKafkaUtils:
         control_config = {'bootstrap.servers':'localhost:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
         assert config == control_config
 
-    @pytest.mark.run(order=1)
     def test_create_kafka_topic(self):
-        conf = {'bootstrap.servers':'localhost:9092'}
-        kafka_utils.create_topic(conf=conf, topic='christian_test', num_partitions=1, replication_factor=1) 
-
+        #topic was already created in circlCI set up (config.yml step 6).  Just checking that it's still up
+        conf = {'bootstrap.servers': 'localhost:9092'}
         p = Producer(conf)
         info = p.list_topics()
         topic = info.topics['christian_test'].topic

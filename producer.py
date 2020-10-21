@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
+import sys, os
+this_path = os.path.dirname(os.path.abspath(__file__))
+
 from web_scrapers import google_scraper as gs
-import sys
 import kafka.kafka_utils as kafka_utils
 from confluent_kafka import SerializingProducer
 from confluent_kafka.schema_registry import SchemaRegistryClient
@@ -29,7 +31,10 @@ if __name__ == '__main__':
 
     schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
     
-    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(conf['google.key.schema.file'], conf['google.value.schema.file'])
+    key_schema_path = this_path + conf['google.key.schema.file']
+    value_schema_path = this_path + conf['google.value.schema.file']
+    print(key_schema_path)
+    key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_path, value_schema_path)
     
     key_avro_serializer = AvroSerializer(key_schema,
                                           schema_registry_client,
@@ -47,7 +52,7 @@ if __name__ == '__main__':
 
     #Set number of articles to read
     num_articles=3
-
+    delivered_records =0
     google_news = gs.google_top_results(num_articles, '/search?q=chicago&tbm=nws')
     for num in range(len(google_news)):
         url = google_news.iloc[num]
@@ -59,9 +64,9 @@ if __name__ == '__main__':
         key_obj = google.Key(key=str(hash(url)))
         print("Producing record: {}\t{}".format(key_obj.key, value_obj.text[:10]))
         producer.produce(topic=topic, key=key_obj, value=value_obj, on_delivery=kafka_utils.acked)
-        producer.poll(0)
+        delivered_records += producer.poll()
 
     producer.flush()
 
-    print("{} messages were produced to topic {}!".format(kafka_utils.delivered_records, topic))
+    print("{} messages were produced to topic {}!".format(delivered_records, topic))
 

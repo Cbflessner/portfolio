@@ -18,8 +18,7 @@ import pytz
 
 
 class TestMessages:
-    test_messages =['test message with newlines (backslash n) \n\n', 'test message with carriage retruns (backslash r)\r\r'
-    ,'test message with \t\t\t tabs', '          test message with leading whitespace', 'test message with trailing whitespace       ']
+    test_messages =['test message 1', 'test message 2', 'test message 3', 'test message 4']
     topic = 'christian_test'
     conf = kafka_utils.read_config(portfolio_path+'/kafka/librdkafka.config')
     schema_registry_conf = {
@@ -59,7 +58,7 @@ class TestMessages:
             delivered_records += producer.poll()
         producer.flush()
 
-        assert delivered_records == 5
+        assert delivered_records == len(self.test_messages)
 
 
     def test_consumer(self):
@@ -69,9 +68,10 @@ class TestMessages:
             'value.deserializer': self.value_avro_deserializer,
             'group.id': '1',
             'auto.offset.reset': 'earliest' }
+        offset = kafka_utils.offset - len(self.test_messages) + 1
         consumer = DeserializingConsumer(consumer_config)
         partitions = []
-        partition = TopicPartition(topic=self.topic, partition=0, offset=0)
+        partition = TopicPartition(topic=self.topic, partition=0, offset=offset)
         partitions.append(partition)
         consumer.assign(partitions)
         # Process messages
@@ -93,5 +93,5 @@ class TestMessages:
                 break
         # Leave group and commit final offsets
         consumer.close()
-        
+
         assert result == self.test_messages
