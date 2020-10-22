@@ -16,10 +16,12 @@ jobs:
       - setup_remote_docker
       # step 3 start docker containers
       - run:
-          name: Start containers 
+          name: Start containers and check that client can talke to kafka
           command: |
             set -x
             docker-compose up -d
+             docker run --network container:client \
+              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused broker
       #step 4: copy repo to python container
       - run:
           name: copy code to python container

@@ -33,7 +33,6 @@ if __name__ == '__main__':
     
     key_schema_path = this_path + conf['google.key.schema.file']
     value_schema_path = this_path + conf['google.value.schema.file']
-    print(key_schema_path)
     key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_path, value_schema_path)
     
     key_avro_serializer = AvroSerializer(key_schema,
