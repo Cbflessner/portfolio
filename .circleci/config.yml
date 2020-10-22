@@ -16,7 +16,7 @@ jobs:
       - setup_remote_docker
       # step 3 start docker containers
       - run:
-          name: Start containers and check that client can talke to kafka
+          name: Start containers
           command: |
             set -x
             docker-compose up -d

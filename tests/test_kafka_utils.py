@@ -17,12 +17,14 @@ class TestKafkaUtils:
 
     def test_read_config(self):
         config = kafka_utils.read_config(this_path + '/librdkafka.config')
-        control_config = {'bootstrap.servers':'localhost:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
+        control_config = {'bootstrap.servers':'broker:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
         assert config == control_config
 
     def test_create_kafka_topic(self):
         #topic was already created in circlCI set up (config.yml step 6).  Just checking that it's still up
         conf = kafka_utils.read_config(portfolio_path + '/kafka/librdkafka.config')
+        producer_config = {'bootstrap.servers': conf['bootstrap.servers']}
+        p = Producer(producer_config)
         info = p.list_topics()
         topic = info.topics['christian_test'].topic
         partitions = info.topics['christian_test'].partitions

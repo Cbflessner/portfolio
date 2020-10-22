@@ -1,15 +1,15 @@
 #############################test_create_kafka_topics()################################
-# import tests.test_kafka_utils as ku
-# from confluent_kafka import Producer
+import tests.test_kafka_utils as ku
+from confluent_kafka import Producer
 
-# kafka = ku.TestKafkaUtils
-# kafka.test_create_kafka_topic(kafka)
+kafka = ku.TestKafkaUtils
+kafka.test_create_kafka_topic(kafka)
 
-# conf = {'bootstrap.servers':'localhost:9092'}
-# p = Producer(conf)
-# info = p.list_topics()
-# topic = info.topics['christian_test'].topic
-# print(topic)
+conf = {'bootstrap.servers':'localhost:9092'}
+p = Producer(conf)
+info = p.list_topics()
+topic = info.topics['christian_test'].topic
+print(topic)
 
 #############################test_producer()################################
 import tests.test_messages as tm
