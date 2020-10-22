@@ -22,8 +22,7 @@ class TestKafkaUtils:
 
     def test_create_kafka_topic(self):
         #topic was already created in circlCI set up (config.yml step 6).  Just checking that it's still up
-        conf = {'bootstrap.servers': 'localhost:9092'}
-        p = Producer(conf)
+        conf = kafka_utils.read_config(portfolio_path + '/kafka/librdkafka.config')
         info = p.list_topics()
         topic = info.topics['christian_test'].topic
         partitions = info.topics['christian_test'].partitions
