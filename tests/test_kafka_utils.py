@@ -17,7 +17,8 @@ class TestKafkaUtils:
 
     def test_read_config(self):
         config = kafka_utils.read_config(this_path + '/librdkafka.config')
-        control_config = {'bootstrap.servers':'broker:9092', 'schema.registry.url':'http://localhost:8081', 'schema.file':'./avro/google-scraper.avsc'}
+        control_config = {'bootstrap.servers':'broker:9092', 'schema.registry.url':'http://schema-registry:8081', 'google.key.schema.file':'/avro/google-scraper-key.avsc'
+        ,'google.value.schema.file':'/avro/google-scraper-value.avsc'}
         assert config == control_config
 
     def test_create_kafka_topic(self):
