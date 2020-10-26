@@ -17,7 +17,7 @@ import pytz
 if __name__ == '__main__':
 
     # Read arguments and configurations and initialize
-    args = kafka_utils.parse_args()
+    args = kafka_utils.parse_args(sys.argv[1:])
     config_file = args.config_file
     topic = args.topic
     conf = kafka_utils.read_config(config_file)

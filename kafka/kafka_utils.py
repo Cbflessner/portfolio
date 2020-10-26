@@ -4,9 +4,9 @@ from confluent_kafka.admin import AdminClient, NewTopic
 from uuid import uuid4
 
 
-def parse_args():
+def parse_args(args):
     arg_parser = argparse.ArgumentParser()
-
+    print(arg_parser)
     arg_parser.add_argument("-t", required=True, help="Topic name", dest="topic")
     arg_parser.add_argument("-f", required=True, help="Kafka config file should be in portfolio/.confluent", dest='config_file')
 

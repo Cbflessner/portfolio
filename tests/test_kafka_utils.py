@@ -71,3 +71,4 @@ class TestKafkaUtils:
         schemas = [key_schema, value_schema]
         controls = [key_schema_control, value_schema_control]
         assert schemas == controls
+

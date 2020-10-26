@@ -39,7 +39,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            docker exec client pytest -v --cov=portfolio $HOME/portfolio/
+            docker exec client pytest -v --cov=portfolio $HOME/portfolio/tests
 workflows:
   version: 2
   build:

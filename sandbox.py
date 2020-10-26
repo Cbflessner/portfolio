@@ -28,7 +28,14 @@
 
 
 ###########################test_read_config()##############################
+# import tests.test_kafka_utils as ku
+
+# kafka = ku.TestKafkaUtils
+# kafka.test_read_config(kafka)
+
+
+############################test_parse_args################################
 import tests.test_kafka_utils as ku
 
 kafka = ku.TestKafkaUtils
-kafka.test_read_config(kafka)
+kafka.test_parse_args(kafka)
