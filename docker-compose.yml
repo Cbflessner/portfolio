@@ -118,10 +118,3 @@ services:
     volumes:
       - "/~/portfolio/cluster-test/7005/redis.conf:/home/redis.conf"                  
 
-volumes:
-  portfolio:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./
