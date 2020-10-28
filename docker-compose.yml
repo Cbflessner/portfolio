@@ -9,7 +9,7 @@ services:
       - "5432:5432"
     #this second command is only here to keep the container from exiting after the pyton command is executed   
     volumes:
-      - "portfolio:/home/circleci/portfolio"      
+      - "/home/christian/portfolio:/home/circleci/portfolio"    
     command: "tail -f /dev/null"   
 
   zookeeper:
@@ -118,10 +118,10 @@ services:
     volumes:
       - "/~/portfolio/cluster-test/7005/redis.conf:/home/redis.conf"                  
 
-volumes:
-  portfolio:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /~/portfolio
+# volumes:
+#   portfolio:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: $HOME/portfolio
