@@ -7,7 +7,7 @@ jobs:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
 
-    working_directory: ~/repo
+    working_directory: ~/portfolio
 
     steps:
       # Step 1: obtain repo from GitHub
