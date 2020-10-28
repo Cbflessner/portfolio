@@ -9,7 +9,7 @@ services:
       - "5432:5432"
     #this second command is only here to keep the container from exiting after the pyton command is executed   
     volumes:
-      - "/home/christian/portfolio:/home/circleci/portfolio"    
+      - "/home/circleci/portfolio:/home/circleci/portfolio"    
     command: "tail -f /dev/null"   
 
   zookeeper:
