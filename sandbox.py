@@ -34,8 +34,11 @@
 # kafka.test_read_config(kafka)
 
 
-############################test_parse_args################################
-import tests.test_kafka_utils as ku
+############################ngrams################################
+import kafka.kafka_utils as ku
 
-kafka = ku.TestKafkaUtils
-kafka.test_parse_args(kafka)
+test = 'the quick brown! fo#x jumped over the 4 lazy sheep'
+ngrams = ku.ngrams(test, 3)
+predictions = ku.ngram_predictions(ngrams)
+print(predictions)
+

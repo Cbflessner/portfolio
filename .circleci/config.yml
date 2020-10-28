@@ -20,11 +20,6 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-      #step 4: copy repo to python container
-      - run:
-          name: copy code to python container
-          command: |
-            docker cp ~/repo client:$HOME/portfolio
       # Step 5: create virtual env and install dependencies
       - run:
           name: install dependencies
@@ -39,7 +34,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            docker exec client pytest -v --cov=portfolio $HOME/portfolio/tests
+            docker exec client pytest -v --cov=portfolio $HOME/portfolio
 workflows:
   version: 2
   build:

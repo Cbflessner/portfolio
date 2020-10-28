@@ -2,11 +2,11 @@ import argparse, sys
 from confluent_kafka import avro, KafkaError, Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 from uuid import uuid4
+import pandas as pd
 
 
 def parse_args(args):
     arg_parser = argparse.ArgumentParser()
-    print(arg_parser)
     arg_parser.add_argument("-t", required=True, help="Topic name", dest="topic")
     arg_parser.add_argument("-f", required=True, help="Kafka config file should be in portfolio/.confluent", dest='config_file')
 
@@ -80,3 +80,30 @@ def load_avro_schema_from_file(key_schema_file, value_schema_file):
         value_schema = vsf.read()
     
     return key_schema, value_schema        
+
+def remove_special(input):
+    clean = ''.join(ch for ch in input if ch.isalnum())
+    return clean
+
+def ngrams(input, n):
+    input = input.split(' ')
+    clean = []
+    output = []
+    for word in input:
+        clean.append(remove_special(word))
+    for i in range(len(clean)-n+1):
+        output.append(clean[i:i+n])
+    return output
+
+def ngram_predictions(ngrams):
+    if len(ngrams[0]) == 1:
+        predictions = pd.Series(ngrams)
+        return predictions
+    idx = []
+    values = []
+    for ngram in ngrams:
+        idx.append(" ".join(ngram[:-1]))
+        values.append(ngram[-1])
+    predictions = pd.Series(values, index=idx)
+    return predictions
+
