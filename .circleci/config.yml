@@ -20,18 +20,6 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-      #step 4: copy repo to python container
-      - run:
-          name: copy code to python container
-          command: |
-            docker cp ~/portfolio client:$HOME/portfolio
-          #sudo docker cp ~/portfolio client:home/circleci/portfolio
-      # Step 5: create virtual env and install dependencies
-      - run:
-          name: install dependencies
-          command: |
-            docker exec client pip install -r $HOME/portfolio/requirements.txt
-      #Step 6: Start test Kafka topic
       - run:
           name: start test kafka topic
           command: |

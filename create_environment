@@ -1,0 +1,5 @@
+!#/usr/bin/env bash
+
+docker-compose up -d
+docker cp /home/christian/portfolio client:home/circleci
+docker exec client pip install -r /home/circleci/portfolio/requirements.txt
