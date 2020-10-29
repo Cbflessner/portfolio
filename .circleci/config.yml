@@ -15,6 +15,12 @@ jobs:
       #Step 2: Set up docker containers
       - setup_remote_docker:
           version: 19.03.13
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       # step 3 start docker containers
       - run:
           name: Start containers
