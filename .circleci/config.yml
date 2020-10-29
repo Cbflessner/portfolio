@@ -13,7 +13,8 @@ jobs:
       # Step 1: obtain repo from GitHub
       - checkout
       #Step 2: Set up docker containers
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       # step 3 start docker containers
       - run:
           name: Start containers
