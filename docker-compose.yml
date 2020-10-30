@@ -8,7 +8,7 @@ services:
     ports: 
       - "5432:5432"
     #this command is only here to keep the container from exiting after the pyton command is executed   
-    command: "tail -f /portfolio/requirments.txt"   
+    command: "tail -f /dev/null"   
     # volumes:
     #   - .:/portfolio
 
