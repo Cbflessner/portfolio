@@ -7,10 +7,10 @@ services:
     container_name: client
     ports: 
       - "5432:5432"
+    volumes:
+      - .:/portfolio      
     #this command is only here to keep the container from exiting after the pyton command is executed   
     command: "tail -f /dev/null"   
-    volumes:
-      - ~/portfolio:/portfolio
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
