@@ -30,6 +30,7 @@ jobs:
       - run:
           name: start test kafka topic
           command: |
+            docker exec client
             docker exec client python /portfolio/tests/setup_test_topic.py
       # Step 7: run tests
       - run:
