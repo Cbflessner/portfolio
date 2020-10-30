@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   client:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile_client
     hostname: client
     container_name: client
     ports: 
@@ -62,60 +64,66 @@ services:
     image: redis:6.0.8
     hostname: redis_1
     container_name: redis_1
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7000:7000"
       - "17000:17000"
     volumes:
-      - "/~/portfolio/cluster-test/7000/redis.conf:/home/redis.conf"  
+      - ./cluster-test/7000/redis.conf:/usr/local/etc/redis/redis.conf
     # command: "../usr/bin/redis-server ../home/redis.conf"
 
   redis_1a:
     image: redis:6.0.8
     hostname: redis_1a
     container_name: redis_1a
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7001:7001"
       - "17001:17001"
     volumes:
-      - "/~/portfolio/cluster-test/7001/redis.conf:/home/redis.conf"        
+      - ./cluster-test/7001/redis.conf:/usr/local/etc/redis/redis.conf
 
   redis_2:
     image: redis:6.0.8
     hostname: redis_2
     container_name: redis_2
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7002:7002"
       - "17002:17002"
     volumes:
-      - "/~/portfolio/cluster-test/7002/redis.conf:/home/redis.conf"        
+      - ./cluster-test/7002/redis.conf:/usr/local/etc/redis/redis.conf
 
   redis_2a:
     image: redis:6.0.8
     hostname: redis_2a
     container_name: redis_2a
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7003:7003"
       - "17003:17003" 
     volumes:
-      - "/~/portfolio/cluster-test/7003/redis.conf:/home/redis.conf"        
+      - ./cluster-test/7003/redis.conf:/usr/local/etc/redis/redis.conf      
 
   redis_3:
     image: redis:6.0.8
     hostname: redis_3
     container_name: redis_3
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7004:7004"
       - "17004:17004"
     volumes:
-      - "/~/portfolio/cluster-test/7004/redis.conf:/home/redis.conf"        
+      - ./cluster-test/7004/redis.conf:/usr/local/etc/redis/redis.conf  
 
   redis_3a:
     image: redis:6.0.8
     hostname: redis_3a
     container_name: redis_3a
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "7005:7005"
       - "17005:17005" 
     volumes:
-      - "/~/portfolio/cluster-test/7005/redis.conf:/home/redis.conf"                  
+      - ./cluster-test/7005/redis.conf:/usr/local/etc/redis/redis.conf  
 
