@@ -26,7 +26,7 @@ jobs:
           name: Start containers
           command: |
             set -x
-            docker-compose up -d
+            docker-compose up -d --build
       - run:
           name: start test kafka topic
           command: |

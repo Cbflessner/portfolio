@@ -9,8 +9,7 @@ services:
     container_name: client
     ports: 
       - "5432:5432"
-    # volumes:
-    #   - ~/portfolio:/portfolio      
+    network_mode: host    
     #this command is only here to keep the container from exiting after the pyton command is executed   
     command: "tail -f /dev/null"   
 
@@ -60,70 +59,102 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
 
-  redis_1:
+  redis-cluster:
     image: redis:6.0.8
+    command: redis-cli --cluster create 10.0.0.11:7001 10.0.0.12:7002 10.0.0.13:7003 10.0.0.14:7004 10.0.0.15:7005 10.0.0.16:7006 --cluster-replicas 1 --cluster-yes
+    depends_on:
+      - redis_1
+      - redis_2
+      - redis_3
+      - redis_4
+      - redis_5
+      - redis_6
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.2
+
+  redis_1:
+    build: ./redis
+    image: redis-cluster-node
     hostname: redis_1
     container_name: redis_1
-    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      X_REDIS_PORT: 7001
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.11
     ports:
-      - "7000:7000"
-      - "17000:17000"
-    volumes:
-      - ./cluster-test/7000/redis.conf:/usr/local/etc/redis/redis.conf
-    # command: "../usr/bin/redis-server ../home/redis.conf"
-
-  redis_1a:
-    image: redis:6.0.8
-    hostname: redis_1a
-    container_name: redis_1a
-    command: redis-server /usr/local/etc/redis/redis.conf
-    ports:
-      - "7001:7001"
-      - "17001:17001"
-    volumes:
-      - ./cluster-test/7001/redis.conf:/usr/local/etc/redis/redis.conf
+      - 7001:6379
 
   redis_2:
-    image: redis:6.0.8
+    build: ./redis
+    image: redis-cluster-node
     hostname: redis_2
     container_name: redis_2
-    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      X_REDIS_PORT: 7002
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.12
     ports:
-      - "7002:7002"
-      - "17002:17002"
-    volumes:
-      - ./cluster-test/7002/redis.conf:/usr/local/etc/redis/redis.conf
-
-  redis_2a:
-    image: redis:6.0.8
-    hostname: redis_2a
-    container_name: redis_2a
-    command: redis-server /usr/local/etc/redis/redis.conf
-    ports:
-      - "7003:7003"
-      - "17003:17003" 
-    volumes:
-      - ./cluster-test/7003/redis.conf:/usr/local/etc/redis/redis.conf      
+      - 7002:6379
 
   redis_3:
-    image: redis:6.0.8
+    build: ./redis
+    image: redis-cluster-node
     hostname: redis_3
     container_name: redis_3
-    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      X_REDIS_PORT: 7003
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.13
     ports:
-      - "7004:7004"
-      - "17004:17004"
-    volumes:
-      - ./cluster-test/7004/redis.conf:/usr/local/etc/redis/redis.conf  
+      - 7003:6379
 
-  redis_3a:
-    image: redis:6.0.8
-    hostname: redis_3a
-    container_name: redis_3a
-    command: redis-server /usr/local/etc/redis/redis.conf
+  redis_4:
+    build: ./redis
+    image: redis-cluster-node
+    hostname: redis_4
+    container_name: redis_4
+    environment:
+      X_REDIS_PORT: 7004
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.14
     ports:
-      - "7005:7005"
-      - "17005:17005" 
-    volumes:
-      - ./cluster-test/7005/redis.conf:/usr/local/etc/redis/redis.conf  
+      - 7004:6379  
+
+  redis_5:
+    build: ./redis
+    image: redis-cluster-node
+    hostname: redis_5
+    container_name: redis_5
+    environment:
+      X_REDIS_PORT: 7005
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.15
+    ports:
+      - 7005:6379
+
+  redis_6:
+    build: ./redis
+    image: redis-cluster-node
+    hostname: redis_6
+    container_name: redis_6
+    environment:
+      X_REDIS_PORT: 7006
+    networks:
+      redisnet:
+        ipv4_address: 10.0.0.16
+    ports:
+      - 7006:6379
+
+networks:
+  redisnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/16
 
