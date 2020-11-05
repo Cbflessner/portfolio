@@ -30,12 +30,12 @@ jobs:
       - run:
           name: start test kafka topic
           command: |
-            docker exec client python /portfolio/tests/setup_test_topic.py
+            docker exec producer python /portfolio/tests/setup_test_topic.py
       # Step 7: run tests
       - run:
           name: run tests
           command: |
-            docker exec client pytest -v 
+            docker exec producer pytest -v 
 workflows:
   version: 2
   build:
