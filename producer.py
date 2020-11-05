@@ -11,6 +11,7 @@ from confluent_kafka.schema_registry.avro import AvroSerializer
 from data import google
 from datetime import datetime
 import pytz
+import time
 
 
 
@@ -48,6 +49,23 @@ if __name__ == '__main__':
         'value.serializer': value_avro_serializer}
 
     producer = SerializingProducer(producer_config)
+
+    #set loop variables
+    error = "not ready"
+    tries = 0
+    #Wait until the kafka topic is up before proceeding
+    while error is not None:
+        info = producer.list_topics(topic)
+        topic_info = info.topics[topic]
+        if topic_info.error is None:
+            error = topic_info.error
+        else:
+            tries += 1
+            print('try {} failed'.format(tries))
+            time.sleep(5)
+        if tries >= 10:
+            exit('could not connect to kafka topic after 10 tries')
+
 
     #Set number of articles to read
     num_articles=3

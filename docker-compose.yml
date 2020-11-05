@@ -1,17 +1,38 @@
 version: "3.8"
 
 services:
-  client:
+  producer:
     build:
       context: .
-      dockerfile: Dockerfile_client
-    hostname: client
-    container_name: client
+      dockerfile: Dockerfile_producer
+    hostname: producer
+    container_name: producer
+    depends_on:
+      - broker
+      - schema-registry
+    volumes:
+      - type: bind
+        source: .
+        target: /portfolio
     ports: 
-      - "5432:5432"
-    network_mode: host    
-    #this command is only here to keep the container from exiting after the pyton command is executed   
-    command: "tail -f /dev/null"   
+      - "5432:5432"    
+    command: "./producer.py -t google_scraper -f /portfolio/kafka/kafka.config"  
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile_consumer
+    hostname: consumer
+    container_name: consumer
+    depends_on:
+      - producer
+    volumes:
+      - type: bind
+        source: .
+        target: /portfolio
+    ports: 
+      - "5433:5433"   
+    command: "tail -f /dev/null"  
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
@@ -59,102 +80,10 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
 
-  redis-cluster:
-    image: redis:6.0.8
-    command: redis-cli --cluster create 10.0.0.11:7001 10.0.0.12:7002 10.0.0.13:7003 10.0.0.14:7004 10.0.0.15:7005 10.0.0.16:7006 --cluster-replicas 1 --cluster-yes
-    depends_on:
-      - redis_1
-      - redis_2
-      - redis_3
-      - redis_4
-      - redis_5
-      - redis_6
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.2
-
   redis_1:
     build: ./redis
-    image: redis-cluster-node
     hostname: redis_1
     container_name: redis_1
-    environment:
-      X_REDIS_PORT: 7001
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.11
     ports:
       - 7001:6379
-
-  redis_2:
-    build: ./redis
-    image: redis-cluster-node
-    hostname: redis_2
-    container_name: redis_2
-    environment:
-      X_REDIS_PORT: 7002
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.12
-    ports:
-      - 7002:6379
-
-  redis_3:
-    build: ./redis
-    image: redis-cluster-node
-    hostname: redis_3
-    container_name: redis_3
-    environment:
-      X_REDIS_PORT: 7003
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.13
-    ports:
-      - 7003:6379
-
-  redis_4:
-    build: ./redis
-    image: redis-cluster-node
-    hostname: redis_4
-    container_name: redis_4
-    environment:
-      X_REDIS_PORT: 7004
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.14
-    ports:
-      - 7004:6379  
-
-  redis_5:
-    build: ./redis
-    image: redis-cluster-node
-    hostname: redis_5
-    container_name: redis_5
-    environment:
-      X_REDIS_PORT: 7005
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.15
-    ports:
-      - 7005:6379
-
-  redis_6:
-    build: ./redis
-    image: redis-cluster-node
-    hostname: redis_6
-    container_name: redis_6
-    environment:
-      X_REDIS_PORT: 7006
-    networks:
-      redisnet:
-        ipv4_address: 10.0.0.16
-    ports:
-      - 7006:6379
-
-networks:
-  redisnet:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.0.0/16
-
+    command: "/etc/init.d/redis_7001 start"
