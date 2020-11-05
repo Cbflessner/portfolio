@@ -20,7 +20,7 @@ import pytz
 class TestMessages:
     test_messages =['test message 1', 'test message 2', 'test message 3', 'test message 4']
     topic = 'christian_test'
-    conf = kafka_utils.read_config(portfolio_path+'/kafka/librdkafka.config')
+    conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
     schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
