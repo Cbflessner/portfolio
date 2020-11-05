@@ -12,7 +12,7 @@ from confluent_kafka import Producer
 import time
 
 #configure and create the producer we will use to check the status of our new topic 
-conf = kafka_utils.read_config(portfolio_path+'/kafka/librdkafka.config')
+conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
 producer_config = {'bootstrap.servers': conf['bootstrap.servers']}
 kafka_utils.create_topic(conf=producer_config, topic='christian_test', num_partitions=1, replication_factor=1) 
 p = Producer(producer_config)
