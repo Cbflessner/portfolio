@@ -23,7 +23,7 @@ class TestKafkaUtils:
 
     def test_create_kafka_topic(self):
         #topic was already created in circlCI set up (config.yml step 6).  Just checking that it's still up
-        conf = kafka_utils.read_config(portfolio_path + '/kafka/librdkafka.config')
+        conf = kafka_utils.read_config(portfolio_path + '/kafka/kafka.config')
         producer_config = {'bootstrap.servers': conf['bootstrap.servers']}
         p = Producer(producer_config)
         info = p.list_topics()
