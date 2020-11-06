@@ -35,7 +35,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            docker exec producer pytest -v 
+            docker exec consumer pytest -v 
 workflows:
   version: 2
   build:
