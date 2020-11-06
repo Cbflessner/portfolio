@@ -48,6 +48,22 @@ class TestMessages:
             'value.serializer': self.value_avro_serializer}
         producer = SerializingProducer(producer_config)
         delivered_records = 0
+
+        error = "not ready"
+        tries = 0
+        #Wait until the kafka topic is up before proceeding
+        while error is not None:
+            info = producer.list_topics(topic)
+            topic_info = info.topics[topic]
+            if topic_info.error is None:
+                error = topic_info.error
+            else:
+                tries += 1
+                print('try {} failed'.format(tries))
+                time.sleep(5)
+            if tries >= 10:
+                exit('could not connect to kafka topic after 10 tries')
+
         for text in self.test_messages:
             url = 'www.test.com'
             scraper_dt = datetime.now(pytz.timezone('America/Denver'))
