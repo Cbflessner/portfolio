@@ -53,8 +53,8 @@ class TestMessages:
         tries = 0
         #Wait until the kafka topic is up before proceeding
         while error is not None:
-            info = producer.list_topics(topic)
-            topic_info = info.topics[topic]
+            info = producer.list_topics(self.topic)
+            topic_info = info.topics[self.topic]
             if topic_info.error is None:
                 error = topic_info.error
             else:
