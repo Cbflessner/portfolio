@@ -94,16 +94,3 @@ def ngrams(input, n):
     for i in range(len(clean)-n+1):
         output.append(clean[i:i+n])
     return output
-
-def ngram_predictions(ngrams):
-    if len(ngrams[0]) == 1:
-        predictions = pd.Series(ngrams)
-        return predictions
-    idx = []
-    values = []
-    for ngram in ngrams:
-        idx.append(" ".join(ngram[:-1]))
-        values.append(ngram[-1])
-    predictions = pd.Series(values, index=idx)
-    return predictions
-

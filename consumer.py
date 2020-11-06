@@ -8,7 +8,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from data import google
 import time
-from rediscluster import RedisCluster
+import redis
 
 
 if __name__ == '__main__':
@@ -42,9 +42,8 @@ if __name__ == '__main__':
         'auto.offset.reset': 'earliest' }
     consumer = DeserializingConsumer(consumer_config)
 
-    #create the redis writer
-    startup_nodes = [{"host": "10.0.0.11", "port": "7001"}]
-    rc = RedisCluster(startup_nodes=startup_nodes, decode_responses=True)
+    #create the redis interface
+    r = redis.Redis(host="redis_1",port=7001, decode_responses=True)
 
     #Wait until the kafka topic is up before proceeding
     error = "not ready"
@@ -83,8 +82,21 @@ if __name__ == '__main__':
                 value_object = msg.value()
                 text = value_object.text
                 five_grams =kafka_utils.ngrams(text, 5)
-                redis_key = ' '.join([str(elem) for elem in five_grams])
-                rc.ZINCRBY(redis_key,1, five_grams[-1])
+                for elem in five_grams:
+                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                    r.zincrby(redis_key,1, elem[-1])
+                four_grams =kafka_utils.ngrams(text, 4)
+                for elem in four_grams:
+                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                    r.zincrby(redis_key,1, elem[-1])
+                three_grams =kafka_utils.ngrams(text, 3)
+                for elem in three_grams:
+                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                    r.zincrby(redis_key,1, elem[-1])
+                two_grams =kafka_utils.ngrams(text, 2)
+                for elem in two_grams:
+                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                    r.zincrby(redis_key,1, elem[-1])
         except KeyboardInterrupt:
             break
         except SerializerError as e:
