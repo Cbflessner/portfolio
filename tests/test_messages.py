@@ -21,8 +21,7 @@ class TestMessages:
     test_messages =['test message 1', 'test message 2', 'test message 3', 'test message 4']
     topic = 'christian_test'
     conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
-    schema_registry_conf = {
-        'url': conf['schema.registry.url']}
+    schema_registry_conf = {'url': conf['schema.registry.url']}
     schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
     key_schema_file = portfolio_path + conf['google.key.schema.file']
     value_schema_file =portfolio_path + conf['google.value.schema.file']  
@@ -47,23 +46,23 @@ class TestMessages:
             'key.serializer': self.key_avro_serializer,
             'value.serializer': self.value_avro_serializer}
         producer = SerializingProducer(producer_config)
-        delivered_records = 0
-
+        
         error = "not ready"
         tries = 0
         #Wait until the kafka topic is up before proceeding
         while error is not None:
-            info = producer.list_topics(self.topic)
-            topic_info = info.topics[self.topic]
-            if topic_info.error is None:
-                error = topic_info.error
-            else:
+            try:
+                info = schema_registry_client.get_schema(1).schema_str
+                error = None
+            except:
+                error ="not ready"
                 tries += 1
                 print('try {} failed'.format(tries))
                 time.sleep(5)
             if tries >= 10:
                 exit('could not connect to kafka topic after 10 tries')
 
+        delivered_records = 0
         for text in self.test_messages:
             url = 'www.test.com'
             scraper_dt = datetime.now(pytz.timezone('America/Denver'))
