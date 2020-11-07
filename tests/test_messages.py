@@ -14,6 +14,7 @@ from confluent_kafka.schema_registry.avro import AvroSerializer, AvroDeserialize
 from data import google
 from datetime import datetime
 import pytz
+import time
 
 
 
@@ -54,6 +55,7 @@ class TestMessages:
             try:
                 info = schema_registry_client.get_schema(1).schema_str
                 error = None
+                print("schema detected after {} tries".format(tries))
             except:
                 error ="not ready"
                 tries += 1
