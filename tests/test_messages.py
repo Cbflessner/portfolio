@@ -53,7 +53,7 @@ class TestMessages:
         #Wait until the kafka topic is up before proceeding
         while error is not None:
             try:
-                info = schema_registry_client.get_schema(1).schema_str
+                info = self.schema_registry_client.get_schema(1).schema_str
                 error = None
                 print("schema detected after {} tries".format(tries))
             except:
