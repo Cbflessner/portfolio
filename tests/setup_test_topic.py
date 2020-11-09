@@ -39,13 +39,10 @@ tries = 1
 conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
 schema_registry_conf = {'url': conf['schema.registry.url']}
 schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
-value_schema = schema_registry_client.get_latest_version('christian_test-value')
-print(value_schema.schema_id)
-key_schema = schema_registry_client.get_latest_version('christian_test-key')
-print(value_schema.schema_id)
 #Wait until the kafka topic is up before proceeding
 while error is not None:
     try:
+        key_schema = schema_registry_client.get_latest_version('christian_test-key')    
         info = schema_registry_client.get_schema(key_schema.schema_id).schema_str
         error = None
         print("schema detected after {} tries".format(tries))
