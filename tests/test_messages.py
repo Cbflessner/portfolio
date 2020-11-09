@@ -60,7 +60,7 @@ class TestMessages:
                 error ="not ready"
                 tries += 1
                 print('try {} failed'.format(tries))
-                time.sleep(5)
+                time.sleep(10)
             if tries >= 10:
                 exit('could not connect to kafka topic after 10 tries')
 
