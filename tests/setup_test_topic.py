@@ -36,7 +36,6 @@ while error is not None:
 
 error = "not ready"
 tries = 1
-conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
 schema_registry_conf = {'url': conf['schema.registry.url']}
 schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
 #Wait until the kafka topic is up before proceeding
@@ -50,7 +49,7 @@ while error is not None:
         # error ="not ready"
         print('try {} failed'.format(tries))
         tries += 1
-        time.sleep(5)
-    if tries >= 10:
+        time.sleep(1)
+    if tries >= 200:
         exit('could not reach schema registry after {} tries'.format(tries))        
 
