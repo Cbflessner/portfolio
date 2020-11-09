@@ -34,19 +34,26 @@ while error is not None:
         exit('could not create kafka topic after')
 
 
-# error = "not ready"
-# tries = 1
-# #Wait until the kafka topic is up before proceeding
-# while error is not None:
-#     try:
-#         info = schema_registry_client.get_schema(1).schema_str
-#         error = None
-#         print("schema detected after {} tries".format(tries))
-#     except:
-#         error ="not ready"
-#         print('try {} failed'.format(tries))
-#         tries += 1
-#         time.sleep(2)
-#     if tries >= 10:
-#         exit('could not reach schema registry after {} tries'.format(tries))        
+error = "not ready"
+tries = 1
+conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
+schema_registry_conf = {'url': conf['schema.registry.url']}
+schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
+value_schema = schema_registry_client.get_latest_version('christian_test-value')
+print(value_schema.schema_id)
+key_schema = schema_registry_client.get_latest_version('christian_test-key')
+print(value_schema.schema_id)
+#Wait until the kafka topic is up before proceeding
+while error is not None:
+    try:
+        info = schema_registry_client.get_schema(key_schema.schema_id).schema_str
+        error = None
+        print("schema detected after {} tries".format(tries))
+    except:
+        # error ="not ready"
+        print('try {} failed'.format(tries))
+        tries += 1
+        time.sleep(5)
+    if tries >= 10:
+        exit('could not reach schema registry after {} tries'.format(tries))        
 
