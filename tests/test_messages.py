@@ -47,22 +47,6 @@ class TestMessages:
             'key.serializer': self.key_avro_serializer,
             'value.serializer': self.value_avro_serializer}
         producer = SerializingProducer(producer_config)
-        
-        error = "not ready"
-        tries = 0
-        #Wait until the kafka topic is up before proceeding
-        while error is not None:
-            try:
-                info = self.schema_registry_client.get_schema(1).schema_str
-                error = None
-                print("schema detected after {} tries".format(tries))
-            except:
-                error ="not ready"
-                tries += 1
-                print('try {} failed'.format(tries))
-                time.sleep(10)
-            if tries >= 10:
-                exit('could not connect to kafka topic after 10 tries')
 
         delivered_records = 0
         for text in self.test_messages:

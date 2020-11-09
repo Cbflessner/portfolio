@@ -17,7 +17,8 @@ services:
     #     target: /portfolio
     ports: 
       - "5432:5432"    
-    command: "./producer.py -t google_scraper -f /portfolio/kafka/kafka.config"  
+    # command: "./producer.py -t google_scraper -f /portfolio/kafka/kafka.config"  
+    command: "tail -f /dev/null"  
 
   consumer:
     build:
