@@ -23,7 +23,7 @@ if __name__ == '__main__':
     #Create the kafka consumer
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
-    schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
+    schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
     key_schema_path = this_path + conf['google.key.schema.file']
     value_schema_path = this_path + conf['google.value.schema.file']
     key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_path, value_schema_path)
@@ -38,14 +38,13 @@ if __name__ == '__main__':
         'bootstrap.servers': conf['bootstrap.servers'],
         'key.deserializer': key_avro_deserializer,
         'value.deserializer': value_avro_deserializer,
-        'group.id': '1',
-        'auto.offset.reset': 'earliest' }
+        'group.id': '1'}
     consumer = DeserializingConsumer(consumer_config)
 
     #create the redis interface
     r = redis.Redis(host="redis_1",port=7001, decode_responses=True)
 
-    #Wait until the kafka topic is up before proceeding
+    Wait until the kafka topic is up before proceeding
     error = "not ready"
     tries = 0
     while error is not None:
@@ -53,6 +52,7 @@ if __name__ == '__main__':
         topic_info = info.topics[topic]
         if topic_info.error is None:
             error = topic_info.error
+            print("topic {} found.  Partion {}".format(topic_info.topic, topic_info.partitions))
         else:
             tries += 1
             print('try {} failed'.format(tries))
@@ -97,6 +97,7 @@ if __name__ == '__main__':
                 for elem in two_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
                     r.zincrby(redis_key,1, elem[-1])
+                print("ngrams sent to redis")
         except KeyboardInterrupt:
             break
         except SerializerError as e:

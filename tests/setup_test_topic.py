@@ -40,9 +40,10 @@ schema_registry_conf = {'url': conf['schema.registry.url']}
 schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
 #Wait until the kafka topic is up before proceeding
 while error is not None:
-    try:
-        key_schema = schema_registry_client.get_latest_version('christian_test-key')    
-        info = schema_registry_client.get_schema(key_schema.schema_id).schema_str
+    try:  
+        info = schema_registry_client.get_subjects()
+        print("Schema registry detected subjects found are: ")
+        print(info)
         error = None
         print("schema detected after {} tries".format(tries))
     except:

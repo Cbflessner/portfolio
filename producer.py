@@ -28,10 +28,7 @@ if __name__ == '__main__':
 
     schema_registry_conf = {
         'url': conf['schema.registry.url']}
-
-
-    schema_registry_client = SchemaRegistryClient(schema_registry_conf)    
-    
+    schema_registry_client = SchemaRegistryClient(schema_registry_conf)   
     key_schema_path = this_path + conf['google.key.schema.file']
     value_schema_path = this_path + conf['google.value.schema.file']
     key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_path, value_schema_path)
@@ -41,14 +38,14 @@ if __name__ == '__main__':
                                           google.Key.key_to_dict)
     value_avro_serializer = AvroSerializer(value_schema,
                                            schema_registry_client,
-                                           google.Value.value_to_dict)
+                                           google.Value.value_to_dict)   
 
     producer_config = {
         'bootstrap.servers': conf['bootstrap.servers'],
         'key.serializer': key_avro_serializer,
         'value.serializer': value_avro_serializer}
 
-    producer = SerializingProducer(producer_config)
+    producer = SerializingProducer(producer_config)  
 
     #set loop variables
     error = "not ready"
@@ -86,4 +83,3 @@ if __name__ == '__main__':
     producer.flush()
 
     print("{} messages were produced to topic {}!".format(delivered_records, topic))
-
