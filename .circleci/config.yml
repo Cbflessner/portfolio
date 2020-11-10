@@ -30,7 +30,7 @@ jobs:
       - run:
           name: start test kafka topic and wait until schema registry is available
           command: |
-            docker exec producer python /portfolio/tests/waitFor_testTopic_schemaRegistry.py.py
+            docker exec producer python /portfolio/tests/waitFor_testTopic_schemaRegistry.py
       # Step 7: run tests
       - run:
           name: run tests
