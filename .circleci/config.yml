@@ -28,9 +28,9 @@ jobs:
             set -x
             docker-compose up -d
       - run:
-          name: start test kafka topic
+          name: start test kafka topic and wait until schema registry is available
           command: |
-            docker exec producer python /portfolio/tests/setup_test_topic.py
+            docker exec producer python /portfolio/tests/waitFor_testTopic_schemaRegistry.py.py
       # Step 7: run tests
       - run:
           name: run tests
