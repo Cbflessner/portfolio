@@ -11,10 +11,10 @@ services:
     depends_on:
       - broker
       - schema-registry
-    volumes:
-      - type: bind
-        source: .
-        target: /portfolio
+    # volumes:
+    #   - type: bind
+    #     source: .
+    #     target: /portfolio
     ports: 
       - "5432:5432"    
     # command: "./producer.py -t google_scraper -f /portfolio/kafka/kafka.config"  
@@ -28,10 +28,10 @@ services:
     container_name: consumer
     depends_on:
       - producer
-    volumes:
-      - type: bind
-        source: .
-        target: /portfolio
+    # volumes:
+    #   - type: bind
+    #     source: .
+    #     target: /portfolio
     ports: 
       - "5433:5433"   
     command: "tail -f /dev/null"  
