@@ -43,8 +43,9 @@ if __name__ == '__main__':
 
     #create the redis interface
     r = redis.Redis(host="redis_1",port=7001, decode_responses=True)
+    r_wordCounts = redis.Redis(host="redis_1",port=7001, decode_responses=True, db=1)
 
-    Wait until the kafka topic is up before proceeding
+    #Wait until the kafka topic is up before proceeding
     error = "not ready"
     tries = 0
     while error is not None:
@@ -56,8 +57,8 @@ if __name__ == '__main__':
         else:
             tries += 1
             print('try {} failed'.format(tries))
-            time.sleep(5)
-        if tries >= 10:
+            time.sleep(1)
+        if tries >= 50:
             exit('could not connect to kafka topic after 10 tries')
 
     partitions = []
@@ -81,22 +82,26 @@ if __name__ == '__main__':
                 key_object = msg.key()
                 value_object = msg.value()
                 text = value_object.text
-                five_grams =kafka_utils.ngrams(text, 5)
+                five_grams = kafka_utils.ngrams(text, 5)
                 for elem in five_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
                     r.zincrby(redis_key,1, elem[-1])
-                four_grams =kafka_utils.ngrams(text, 4)
+                four_grams = kafka_utils.ngrams(text, 4)
                 for elem in four_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
                     r.zincrby(redis_key,1, elem[-1])
-                three_grams =kafka_utils.ngrams(text, 3)
+                three_grams = kafka_utils.ngrams(text, 3)
                 for elem in three_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
                     r.zincrby(redis_key,1, elem[-1])
-                two_grams =kafka_utils.ngrams(text, 2)
+                two_grams = kafka_utils.ngrams(text, 2)
                 for elem in two_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
                     r.zincrby(redis_key,1, elem[-1])
+                one_gram = kafka_utils.ngrams(text,1)
+                for elem in one_gram:
+                    redis_key = elem[0]
+                    r_wordCounts.incrby(redis_key,1)    
                 print("ngrams sent to redis")
         except KeyboardInterrupt:
             break

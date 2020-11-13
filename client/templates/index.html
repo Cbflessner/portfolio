@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>A Few Words Apropos Word Prediction</h1>
+    <p>Hello, {{ user.username }}! Welcome to my next word engine, an application that predicts the next word a user is going to type.</p>
+    <p>This is done by scouring the internet for text then converting that text into a data structure called a n-gram.  A n-gram is simply a given number of consecutive words in a sentance.</p>
+    <p>For example, given the sentance "Today is a greate day for baseball!" if the goal is to extract all of the 5-grams out of it the result would be:</p>
+    <ol>
+        <li>Today is a great day</li>
+        <li>is a great day for</li>
+        <li>a great day for baseball</li>
+    </ol>
+    <p>By contrast the 4-grams would be:</p>
+    <ol>
+        <li>Today is a great</li>
+        <li>is a great day</li>
+        <li>a great day for</li>
+        <li>great day for baseball</li>
+    </ol>        
+    <p>These n-grams can then be used as input for a stupid backoff model which was developed by some linguists at Google in 2007 and can be read about in detail here:</p>
+    <a href="https://www.aclweb.org/anthology/D07-1090.pdf">Large Language Models in Machine Translation</a>
+    <p>This model is interested not only in the n-grams found but also in the frequency with which they are found.  Thus, if a user types "Today I feel" and the model has two seperate 4-grams one of which is "Today I feel great" which has occured four times and the other being "Today I feel terrible" which the model has only seen twice a score of four will be given to the word "great" and a score of two to the word "terrible" the word with the highest score becomes the prediction. </p>
+    <p>After getting the 4-gram score the model will then "backoff" one word to look at the appropriate 3-grams.  These scores will get multiplied by a factor of 0.4 to reflect the fact that it's easier to find a sequence of three words in a row than four.  For example, if the 3-gram "I feel funky" is present six times, it will still not be the prediction because 6*0.4=2.4 which is less than our highest score of four.  However if "I feel funky" was seen by the model twelve times it would become the prediction as 12*0.4=4.8</p>
+    <p>The model continues to backoff in this manner multiplying each subsequently lower n-gram by a factor of 0.4 until it reaches 2-grams.  If no 2-grams are found that match the user's input the model will simply predict the most common word</p>
+    <p>Just for fun here are some random n-grams pulled from my data store along with their given scores/p>
+    {% for n in ngrams %}
+    <p><b>ngram:</b> {{ n.ngram }} <br>
+    <b>frequency:</b> {{ n.value }}</p>
+    {% endfor %}
+{% endblock %}

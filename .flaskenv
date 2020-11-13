@@ -1,0 +1,1 @@
+FLASK_APP=next_word_engine.py

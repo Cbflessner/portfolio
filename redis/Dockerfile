@@ -14,5 +14,3 @@ RUN chmod 764 /etc/init.d/redis_7001
 RUN chmod 777 /var/redis/7001
 
 RUN update-rc.d redis_7001 defaults
-
-

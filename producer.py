@@ -59,8 +59,8 @@ if __name__ == '__main__':
         else:
             tries += 1
             print('try {} failed'.format(tries))
-            time.sleep(5)
-        if tries >= 10:
+            time.sleep(1)
+        if tries >= 50:
             exit('could not connect to kafka topic after 10 tries')
 
 
