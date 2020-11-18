@@ -1,0 +1,25 @@
+FROM cimg/python:3.8.5
+
+USER root
+
+RUN groupadd -g 998 nwe && \
+    useradd -r -u 998 -g nwe nwe -m -d /home/portfolio
+
+WORKDIR /home/portfolio
+
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+
+COPY client client
+COPY migrations migrations
+COPY next_word_engine.py config.py boot.sh ./
+RUN chmod +x boot.sh
+
+ENV FLASK_APP next_word_engine.py
+
+RUN chown -R nwe:nwe ./
+USER nwe
+
+EXPOSE 5000
+ENTRYPOINT ./boot.sh

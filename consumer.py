@@ -8,7 +8,7 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from data import google
 import time
-import redis
+from redis import Redis
 
 
 if __name__ == '__main__':
@@ -42,8 +42,8 @@ if __name__ == '__main__':
     consumer = DeserializingConsumer(consumer_config)
 
     #create the redis interface
-    r = redis.Redis(host="redis_1",port=7001, decode_responses=True)
-    r_wordCounts = redis.Redis(host="redis_1",port=7001, decode_responses=True, db=1)
+    r = Redis(host="redis_1",port=7001, decode_responses=True)
+    r_wordCounts = Redis(host="redis_1",port=7001, decode_responses=True, db=1)
 
     #Wait until the kafka topic is up before proceeding
     error = "not ready"

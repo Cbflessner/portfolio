@@ -35,6 +35,21 @@ services:
       - "5433:5433"   
     command: "tail -f /dev/null"  
 
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile_client
+    hostname: client
+    container_name: client
+    depends_on:
+      - redis_1
+    # volumes:
+    #   - type: bind
+    #     source: .
+    #     target: /portfolio
+    ports:
+      - "5000:5000"       
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
     hostname: zookeeper
