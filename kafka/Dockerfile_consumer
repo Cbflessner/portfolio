@@ -14,6 +14,7 @@ RUN apt-get install nano
 COPY kafka kafka
 COPY avro avro
 COPY data data
+COPY tests tests
 RUN mv kafka/consumer.py kafka/boot_consumer.sh ./
 
 RUN chown -R consumer:consumer ./
