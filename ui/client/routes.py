@@ -1,4 +1,4 @@
-from client import app, db
+from client import app, db, r_ngram, r_words
 from client.sql_models import User
 from flask import render_template, flash, redirect, url_for, request
 from client.forms import LoginForm, NextWordForm, RegistrationForm
@@ -9,10 +9,11 @@ from redis import Redis
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index',  methods=['GET','POST'])
 @login_required
 def index():
     user = {'username': "Christian"}
+    
     ngrams = [
         {
             "ngram": "the quick fox jumps over",
@@ -26,6 +27,8 @@ def index():
     form = NextWordForm()
     if form.validate_on_submit():
         key = form.text.data
+        predictions = r_ngram.zrange(key, 0, 2)
+        flash(predictions)
     return render_template("index.html", title='Home', ngrams=ngrams
         ,form=form)
 

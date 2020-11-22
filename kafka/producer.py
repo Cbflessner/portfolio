@@ -56,12 +56,30 @@ if __name__ == '__main__':
         topic_info = info.topics[topic]
         if topic_info.error is None:
             error = topic_info.error
+            print('connected to topic: {}'.format(topic))
         else:
             tries += 1
             print('try {} failed'.format(tries))
             time.sleep(1)
         if tries >= 50:
             exit('could not connect to kafka topic after 10 tries')
+
+    error = "not ready"
+    tries = 1
+    #Wait until the schema registry is up before proceeding
+    while error is not None:
+        try:  
+            info = schema_registry_client.get_subjects()
+            print("Schema registry detected subjects found are: ")
+            print(info)
+            error = None
+            print("schema detected after {} tries".format(tries))
+        except:
+            print('try {} failed'.format(tries))
+            tries += 1
+            time.sleep(1)
+        if tries >= 200:
+            exit('could not reach schema registry after {} tries'.format(tries))
 
 
     #Set number of articles to read

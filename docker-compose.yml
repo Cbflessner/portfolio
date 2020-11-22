@@ -5,7 +5,7 @@ services:
   producer:
     build:
       context: .
-      dockerfile: Dockerfile_producer
+      dockerfile: kafka/Dockerfile_producer
     hostname: producer
     container_name: producer
     depends_on:
@@ -16,39 +16,44 @@ services:
     #     source: .
     #     target: /portfolio
     ports: 
-      - "5432:5432"    
-    command: "./producer.py -t google_scraper -f /portfolio/kafka/kafka.config"   
+      - "5432:5432"       
 
   consumer:
     build:
       context: .
-      dockerfile: Dockerfile_consumer
+      dockerfile: kafka/Dockerfile_consumer
     hostname: consumer
     container_name: consumer
     depends_on:
       - producer
+      - redis_1
     # volumes:
     #   - type: bind
     #     source: .
     #     target: /portfolio
     ports: 
       - "5433:5433"   
-    command: "tail -f /dev/null"  
 
   client:
     build:
       context: .
-      dockerfile: Dockerfile_client
+      dockerfile: ui/Dockerfile_client
     hostname: client
     container_name: client
     depends_on:
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: .
-    #     target: /portfolio
+    volumes:
+      - type: bind
+        source: ./ui
+        target: /home/portfolio/ui      
+    # environment:
+      # SECRET_KEY: my-secret-key
+      # FLASK_DEBUG: 1
+      # DATABASE_URL:
+      # MAIL_PORT=25
+      # MAIL_SERVER=localhost
     ports:
-      - "5000:5000"       
+      - "8000:5000"       
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0
@@ -97,7 +102,9 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
 
   redis_1:
-    build: ./redis
+    build: 
+      context: .
+      dockerfile: redis/Dockerfile_redis
     hostname: redis_1
     container_name: redis_1
     ports:

@@ -7,8 +7,8 @@ RUN mkdir /var/redis/7001
 RUN mkdir /etc/redis
 RUN mkdir /etc/redis/logs
 
-COPY redis_init_script /etc/init.d/redis_7001
-COPY redis.conf /etc/redis/7001.conf
+COPY redis/redis_init_script /etc/init.d/redis_7001
+COPY redis/redis.conf /etc/redis/7001.conf
 
 RUN chmod 764 /etc/init.d/redis_7001
 RUN chmod 777 /var/redis/7001
