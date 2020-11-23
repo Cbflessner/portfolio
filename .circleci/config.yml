@@ -36,7 +36,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            docker exec consumer pytest.sh 
+            docker exec consumer ~/tests/pytest.sh 
 workflows:
   version: 2
   build:
