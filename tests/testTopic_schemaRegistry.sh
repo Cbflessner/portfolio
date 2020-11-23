@@ -1,4 +1,4 @@
 #!/bin/bash
 
 source venv/bin/activate
-python tests/waitFor_testTopic_schemaaRegistry.py 
+python3 ~/portfolio/tests/waitFor_testTopic_schemaRegistry.py 
