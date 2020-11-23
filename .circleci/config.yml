@@ -2,7 +2,7 @@
 jobs:
   build:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/python:3.8.5
         auth:
             username: xian8290
             password: $DOCKERHUB_PASSWORD
@@ -31,12 +31,12 @@ jobs:
       - run:
           name: start test kafka topic and wait until schema registry is available
           command: |
-            docker exec consumer bash /home/portfolio/tests/testTopic_schemaRegistry.sh
+            ~/tests/testTopic_schemaRegistry.sh
       # Step 5: run tests
       - run:
           name: run tests
           command: |
-            docker exec consumer /home/portfolio/tests/pytest.sh 
+            ~/tests/pytest.sh 
 workflows:
   version: 2
   build:

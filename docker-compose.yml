@@ -46,9 +46,9 @@ services:
     #   - type: bind
     #     source: ./ui
     #     target: /home/portfolio/ui      
-    # environment:
+    environment:
       # SECRET_KEY: my-secret-key
-      # FLASK_DEBUG: 1
+      FLASK_DEBUG: 1
       # DATABASE_URL:
       # MAIL_PORT=25
       # MAIL_SERVER=localhost
