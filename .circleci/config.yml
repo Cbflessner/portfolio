@@ -31,12 +31,12 @@ jobs:
       - run:
           name: start test kafka topic and wait until schema registry is available
           command: |
-            ~/tests/testTopic_schemaRegistry.sh
+            ~/portfolio/tests/testTopic_schemaRegistry.sh
       # Step 5: run tests
       - run:
           name: run tests
           command: |
-            ~/tests/pytest.sh 
+            ~/portfolio/tests/pytest.sh 
 workflows:
   version: 2
   build:
