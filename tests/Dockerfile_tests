@@ -23,4 +23,4 @@ RUN chown -R tests:tests ./
 USER tests
 
 EXPOSE 5433
-ENTRYPOINT ["./tests/boot_tests.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]

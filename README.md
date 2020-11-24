@@ -29,14 +29,15 @@ To run the appliction in debug mode first locate the FLASK_DEBUG environment var
 in the docker-compose.yml file.  It is found in the environment section of the 
 client service.  Change this from 0 to 1.
 
-Further convience can be gain by enabling the bind mounts on the 3 python containers
-(these are the producer, consumer, and client containers).  By default the mounts
-are commented out as they cause the circleCI pipeline to fail however if you uncomment 
-the lines starting with the word "volumes" and ending with the word "target" you
-will be able to make changes to the code on your local machine and have those 
-immediately reflected in the corresponding code on the container.  If you have also
-enabled debug mode this code will be immediately reloaded into the app.  If you have
-not enabled Flask Debug you will need to stop and rebuild the containers.
+Further convience can be gained by enabling the bind mounts on the 4 python containers
+(these are the producer, consumer, client, and tests containers).  By default the 
+mounts are commented out as they cause the circleCI pipeline to fail, however if 
+you uncomment the lines starting with the line that begins "volumes" and ending 
+with the line that begins "target" you will be able to make changes to the code 
+on your local machine and have those immediately reflected in the corresponding 
+code on the container.  If you have also enabled debug mode this code will be 
+immediately reloaded into the app.  If you havenot enabled Flask Debug you will 
+need to stop and rebuild the containers.
 
 ## Useful Docker Commands
 ### docker-compose

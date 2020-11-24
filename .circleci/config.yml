@@ -27,7 +27,12 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-      # Step 4: run tests
+      # step 4 wait until test topic and schema registry are up
+      - run:
+          name: wait for test topic and schema registry
+          command: |
+            docker exec tests ./tests/testTopic_schemaRegistry.sh           
+      # Step 5: run tests
       - run:
           name: run tests
           command: |
