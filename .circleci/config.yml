@@ -31,6 +31,7 @@ jobs:
       - run:
           name: import requirements
           command: |
+            python -m venv venv
             venv/bin/pip install -r requirements.txt
       # step 4 Start test kafka topic and make sure schema registry is available
       - run:
