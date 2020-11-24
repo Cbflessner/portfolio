@@ -4,7 +4,7 @@ import sys, os
 this_path = os.path.dirname(os.path.abspath(__file__))
 
 from web_scrapers import google_scraper as gs
-import kafka.kafka_utils as kafka_utils
+import kafka_utils 
 from confluent_kafka import SerializingProducer
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer

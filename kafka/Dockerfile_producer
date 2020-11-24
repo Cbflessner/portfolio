@@ -12,15 +12,11 @@ RUN apt-get update
 RUN apt-get install nano
 
 COPY kafka kafka
-COPY avro avro
-COPY data data
-COPY web_scrapers web_scrapers
-RUN mv kafka/producer.py kafka/boot_producer.sh ./
 
 RUN chown -R producer:producer ./
 USER producer
 
 EXPOSE 5432
-ENTRYPOINT ["./boot_producer.sh"]
+ENTRYPOINT ["./kafka/boot_producer.sh"]
 
 

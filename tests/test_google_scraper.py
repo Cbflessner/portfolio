@@ -8,8 +8,9 @@ path=this_path.split( '/')
 path.pop(len(path)-1)
 portfolio_path = "/".join(path)
 sys.path.insert(0, portfolio_path)
+print(portfolio_path)
 
-from web_scrapers import google_scraper as gs
+import kafka.web_scrapers.google_scraper as gs
 import requests
 from bs4 import BeautifulSoup as bs
 import pytest

@@ -6,12 +6,12 @@ path.pop(len(path)-1)
 portfolio_path = "/".join(path)
 sys.path.insert(0, portfolio_path)
 
-import kafka.kafka_utils as kafka_utils
-from web_scrapers import google_scraper as gs
+from kafka import kafka_utils
+import kafka.web_scrapers.google_scraper as gs
 from confluent_kafka import SerializingProducer, DeserializingConsumer, TopicPartition
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer, AvroDeserializer
-from data import google
+from kafka.data import google
 from datetime import datetime
 import pytz
 import time
@@ -24,8 +24,8 @@ class TestMessages:
     conf = kafka_utils.read_config(portfolio_path+'/kafka/kafka.config')
     schema_registry_conf = {'url': conf['schema.registry.url']}
     schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
-    key_schema_file = portfolio_path + conf['google.key.schema.file']
-    value_schema_file =portfolio_path + conf['google.value.schema.file']  
+    key_schema_file = portfolio_path + "/kafka" + conf['google.key.schema.file']
+    value_schema_file = portfolio_path + "/kafka" + conf['google.value.schema.file']  
     key_schema, value_schema = kafka_utils.load_avro_schema_from_file(key_schema_file, value_schema_file)
     key_avro_serializer = AvroSerializer(key_schema,
                                           schema_registry_client,

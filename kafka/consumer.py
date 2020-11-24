@@ -2,7 +2,8 @@
 
 import sys, os
 this_path = os.path.dirname(os.path.abspath(__file__))
-from kafka import kafka_utils
+
+import kafka_utils
 from confluent_kafka import DeserializingConsumer, TopicPartition
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
