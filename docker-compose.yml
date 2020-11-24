@@ -47,13 +47,26 @@ services:
     #     source: ./ui
     #     target: /home/portfolio/ui      
     environment:
+      FLASK_DEBUG: 0
       # SECRET_KEY: my-secret-key
-      FLASK_DEBUG: 1
       # DATABASE_URL:
       # MAIL_PORT=25
       # MAIL_SERVER=localhost
     ports:
-      - "8000:5000"       
+      - "8000:5000"    
+
+  tests:
+    build:
+      context: .
+      dockerfile: tests/Dockerfile_tests
+    hostname: tests
+    container_name: tests
+    depends_on:
+      - consumer
+      - producer
+      - client
+    ports:
+      - "9000:9000"   
 
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.0

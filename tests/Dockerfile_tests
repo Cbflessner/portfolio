@@ -1,0 +1,26 @@
+FROM python:3.8.5
+
+RUN groupadd -g 998 tests && \
+    useradd -r -u 998 -g tests tests -m -d /home/portfolio
+
+WORKDIR /home/portfolio
+
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN apt-get update
+RUN apt-get install nano
+
+COPY avro avro
+COPY data data
+COPY kafka kafka
+COPY redis redis
+COPY tests tests
+COPY ui ui
+COPY web_scrapers web_scrapers
+
+RUN chown -R tests:tests ./
+USER tests
+
+EXPOSE 5433
+ENTRYPOINT ["./tests/boot_tests.sh"]
