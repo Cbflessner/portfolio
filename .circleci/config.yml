@@ -27,10 +27,16 @@ jobs:
           command: |
             set -x
             docker-compose up -d
+      # step 4 import requirements
+      - run:
+          name: import requirements
+          command: |
+            venv/bin/pip install -r requirements.txt
       # step 4 Start test kafka topic and make sure schema registry is available
       - run:
           name: start test kafka topic and wait until schema registry is available
           command: |
+            source venv/bin/activate
             ~/portfolio/tests/testTopic_schemaRegistry.sh
       # Step 5: run tests
       - run:
