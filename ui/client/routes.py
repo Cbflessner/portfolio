@@ -24,12 +24,13 @@ def index():
             "value": 7            
         }
     ]
+    predictions = []
     form = NextWordForm()
     if form.validate_on_submit():
         key = form.text.data
         predictions = r_ngram.zrange(key, 0, 2)
     return render_template("index.html", title='Home', ngrams=ngrams
-        ,form=form)
+        ,form=form, predictions=predictions)
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
