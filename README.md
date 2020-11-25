@@ -24,20 +24,14 @@ After all of the docker containers are up you'll be able to navigate to the site
 by typing localhost:8000 into your preferred web browser.  You'll need to register
 an account and sign in to get to the main page.
 
-## Debugging
-To run the appliction in debug mode first locate the FLASK_DEBUG environment variable
-in the docker-compose.yml file.  It is found in the environment section of the 
-client service.  Change this from 0 to 1.
-
-Further convience can be gained by enabling the bind mounts on the 4 python containers
+## Bind Mounts
+For your convience while editing you can enable the bind mounts on the 4 python containers
 (these are the producer, consumer, client, and tests containers).  By default the 
 mounts are commented out as they cause the circleCI pipeline to fail, however if 
 you uncomment the lines starting with the line that begins "volumes" and ending 
 with the line that begins "target" you will be able to make changes to the code 
 on your local machine and have those immediately reflected in the corresponding 
-code on the container.  If you have also enabled debug mode this code will be 
-immediately reloaded into the app.  If you havenot enabled Flask Debug you will 
-need to stop and rebuild the containers.
+code on the container.  
 
 ## Useful Docker Commands
 ### docker-compose
@@ -56,6 +50,9 @@ To take down all of your containers use:
 docker-compose down
     this will both stop and remove all of your containers so you will not be able
     to view the log files after doing this
+
+To rebuild one of the images in the docker-compose file
+docker-compose build [service name]
 
 ### docker
 When you only want to do something to one of your containers you use the docker 

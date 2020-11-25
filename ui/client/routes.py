@@ -8,7 +8,7 @@ from werkzeug.urls import url_parse
 from redis import Redis
 
 
-@app.route('/')
+@app.route('/',  methods=['GET','POST'])
 @app.route('/index',  methods=['GET','POST'])
 @login_required
 def index():
@@ -32,7 +32,7 @@ def index():
     return render_template("index.html", title='Home', ngrams=ngrams
         ,form=form)
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods = ['GET','POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
