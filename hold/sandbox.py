@@ -40,5 +40,5 @@ import kafka.kafka_utils as ku
 test = 'the quick brown! fo#x jumped over the 4 lazy sheep'
 ngrams = ku.ngrams(test, 3)
 predictions = ku.ngram_predictions(ngrams)
-print(predictions)
+
 
