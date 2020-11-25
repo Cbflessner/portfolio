@@ -42,12 +42,12 @@ services:
     container_name: client
     depends_on:
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: ./ui
-    #     target: /home/portfolio/ui      
-    # environment:
-    #   FLASK_DEBUG: 1
+    volumes:
+      - type: bind
+        source: ./ui
+        target: /home/portfolio/ui      
+    environment:
+      FLASK_DEBUG: 1
       # SECRET_KEY: my-secret-key
       # DATABASE_URL:
       # MAIL_PORT=25

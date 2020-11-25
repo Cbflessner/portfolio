@@ -24,7 +24,9 @@ After all of the docker containers are up you'll be able to navigate to the site
 by typing localhost:8000 into your preferred web browser.  You'll need to register
 an account and sign in to get to the main page.
 
-## Bind Mounts
+## Debugging
+
+### Bind Mounts
 For your convience while editing you can enable the bind mounts on the 4 python containers
 (these are the producer, consumer, client, and tests containers).  By default the 
 mounts are commented out as they cause the circleCI pipeline to fail, however if 
@@ -32,6 +34,17 @@ you uncomment the lines starting with the line that begins "volumes" and ending
 with the line that begins "target" you will be able to make changes to the code 
 on your local machine and have those immediately reflected in the corresponding 
 code on the container.  
+
+### Reload
+If you further set the reload variable in ~/portfolio/ui/gunicorn_config.py to 
+True the code you change on your local computer will be immediately reflected in
+the UI.
+
+### Loglevel
+In the same gunicorn_config.py file you can set the granularity of log output as
+well as where those logs go.  The default setting of "-" sends the log to the standard
+output which allows you to access it with the docker-compose logs -f -t [container name]
+command.  See more details about this command below.
 
 ## Useful Docker Commands
 ### docker-compose

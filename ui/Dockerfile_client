@@ -18,7 +18,6 @@ RUN chmod +x /home/portfolio/ui/boot_client.sh
 ENV FLASK_APP next_word_engine.py
 
 RUN chown -R nwe:nwe /home/portfolio
-USER nwe
 
 EXPOSE 5000
 ENTRYPOINT ["./ui/boot_client.sh"]

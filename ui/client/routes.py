@@ -28,7 +28,6 @@ def index():
     if form.validate_on_submit():
         key = form.text.data
         predictions = r_ngram.zrange(key, 0, 2)
-        flash(predictions)
     return render_template("index.html", title='Home', ngrams=ngrams
         ,form=form)
 
