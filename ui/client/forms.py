@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from client.sql_models import User
-from wtforms.widgets import TextArea
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -11,7 +10,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class NextWordForm(FlaskForm):
-    text = StringField('Enter Text Here', widget=TextArea())
+    text = TextAreaField('Enter Text Here', validators=[Length(min=1, max=120)])
     submit = SubmitField('Submit')
 
 class RegistrationForm(FlaskForm):
@@ -30,5 +29,23 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError("Please use a different email address")            
+            raise ValidationError("Please use a different email address")  
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')  
+
+    def __init__(self, original_username, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, ** kwargs)
+        self.original_username = original_username
+
+    #this is a read-modify-write cycle should change this and the lines after
+    #form = EditProfileForm(current_user.username) in routes.py to an atomic 
+    #updates statement
+    def validate_username(self, username):
+        if username.data != self.original_username:
+            user = User.query.filter_by(username=self.username.data).first()
+            if user is not None:
+                raise ValidationError('Please use a different username')
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <h1>A Few Words Apropos Word Prediction</h1>
     <p>Hello, {{ current_user.username }}! Welcome to my next word engine, an application that predicts the next word a user is going to type.</p>
     <p>This is done by scouring the internet for text then converting that text into a data structure called a n-gram.  A n-gram is simply a given number of consecutive words in a sentance.</p>
@@ -36,7 +36,7 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.text.label }}<br>
-            {{ form.text(cols=75, rows=10) }}<br>
+            {{ form.text(cols=50, rows=3) }}<br>
             {% for error in form.text.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

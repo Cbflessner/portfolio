@@ -1,0 +1,31 @@
+2020-11-30 23:59:52,769 ERROR: Exception on /edit_profile [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/portfolio/ui/client/routes.py", line 92, in edit_profile
+    if form.validate_on_submit():
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_wtf/form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "/home/portfolio/ui/client/forms.py", line 44, in validate_username
+    if username.date != self.original_username:
+AttributeError: 'StringField' object has no attribute 'date'
