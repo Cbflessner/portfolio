@@ -86,3 +86,4 @@ AttributeError: 'StringField' object has no attribute 'date'
 2020-12-01 17:11:52,120 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
 2020-12-01 17:17:05,669 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
 2020-12-01 17:21:31,053 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 17:24:22,325 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]

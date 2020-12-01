@@ -42,10 +42,10 @@ services:
     container_name: client
     depends_on:
       - redis_1
-    volumes:
-      - type: bind
-        source: ./ui
-        target: /home/portfolio/ui      
+    # volumes:
+    #   - type: bind
+    #     source: ./ui
+    #     target: /home/portfolio/ui      
     environment:
       # SECRET_KEY: my-secret-key
       # DATABASE_URL:
