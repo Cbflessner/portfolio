@@ -17,7 +17,7 @@ so you do not need to install Python, Kafka, or Redis to run this app even thoug
 it uses all three.
 
 After pulling the code onto your local machine simply navigate to the portfolio 
-directory in your preferred shell and type docker-compose -d (depending on how
+directory in your preferred shell and type docker-compose up -d (depending on how
 docker was set up you might need to run this command as an admin)
 
 After all of the docker containers are up you'll be able to navigate to the site 
