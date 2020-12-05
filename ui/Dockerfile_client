@@ -10,7 +10,6 @@ RUN python -m venv venv
 RUN venv/bin/pip install -r requirements.txt
 RUN apt-get update
 RUN apt-get install nano
-RUN apt-get install sqlite3
 
 COPY ui ui
 RUN chmod +x /home/portfolio/ui/boot_client.sh
