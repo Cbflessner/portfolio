@@ -48,3 +48,32 @@
         {% endblock %}
     </div>
 {% endblock %}
+
+{% block scripts %}
+    <script>
+        //setup before functions
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 2000;  //time in ms (2 seconds)
+
+        //on keyup, start the countdown
+        $('#input{{ pred_id }}').keyup(function(){
+            clearTimeout(typingTimer);
+            if ($('#input{{ pred_id }}').val()) {
+                typingTimer = setTimeout(predict, doneTypingInterval, $('#input{{ pred_id }}'), $('#pred{{ pred_id }}'), 0, 2);
+            }
+        });
+
+        //user is "finished typing," do something
+        function predict(key, dest, begin, end) {
+            $.post('/predict', {
+                key: $(key).text(),
+                begin: begin,
+                end: end
+            }).done(function(response) {
+                $(dest).text(response['prediction'])
+            }).fail(function() {
+                $(dest).text("{{ ('Error: Could not contact server.') }}");
+            });
+        }
+    </script>
+{% endblock %}

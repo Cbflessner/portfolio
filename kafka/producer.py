@@ -18,12 +18,14 @@ import time
 if __name__ == '__main__':
 
     # Read arguments and configurations and initialize
+    print("starting producer")
     args = kafka_utils.parse_args(sys.argv[1:])
     config_file = args.config_file
     topic = args.topic
     conf = kafka_utils.read_config(config_file)
 
     # Create topic if needed
+    print("connecting to server", conf['bootstrap.servers'])
     kafka_utils.create_topic(conf=conf, topic=topic, num_partitions=1, replication_factor=1) 
 
     schema_registry_conf = {
@@ -59,7 +61,7 @@ if __name__ == '__main__':
             print('connected to topic: {}'.format(topic))
         else:
             tries += 1
-            print('try {} failed'.format(tries))
+            print('connecting to topic try {} failed'.format(tries))
             time.sleep(1)
         if tries >= 50:
             exit('could not connect to kafka topic after 10 tries')
@@ -75,7 +77,7 @@ if __name__ == '__main__':
             error = None
             print("schema detected after {} tries".format(tries))
         except:
-            print('try {} failed'.format(tries))
+            print('connecting to schema registry try {} failed'.format(tries))
             tries += 1
             time.sleep(1)
         if tries >= 200:
@@ -92,9 +94,9 @@ if __name__ == '__main__':
         news = gs.clean_news(text, 20)
         scraper_dt = datetime.now(pytz.timezone('America/Denver'))
         scraper_dt = scraper_dt.strftime("%Y/%m/%d %H:%M:%S %z")
-        value_obj = google.Value(url=url, text=news.to_string(index=False), scraper_dt=scraper_dt)
-        key_obj = google.Key(key=str(hash(url)))
-        print("Producing record: {}\t{}".format(key_obj.key, value_obj.text[:10]))
+        value_obj = google.Value(text=news.to_string(index=False), scraper_dt=scraper_dt)
+        key_obj = google.Key(url=str(url))
+        print("Producing record: {}\t{}".format(key_obj.url, value_obj.text[:10]))
         producer.produce(topic=topic, key=key_obj, value=value_obj, on_delivery=kafka_utils.acked)
         delivered_records += producer.poll()
 
