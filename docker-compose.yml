@@ -13,10 +13,10 @@ services:
       # - broker_2
       # - broker_3
       - schema-registry
-    volumes:
-      - type: bind
-        source: ./kafka
-        target: /home/portfolio/kafka
+    # volumes:
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1    
     ports: 
@@ -31,10 +31,10 @@ services:
     depends_on:
       - producer
       - redis_1
-    volumes:
-      - type: bind
-        source: ./kafka
-        target: /home/portfolio/kafka
+    # volumes:
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1
     ports: 
