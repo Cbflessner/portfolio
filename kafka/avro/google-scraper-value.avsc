@@ -5,14 +5,16 @@
   "name": "GoogleScraper",
   "fields": [
     {
+      "name": "url",
+      "type": "string"
+    },
+    {
       "name": "text",
-      "type": ["null","string"],
-      "defalult": null
+      "type": "string"
     },
     {
       "name": "scraper_dt",
-      "type": ["null","string"],
-      "defalult": null
+      "type": "string"
     }
   ]
 }

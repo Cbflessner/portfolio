@@ -5,9 +5,8 @@
   "name": "GoogleScraper",
   "fields": [
     {
-      "name": "url",
-      "type": ["null","string"],
-      "defalult": null
+      "name": "key",
+      "type": "string"
     }
   ]
 }

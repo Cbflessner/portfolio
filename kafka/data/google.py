@@ -6,19 +6,19 @@ class Key(object):
     """
 
     # Use __slots__ to explicitly declare all data members.
-    __slots__ = ["url", "id"]
+    __slots__ = ["key", "id"]
 
-    def __init__(self, url=None):
-        self.url = url
+    def __init__(self, key=None):
+        self.key = key
         # Unique id used to track produce request success/failures.
         # Do *not* include in the serialized object.
         self.id = uuid4()
 
     def key_to_dict(self, ctx):
-        return dict(url=self.url)
+        return dict(key=self.key)
 
     def dict_to_key(d, ctx):
-        return Key(d['url'])
+        return Key(d['key'])
         
 
 class Value(object):
@@ -27,9 +27,10 @@ class Value(object):
     """
 
     # Use __slots__ to explicitly declare all data members.
-    __slots__ = ["text", "scraper_dt", "id"]
+    __slots__ = ["url", "text", "scraper_dt", "id"]
 
-    def __init__(self, text=None, scraper_dt=None):
+    def __init__(self, url=None, text=None, scraper_dt=None):
+        self.url = url
         self.text = text
         self.scraper_dt = scraper_dt
         # Unique id used to track produce request success/failures.
@@ -47,8 +48,10 @@ class Value(object):
         Returns:
             dict: Dict populated with value attributes to be serialized.
         """
-        return dict(text=self.text, scraper_dt=self.scraper_dt)
+        return dict(url=self.url,
+                    text=self.text,
+                    scraper_dt=self.scraper_dt)
 
     def dict_to_value(d, ctx):
-        return Value(text=d['text'], scraper_dt=d['scraper_dt'])
+        return Value(url=d['url'], text=d['text'], scraper_dt=d['scraper_dt'])
 

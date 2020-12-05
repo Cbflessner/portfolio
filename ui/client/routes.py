@@ -1,6 +1,6 @@
-from client import app, db, r_ngram, r_words, pred_id
+from client import app, db, r_ngram, r_words
 from client.sql_models import User
-from flask import render_template, flash, redirect, url_for, request, jsonify
+from flask import render_template, flash, redirect, url_for, request
 from client.forms import LoginForm, NextWordForm, RegistrationForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from client.sql_models import User
@@ -8,10 +8,13 @@ from werkzeug.urls import url_parse
 from redis import Redis
 from datetime import datetime, timezone
 
+
 @app.route('/',  methods=['GET','POST'])
 @app.route('/index',  methods=['GET','POST'])
 @login_required
 def index():
+    user = {'username': "Christian"}
+    
     ngrams = [
         {
             "ngram": "the quick fox jumps over",
@@ -23,14 +26,12 @@ def index():
         }
     ]
     predictions = []
-    global pred_id 
-    pred_id += 1
     form = NextWordForm()
     if form.validate_on_submit():
         key = form.text.data
         predictions = r_ngram.zrange(key, 0, 2)
     return render_template("index.html", title='Home', ngrams=ngrams
-        ,form=form, predictions=predictions, pred_id=pred_id)
+        ,form=form, predictions=predictions)
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -99,10 +100,3 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
-
-@app.route('/predict', methods=['POST'])
-@login_required
-def predict_word():
-    return jsonify({'prediction': r_ngram.zrange(request.form['key'],
-                                                request.form['begin'], 
-                                                request.form['end'])})

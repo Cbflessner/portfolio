@@ -30,13 +30,13 @@
 
     <h1>Let's See It In Action!</h1>
     {% for pr in predictions %}
-    <span id="pred{{ pred_id }}"><b>{{ pr }}</b> </span>
+    <p><b>{{ pr }}</b> </p>
     {% endfor %}
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.text.label }}<br>
-            <span id="input{{ pred_id }}">{{ form.text(cols=50, rows=3) }}</span><br>
+            {{ form.text(cols=50, rows=3) }}<br>
             {% for error in form.text.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

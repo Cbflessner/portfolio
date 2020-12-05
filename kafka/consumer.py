@@ -5,7 +5,6 @@ this_path = os.path.dirname(os.path.abspath(__file__))
 
 import kafka_utils
 from confluent_kafka import DeserializingConsumer, TopicPartition
-from confluent_kafka.error import KeyDeserializationError, ValueDeserializationError, ConsumeError
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from data import google
@@ -42,10 +41,7 @@ if __name__ == '__main__':
         'key.deserializer': key_avro_deserializer,
         'value.deserializer': value_avro_deserializer,
         'group.id': '1'}
-
-    print("connecting to broker")
     consumer = DeserializingConsumer(consumer_config)
-    print("broker connection succeeded")
 
     #create the redis interface
     r = Redis(host="redis_1",port=7001, decode_responses=True)
@@ -78,7 +74,7 @@ if __name__ == '__main__':
             msg = consumer.poll(1.0)
             if msg is None:
                 # No message available within timeout.
-                # print("Waiting for message or event/error in poll()")
+                print("Waiting for message or event/error in poll()")
                 continue
             elif msg.error():
                 #Error returned
@@ -88,8 +84,6 @@ if __name__ == '__main__':
                 key_object = msg.key()
                 value_object = msg.value()
                 text = value_object.text
-                url = key_object.url
-                print("url is:",url)
                 five_grams = kafka_utils.ngrams(text, 5)
                 for elem in five_grams:
                     redis_key = ' '.join([str(word) for word in elem[:-1]])
@@ -113,17 +107,10 @@ if __name__ == '__main__':
                 print("ngrams sent to redis")
         except KeyboardInterrupt:
             break
-        except KeyDeserializationError as ke:
+        except SerializerError as e:
             # Report malformed record, discard results, continue polling
-            print("Message key deserialization failed {}".format(ke))
+            print("Message deserialization failed {}".format(e))
             pass
-        except ValueDeserializationError as ve:
-            # Report malformed record, discard results, continue polling
-            print("Message value deserialization failed {}".format(ve))
-            pass  
-        except ConsumeError as ce:
-            print("Consume error encountered while polling. Message failed {}".format(ke))
-            pass                      
 
     # Leave group and commit final offsets
     consumer.close()
