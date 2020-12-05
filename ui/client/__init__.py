@@ -18,6 +18,7 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 bootstrap =Bootstrap(app)
+pred_id = 0
 
 if not app.debug:
     if app.config['MAIL_SERVER']:

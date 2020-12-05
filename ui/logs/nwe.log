@@ -1,89 +1,59 @@
-2020-12-01 00:00:02,861 ERROR: Exception on /edit_profile [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 92, in edit_profile
-    if form.validate_on_submit():
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_wtf/form.py", line 100, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 318, in validate
-    return super(Form, self).validate(extra)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 150, in validate
-    if not field.validate(self, extra):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 226, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 246, in _run_validation_chain
-    validator(form, self)
-  File "/home/portfolio/ui/client/forms.py", line 44, in validate_username
-    if username.date != self.original_username:
-AttributeError: 'StringField' object has no attribute 'date'
-2020-12-01 00:00:09,340 ERROR: Exception on /edit_profile [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 92, in edit_profile
-    if form.validate_on_submit():
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_wtf/form.py", line 100, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 318, in validate
-    return super(Form, self).validate(extra)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/form.py", line 150, in validate
-    if not field.validate(self, extra):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 226, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/wtforms/fields/core.py", line 246, in _run_validation_chain
-    validator(form, self)
-  File "/home/portfolio/ui/client/forms.py", line 44, in validate_username
-    if username.date != self.original_username:
-AttributeError: 'StringField' object has no attribute 'date'
-2020-12-01 00:00:40,501 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:02:39,190 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:02:39,336 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:02:39,830 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:02:39,890 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:07:10,839 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:07:11,151 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:07:11,229 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 00:07:11,786 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:25:11,504 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:25:11,504 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:25:11,505 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:25:12,216 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:26:30,524 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:26:30,526 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:26:30,705 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:26:31,124 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:28:24,947 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 15:31:35,300 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-12-01 17:11:51,360 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:11:51,996 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:11:52,040 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:11:52,057 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:11:52,120 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:17:05,669 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:21:31,053 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 17:24:22,325 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-04 20:01:59,059 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:01:59,694 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:01:59,814 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:01:59,894 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:05:38,586 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:05:41,943 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:05:42,166 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:05:42,183 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:05:42,559 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:23:01,686 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:23:05,121 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:23:05,240 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:23:05,335 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:23:05,383 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:25:44,985 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:25:48,287 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:25:48,418 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:25:48,825 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:25:48,841 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:27:19,194 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:27:21,916 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:27:22,781 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:27:22,879 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:27:22,886 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:28:44,218 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:28:46,142 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:28:47,509 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:28:47,596 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:28:47,764 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:30:00,058 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:30:03,147 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:30:03,361 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:30:03,613 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:30:03,736 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:31:40,563 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:31:43,903 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:31:43,963 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:31:44,092 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:31:44,266 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:33:12,713 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:33:16,330 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:33:16,510 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:33:16,616 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:33:16,610 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:34:19,674 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:34:22,450 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:34:22,876 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:34:23,009 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:34:23,099 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:35:47,009 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:35:50,610 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:35:50,794 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:35:50,870 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 20:35:50,921 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 22:44:38,348 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 22:44:40,709 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 22:44:41,049 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 22:44:41,348 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-04 22:44:41,477 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]

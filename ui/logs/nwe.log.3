@@ -1,13 +1,11 @@
-2020-11-30 23:40:20,517 ERROR: Exception on /edit_profile [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1276, in _execute_context
-    self.dialect.do_execute(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.IntegrityError: UNIQUE constraint failed: user.username
-
-The above exception was the direct cause of the following exception:
-
+2020-12-01 21:59:18,218 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:18,354 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:18,729 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:40,428 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:40,765 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:40,938 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:41,037 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 21:59:47,947 ERROR: Exception on /index [GET] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
 Traceback (most recent call last):
   File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -23,58 +21,108 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 95, in edit_profile
-    db.session.commit()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/scoping.py", line 163, in do
-    return getattr(self.registry(), name)(*args, **kwargs)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1042, in commit
-    self.transaction.commit()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 504, in commit
-    self._prepare_impl()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 483, in _prepare_impl
-    self.session.flush()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2536, in flush
-    self._flush(objects)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2678, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
-    compat.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 2638, in _flush
-    flush_context.execute()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
-    rec.execute(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/unitofwork.py", line 586, in execute
-    persistence.save_obj(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 230, in save_obj
-    _emit_update_statements(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/persistence.py", line 994, in _emit_update_statements
-    c = cached_connections[connection].execute(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1011, in execute
-    return meth(self, multiparams, params)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1124, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1316, in _execute_context
-    self._handle_dbapi_exception(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1510, in _handle_dbapi_exception
-    util.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1276, in _execute_context
-    self.dialect.do_execute(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 593, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
-[SQL: UPDATE user SET username=?, about_me=? WHERE user.id = ?]
-[parameters: ('susan', "Hi I'm Christian!!!", 4)]
-(Background on this error at: http://sqlalche.me/e/13/gkpj)
-2020-11-30 23:40:51,709 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:41:39,881 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:44:09,528 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:44:10,216 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:44:10,277 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:44:10,377 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
-2020-11-30 23:44:10,473 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:46]
+  File "/home/portfolio/ui/client/routes.py", line 26, in index
+    pred_id += 1
+UnboundLocalError: local variable 'pred_id' referenced before assignment
+2020-12-01 22:00:19,245 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:31:31,123 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:31:31,730 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:31:31,730 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:31:31,813 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:31:31,859 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:36:25,965 ERROR: Exception on /index [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/portfolio/ui/client/routes.py", line 26, in index
+    pred_id += 1
+UnboundLocalError: local variable 'pred_id' referenced before assignment
+2020-12-01 22:36:56,361 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:17,606 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:18,183 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:18,223 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:18,330 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:18,356 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:38:26,988 ERROR: Exception on /index [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/portfolio/ui/client/routes.py", line 26, in index
+    pred_id += 1
+UnboundLocalError: local variable 'pred_id' referenced before assignment
+2020-12-01 22:38:57,497 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 22:45:43,925 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:45:44,488 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:45:44,524 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:45:44,613 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:45:44,655 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:09,946 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:10,530 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:10,556 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:10,647 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:10,704 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:47:48,040 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:48:16,765 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:48:16,836 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:48:16,862 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:48:20,033 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:48:51,200 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:52:26,481 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:52:27,077 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:52:27,115 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:52:27,134 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:52:27,215 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:53:05,417 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:56:26,313 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:56:26,465 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:56:26,514 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:56:26,581 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:57:51,038 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:57:51,078 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:57:51,083 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:57:53,340 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 22:58:54,449 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 23:00:08,479 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 23:00:08,837 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 23:00:09,331 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 23:00:17,442 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
+2020-12-01 23:00:19,974 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:20,119 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:20,476 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:20,956 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:30,707 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:31,013 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:31,560 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:00:31,644 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:01:31,788 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:02:54,093 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:04,863 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:05,392 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:05,409 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:05,683 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:19,573 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-01 23:03:20,260 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
