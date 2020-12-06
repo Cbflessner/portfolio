@@ -53,8 +53,8 @@ class TestMessages:
             url = 'www.test.com'
             scraper_dt = datetime.now(pytz.timezone('America/Denver'))
             scraper_dt = scraper_dt.strftime("%Y/%m/%d %H:%M:%S %z")
-            value_obj = google.Value(url=url, text=text, scraper_dt=scraper_dt)
-            key_obj = google.Key(key=str(hash(url)))
+            value_obj = google.Value(text=text, scraper_dt=scraper_dt)
+            key_obj = google.Key(url=(url))
             producer.produce(topic=self.topic, key=key_obj, value=value_obj, on_delivery=kafka_utils.acked)
             delivered_records += producer.poll()
         producer.flush()
@@ -77,16 +77,23 @@ class TestMessages:
         consumer.assign(partitions)
         # Process messages
         result = []  
-        while True:
+        attempt =0
+        while len(result)<len(self.test_messages):
             try:
                 msg = consumer.poll(1.0)
+                attempt += 1
                 if msg is None:
-                    break
+                    print("no message received")
+                    if attempt <10:
+                        pass
+                    else:
+                        break
                 elif msg.error():
                     break
                 else:
                     value_object = msg.value()
                     text = value_object.text
+                    print("adding {} to result".format(text))
                     result.append(text)
             except KeyboardInterrupt:
                 break
