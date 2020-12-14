@@ -1,4 +1,4 @@
-import argparse, sys
+import argparse, sys, os
 from confluent_kafka import avro, KafkaError, Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 from uuid import uuid4
@@ -7,6 +7,7 @@ from redis import Redis, WatchError
 import numpy as np
 import time
 
+offset = 0
 
 def parse_args(args):
     arg_parser = argparse.ArgumentParser()
@@ -18,9 +19,12 @@ def parse_args(args):
 
 def read_config(config_file):
     """Read Confluent Cloud configuration for librdkafka clients"""
-
+    this_path = os.path.dirname(os.path.abspath(__file__))
+    kafka_config_path=this_path+'/configs/'
+    f = kafka_config_path+config_file
+    print(f)
     conf = {}
-    with open(config_file) as fh:
+    with open(f) as fh:
         for line in fh:
             line = line.strip()
             if len(line) != 0 and line[0] != "#":
@@ -65,11 +69,13 @@ def acked(err, msg):
     """Delivery report handler called on 
     successful or failed delivery of message
     """
+    global offset
     if err is not None:
         print("Failed to deliver message: {}".format(err))
     else:
         print("Produced record to topic {} partition [{}] @ offset {} and time {}"
               .format(msg.topic(), msg.partition(), msg.offset(), msg.timestamp()))
+    offset = msg.offset()
 
 
 def load_avro_schema_from_file(key_schema_file, value_schema_file):

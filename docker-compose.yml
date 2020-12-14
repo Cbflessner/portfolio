@@ -76,7 +76,13 @@ services:
     # volumes:
     #   - type: bind
     #     source: ./tests
-    #     target: /home/portfolio/tests          
+    #     target: /home/portfolio/tests   
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka   
+    #   - type: bind
+    #     source: ./ui
+    #     target: /home/portfolio/ui   
     ports:
       - "9000:9000"   
 
