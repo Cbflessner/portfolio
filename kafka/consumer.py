@@ -10,10 +10,13 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from data import google
 import time
-from redis import Redis
+from redis import Redis, WatchError
+import logging
 
 
 if __name__ == '__main__':
+
+    # logging.basicConifg()
 
     # Read arguments and configurations and initialize
     print("starting consumer")
@@ -70,7 +73,8 @@ if __name__ == '__main__':
     partitions = []
     partition = TopicPartition(topic=topic, partition=0, offset=0)
     partitions.append(partition)
-    consumer.assign(partitions)            
+    consumer.assign(partitions) 
+        #maybe should change this to subscribe so we can use the on_assign and on_revoke callbacks           
 
     # Process messages
     while True:
@@ -80,9 +84,6 @@ if __name__ == '__main__':
                 # No message available within timeout.
                 # print("Waiting for message or event/error in poll()")
                 continue
-            elif msg.error():
-                #Error returned
-                print('error: {}'.format(msg.error()))
             else:
                 #message returned
                 key_object = msg.key()
@@ -90,40 +91,66 @@ if __name__ == '__main__':
                 text = value_object.text
                 url = key_object.url
                 print("url is:",url)
-                five_grams = kafka_utils.ngrams(text, 5)
-                for elem in five_grams:
-                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                    r.zincrby(redis_key,1, elem[-1])
-                four_grams = kafka_utils.ngrams(text, 4)
-                for elem in four_grams:
-                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                    r.zincrby(redis_key,1, elem[-1])
-                three_grams = kafka_utils.ngrams(text, 3)
-                for elem in three_grams:
-                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                    r.zincrby(redis_key,1, elem[-1])
-                two_grams = kafka_utils.ngrams(text, 2)
-                for elem in two_grams:
-                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                    r.zincrby(redis_key,1, elem[-1])
-                one_gram = kafka_utils.ngrams(text,1)
-                for elem in one_gram:
-                    redis_key = elem[0]
-                    r_wordCounts.incrby(redis_key,1)    
-                print("ngrams sent to redis")
+                #need more error handling, what happens if we can't connect to redis
+                with r.pipeline() as pipe:
+                    error_count = 0
+                    while True:
+                        try:
+                            pipe.watch(url)
+                            #check if we've seen this url before
+                            if r.hexists('url', url) == 0:
+                                #if not record the url and the offset it came over with
+                                r.hset("url", key=url, value=msg.offset())
+                                #then break the text into n-grams and store them in redis
+                                five_grams = kafka_utils.ngrams(text, 5)
+                                for elem in five_grams:
+                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                                    pipe.zincrby(redis_key,1, elem[-1])
+                                four_grams = kafka_utils.ngrams(text, 4)
+                                for elem in four_grams:
+                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                                    pipe.zincrby(redis_key,1, elem[-1])
+                                three_grams = kafka_utils.ngrams(text, 3)
+                                for elem in three_grams:
+                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                                    pipe.zincrby(redis_key,1, elem[-1])
+                                two_grams = kafka_utils.ngrams(text, 2)
+                                for elem in two_grams:
+                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
+                                    pipe.zincrby(redis_key,1, elem[-1])
+                                # one_gram = kafka_utils.ngrams(text,1)
+                                # for elem in one_gram:
+                                #     redis_key = elem[0]
+                                #     r_wordCounts.incrby(redis_key,1) 
+                                pipe.execute()  
+                                print("ngrams sent to redis, offsets committed") 
+                                break 
+                            else:
+                                pipe.unwatch()
+                                print('URL has come through redis before')
+                                break
+                        except WatchError:
+                            error_count += 1
+                            print("WatchError {} for url {}; retrying",
+                                error_count, url)
+                consumer.commit(message=msg, asynchronous=True)   
         except KeyboardInterrupt:
             break
+        except ConsumeError as ce:
+            print("Consume error encountered while polling. Message failed {}".format(ke))
+            continue             
         except KeyDeserializationError as ke:
             # Report malformed record, discard results, continue polling
             print("Message key deserialization failed {}".format(ke))
-            pass
+            continue
         except ValueDeserializationError as ve:
             # Report malformed record, discard results, continue polling
             print("Message value deserialization failed {}".format(ve))
-            pass  
-        except ConsumeError as ce:
-            print("Consume error encountered while polling. Message failed {}".format(ke))
-            pass                      
+            continue   
 
-    # Leave group and commit final offsets
+    # After you exit the poll loop commit the final offsets and close the consumer
+    consumer.commit(message=msg, asynchronous=False)
     consumer.close()
+    #finally disconnect from redis server
+    r.connection_pool.disconnect()
+

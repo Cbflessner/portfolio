@@ -13,10 +13,10 @@ services:
       # - broker_2
       # - broker_3
       - schema-registry
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1    
     ports: 
@@ -31,10 +31,10 @@ services:
     depends_on:
       - producer
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1
     ports: 
@@ -120,7 +120,9 @@ services:
       ZOOKEEPER_SERVERS: zookeeper_1:2888:3888;zookeeper_2:2888:3888;0.0.0.0:2888:3888
 
   broker_1:
-    image: confluentinc/cp-server:6.0.0
+    build:
+      context: .
+      dockerfile: kafka/Dockerfile_broker1
     hostname: broker
     container_name: broker_1
     depends_on:
@@ -139,11 +141,13 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker_1:29092
-      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://localhost:8081
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: schema-registry:8081
       CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper_1:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      KAFKA_LOG_CLEANUP_POLICY: compact
+      KAFKA_MIN_INSYNC_REPLICAS: 1
 
   # broker_2:
   #   image: confluentinc/cp-server:6.0.0

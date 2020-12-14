@@ -55,21 +55,18 @@ def create_topic(conf, topic, num_partitions, replication_factor):
 
 
 
-# Optional per-message on_delivery handler (triggered by poll() or flush())
-# when a message has been successfully delivered or
-# permanently failed delivery (after retries).
-offset = 0
+#callback function which gets passed to poll() (since flush calls poll() it will
+#call this too).  msg metadata that gets returned is: topic, partition, offset,
+#len (message value size in bytes).  key, value,  and timestamp
 def acked(err, msg):
     """Delivery report handler called on 
     successful or failed delivery of message
     """
-    global offset
     if err is not None:
         print("Failed to deliver message: {}".format(err))
     else:
-        print("Produced record to topic {} partition [{}] @ offset {}"
-              .format(msg.topic(), msg.partition(), msg.offset()))
-    offset = msg.offset()
+        print("Produced record to topic {} partition [{}] @ offset {} and time {}"
+              .format(msg.topic(), msg.partition(), msg.offset(), msg.timestamp()))
 
 
 def load_avro_schema_from_file(key_schema_file, value_schema_file):

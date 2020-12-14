@@ -12,10 +12,16 @@ from data import google
 from datetime import datetime
 import pytz
 import time
+import json
+import pprint
 
 
 
 if __name__ == '__main__':
+
+    # def print_stats(stats_json_str):
+    #     stats = json.loads(stats_json_str)
+    #     pprint.pprint(stats)
 
     # Read arguments and configurations and initialize
     print("starting producer")
@@ -46,6 +52,8 @@ if __name__ == '__main__':
         'bootstrap.servers': conf['bootstrap.servers'],
         'key.serializer': key_avro_serializer,
         'value.serializer': value_avro_serializer}
+        # 'stats_cb': print_stats,
+        # 'statistics.interval.ms': 1000}
 
     producer = SerializingProducer(producer_config)  
 
@@ -88,10 +96,16 @@ if __name__ == '__main__':
     num_articles=3
     delivered_records =0
     google_news = gs.google_top_results(num_articles, '/search?q=chicago&tbm=nws')
+    print('loop should run {} times'.format(len(google_news)))
+    print("for these url's", google_news)
     for num in range(len(google_news)):
+        # print("begin producing record {}".format(num+1))
         url = google_news.iloc[num]
+        # print("url key for message is", url)
         text = gs.html_to_string(url)
+        # print("dirty text for message is", text[:20])
         news = gs.clean_news(text, 20)
+        # print("cleaned news value for message is", news)
         scraper_dt = datetime.now(pytz.timezone('America/Denver'))
         scraper_dt = scraper_dt.strftime("%Y/%m/%d %H:%M:%S %z")
         value_obj = google.Value(text=news.to_string(index=False), scraper_dt=scraper_dt)
