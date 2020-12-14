@@ -9,8 +9,7 @@ from confluent_kafka.error import KeyDeserializationError, ValueDeserializationE
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroDeserializer
 from data import google
-import time
-from redis import Redis, WatchError
+from redis import Redis
 import logging
 
 
@@ -55,20 +54,7 @@ if __name__ == '__main__':
     r_wordCounts = Redis(host="redis_1",port=7001, decode_responses=True, db=1)
 
     #Wait until the kafka topic is up before proceeding
-    error = "not ready"
-    tries = 0
-    while error is not None:
-        info = consumer.list_topics(topic)
-        topic_info = info.topics[topic]
-        if topic_info.error is None:
-            error = topic_info.error
-            print("topic {} found.  Partion {}".format(topic_info.topic, topic_info.partitions))
-        else:
-            tries += 1
-            print('try {} failed'.format(tries))
-            time.sleep(1)
-        if tries >= 50:
-            exit('could not connect to kafka topic after 10 tries')
+    kafka_utils.wait_topic(consumer, topic)
 
     partitions = []
     partition = TopicPartition(topic=topic, partition=0, offset=0)
@@ -92,47 +78,7 @@ if __name__ == '__main__':
                 url = key_object.url
                 print("url is:",url)
                 #need more error handling, what happens if we can't connect to redis
-                with r.pipeline() as pipe:
-                    error_count = 0
-                    while True:
-                        try:
-                            pipe.watch(url)
-                            #check if we've seen this url before
-                            if r.hexists('url', url) == 0:
-                                #if not record the url and the offset it came over with
-                                r.hset("url", key=url, value=msg.offset())
-                                #then break the text into n-grams and store them in redis
-                                five_grams = kafka_utils.ngrams(text, 5)
-                                for elem in five_grams:
-                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                                    pipe.zincrby(redis_key,1, elem[-1])
-                                four_grams = kafka_utils.ngrams(text, 4)
-                                for elem in four_grams:
-                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                                    pipe.zincrby(redis_key,1, elem[-1])
-                                three_grams = kafka_utils.ngrams(text, 3)
-                                for elem in three_grams:
-                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                                    pipe.zincrby(redis_key,1, elem[-1])
-                                two_grams = kafka_utils.ngrams(text, 2)
-                                for elem in two_grams:
-                                    redis_key = ' '.join([str(word) for word in elem[:-1]])
-                                    pipe.zincrby(redis_key,1, elem[-1])
-                                # one_gram = kafka_utils.ngrams(text,1)
-                                # for elem in one_gram:
-                                #     redis_key = elem[0]
-                                #     r_wordCounts.incrby(redis_key,1) 
-                                pipe.execute()  
-                                print("ngrams sent to redis, offsets committed") 
-                                break 
-                            else:
-                                pipe.unwatch()
-                                print('URL has come through redis before')
-                                break
-                        except WatchError:
-                            error_count += 1
-                            print("WatchError {} for url {}; retrying",
-                                error_count, url)
+                kafka_utils.send_ngrams(r, url, msg.offset(), text)
                 consumer.commit(message=msg, asynchronous=True)   
         except KeyboardInterrupt:
             break

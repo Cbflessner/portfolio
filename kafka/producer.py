@@ -11,7 +11,6 @@ from confluent_kafka.schema_registry.avro import AvroSerializer
 from data import google
 from datetime import datetime
 import pytz
-import time
 import json
 import pprint
 
@@ -57,40 +56,9 @@ if __name__ == '__main__':
 
     producer = SerializingProducer(producer_config)  
 
-    #set loop variables
-    error = "not ready"
-    tries = 0
-    #Wait until the kafka topic is up before proceeding
-    while error is not None:
-        info = producer.list_topics(topic)
-        topic_info = info.topics[topic]
-        if topic_info.error is None:
-            error = topic_info.error
-            print('connected to topic: {}'.format(topic))
-        else:
-            tries += 1
-            print('connecting to topic try {} failed'.format(tries))
-            time.sleep(1)
-        if tries >= 50:
-            exit('could not connect to kafka topic after 10 tries')
-
-    error = "not ready"
-    tries = 1
-    #Wait until the schema registry is up before proceeding
-    while error is not None:
-        try:  
-            info = schema_registry_client.get_subjects()
-            print("Schema registry detected subjects found are: ")
-            print(info)
-            error = None
-            print("schema detected after {} tries".format(tries))
-        except:
-            print('connecting to schema registry try {} failed'.format(tries))
-            tries += 1
-            time.sleep(1)
-        if tries >= 200:
-            exit('could not reach schema registry after {} tries'.format(tries))
-
+    #wait until the kafka topic and schema registry are up before proceeding
+    kafka_utils.wait_topic(producer, topic)
+    kafka_utils.wait_schemaRegistry(schema_registry_client)
 
     #Set number of articles to read
     num_articles=3
