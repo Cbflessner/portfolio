@@ -16,7 +16,7 @@ COPY kafka kafka
 RUN chown -R producer:producer ./
 USER producer
 
-EXPOSE 5432
+EXPOSE 5431
 ENTRYPOINT ["./kafka/boot_producer.sh"]
 
 

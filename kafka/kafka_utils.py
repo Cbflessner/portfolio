@@ -1,6 +1,7 @@
 import argparse, sys, os
 from confluent_kafka import avro, KafkaError, Producer
 from confluent_kafka.admin import AdminClient, NewTopic
+from confluent_kafka.error import KeyDeserializationError, ValueDeserializationError, ConsumeError
 from uuid import uuid4
 import pandas as pd
 from redis import Redis, WatchError
@@ -17,8 +18,7 @@ def parse_args(args):
     return arg_parser.parse_args()
 
 
-def read_config(config_file):
-    """Read Confluent Cloud configuration for librdkafka clients"""
+def read_config(config_file, client_id):
     this_path = os.path.dirname(os.path.abspath(__file__))
     kafka_config_path=this_path+'/configs/'
     f = kafka_config_path+config_file
@@ -30,16 +30,12 @@ def read_config(config_file):
             if len(line) != 0 and line[0] != "#":
                 parameter, value = line.strip().split('=', 1)
                 conf[parameter] = value.strip()
-
+    conf['client.id'] = client_id
     return conf
 
 
 def create_topic(conf, topic, num_partitions, replication_factor):
-    """
-        Create a topic if needed
-        Examples of additional admin API functionality:
-        https://github.com/confluentinc/confluent-kafka-python/blob/master/examples/adminapi.py
-    """
+    #Create a topic if needed
     a = AdminClient({
            'bootstrap.servers': conf['bootstrap.servers']
     })
@@ -104,17 +100,10 @@ def create_ngrams(input, n):
     return output
 
 
-def ngram_factoral(pipe, n, text):
+#need more error handling, what happens if we loose our connection to redis
+def send_ngrams_redis(r, url, offset, text, n):
     grams = np.arange(n)+1
     grams = grams[1:]
-    for i in grams: 
-        n_grams = create_ngrams(text, i)
-        for elem in n_grams:
-            redis_key = ' '.join([str(word) for word in elem[:-1]])
-            pipe.zincrby(redis_key,1, elem[-1])
-
-
-def send_ngrams(r, url, offset, text):
     with r.pipeline() as pipe:
         error_count = 0
         while True:
@@ -125,18 +114,91 @@ def send_ngrams(r, url, offset, text):
                     #if not record the url and the offset it came over with
                     r.hset("url", key=url, value=offset)
                     #then break the text into n-grams and store them in redis
-                    ngram_factoral(pipe, 5, text)
+                    for i in grams: 
+                        n_grams = create_ngrams(text, i)
+                        for elem in n_grams:
+                            redis_key = ' '.join([str(word) for word in elem[:-1]])
+                            redis_value = elem[-1]
+                            pipe.zincrby(redis_key, 1, redis_value)
                     pipe.execute()  
                     print("ngrams sent to redis, offsets committed") 
                     break 
                 else:
                     pipe.unwatch()
-                    print('URL has come through redis before')
+                    print('URL has come through redis before, ngrams not sent')
                     break
             except WatchError:
                 error_count += 1
                 print("WatchError {} for url {}; retrying",
                     error_count, url)
+
+
+def send_ngrams_postgres(db, url, offset, text, n):
+    grams = np.arange(n)+1
+    grams = grams[1:]
+    with r.pipeline() as pipe:
+        error_count = 0
+        while True:
+            try:
+                pipe.watch(url)
+                #check if we've seen this url before
+                if r.hexists('url', url) == 0:
+                    #if not record the url and the offset it came over with
+                    r.hset("url", key=url, value=offset)
+                    #then break the text into n-grams and store them in redis
+                    for i in grams: 
+                        n_grams = create_ngrams(text, i)
+                        for elem in n_grams:
+                            redis_key = ' '.join([str(word) for word in elem[:-1]])
+                            redis_value = elem[-1]
+                            pipe.zincrby(redis_key, 1, redis_value)
+                    pipe.execute()  
+                    print("ngrams sent to redis, offsets committed") 
+                    break 
+                else:
+                    pipe.unwatch()
+                    print('URL has come through redis before, ngrams not sent')
+                    break
+            except WatchError:
+                error_count += 1
+                print("WatchError {} for url {}; retrying",
+                    error_count, url)                
+
+
+def consume_messages(consumer, r, process_and_send):
+    #setting n=5 means we'll create all coresponding 5 grams, 4 grams, 3 grams, and 2 grams
+    #for a given unit of text
+    n=5
+    while True:
+        try:
+            msg = consumer.poll(1.0)
+            if msg is None:
+                # No message available within timeout.
+                # print("Waiting for message or event/error in poll()")
+                continue
+            else:
+                #message returned
+                key_object = msg.key()
+                value_object = msg.value()
+                text = value_object.text
+                url = key_object.url
+                print("url is:",url)
+                process_and_send(r, url, msg.offset(), text, n)
+                consumer.commit(message=msg, asynchronous=True)   
+        except KeyboardInterrupt:
+            break
+        except ConsumeError as ce:
+            print("Consume error encountered while polling. Message failed {}".format(ke))
+            continue             
+        except KeyDeserializationError as ke:
+            # Report malformed record, discard results, continue polling
+            print("Message key deserialization failed {}".format(ke))
+            continue
+        except ValueDeserializationError as ve:
+            # Report malformed record, discard results, continue polling
+            print("Message value deserialization failed {}".format(ve))
+            continue  
+    return msg                
 
 
 def wait_topic(kaf_con, topic):

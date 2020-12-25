@@ -21,7 +21,7 @@ import time
 class TestMessages:
     test_messages =['test message 1', 'test message 2', 'test message 3', 'test message 4']
     topic = 'christian_test'
-    conf = kafka_utils.read_config('producer_google_chicago_1.config')
+    conf = kafka_utils.read_config('producer_google_chicago_1.config', 'producer_google_chicago_1')
     schema_registry_conf = {'url': conf['schema.registry.url']}
     schema_registry_client = SchemaRegistryClient(schema_registry_conf) 
     key_schema_file = portfolio_path + "/kafka" + conf['google.key.schema.file']

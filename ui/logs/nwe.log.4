@@ -1,4 +1,52 @@
-2020-12-01 21:37:41,936 ERROR: Exception on /index [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
+2020-12-17 16:56:04,863 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-17 16:56:05,294 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-17 16:56:05,349 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-17 16:56:05,368 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:38:39,787 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:38:39,787 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:38:39,789 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:38:39,790 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:39:38,634 ERROR: Exception on /login [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2336, in _wrap_pool_connect
+    return fn()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 364, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 778, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 495, in checkout
+    rec = pool._do_get()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 140, in _do_get
+    self._dec_overflow()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.raise_(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 137, in _do_get
+    return self._create_connection()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 309, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 440, in __init__
+    self.__connect(first_connect_check=True)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 661, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.raise_(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 656, in __connect
+    connection = pool._invoke_creator(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 493, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: FATAL:  password authentication failed for user "docker"
+
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,127 +60,81 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 28, in index
-    pred_id += 1
-UnboundLocalError: local variable 'pred_id' referenced before assignment
-2020-12-01 21:38:12,763 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:39:00,138 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:39:00,309 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:39:00,617 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:39:00,724 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:39:06,961 ERROR: Exception on /index [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 28, in index
-    self.pred_id += 1
-NameError: name 'self' is not defined
-2020-12-01 21:39:37,910 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:41:24,279 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:41:24,560 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:41:24,723 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:41:24,888 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:41:30,147 ERROR: Exception on /index [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-TypeError: index() missing 1 required positional argument: 'self'
-2020-12-01 21:41:33,741 ERROR: Exception on /index [GET] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-TypeError: index() missing 1 required positional argument: 'self'
-2020-12-01 21:42:05,021 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:42:50,039 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:42:50,112 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:42:50,410 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:42:50,734 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:42:57,111 ERROR: Exception on /index [GET] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-TypeError: index() missing 1 required positional argument: 'pred_id'
-2020-12-01 21:43:27,960 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:48:37,442 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:48:37,506 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:48:37,905 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:48:38,080 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:54:22,473 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:54:22,840 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:54:22,971 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:54:23,308 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:54:27,014 ERROR: Exception on /index [GET] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask_login/utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "/home/portfolio/ui/client/routes.py", line 27, in index
-    pred_id += 1
-TypeError: can only concatenate str (not "int") to str
-2020-12-01 21:54:57,463 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:48]
-2020-12-01 21:58:54,336 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-01 21:58:54,527 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-01 21:58:54,644 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-01 21:58:54,981 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-01 21:59:18,058 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+  File "/home/portfolio/ui/client/routes.py", line 41, in login
+    user = User.query.filter_by(username=form.username.data).first()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3429, in first
+    ret = list(self[0:1])
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3203, in __getitem__
+    return list(res)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3535, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3556, in _execute_and_instances
+    conn = self._get_bind_args(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3571, in _get_bind_args
+    return fn(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3550, in _connection_from_session
+    conn = self.session.connection(**kw)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1138, in connection
+    return self._connection_for_bind(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1146, in _connection_for_bind
+    return self.transaction._connection_for_bind(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 433, in _connection_for_bind
+    conn = bind._contextual_connect()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2302, in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2339, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1583, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2336, in _wrap_pool_connect
+    return fn()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 364, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 778, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 495, in checkout
+    rec = pool._do_get()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 140, in _do_get
+    self._dec_overflow()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.raise_(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 137, in _do_get
+    return self._create_connection()
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 309, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 440, in __init__
+    self.__connect(first_connect_check=True)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 661, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.raise_(
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
+    raise exception
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 656, in __connect
+    connection = pool._invoke_creator(self)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 493, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/portfolio/venv/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) FATAL:  password authentication failed for user "docker"
+
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2020-12-25 20:40:09,888 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:55:31,570 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:55:35,380 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:55:35,423 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:55:35,455 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 20:55:35,502 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:00:37,504 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:00:43,404 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:00:49,117 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:00:54,851 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:01:00,510 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:01:06,237 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2020-12-25 21:01:11,835 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]

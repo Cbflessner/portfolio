@@ -16,14 +16,14 @@ class TestKafkaUtils:
 
 
     def test_read_config(self):
-        config = kafka_utils.read_config('test.config')
+        config = kafka_utils.read_config('test.config', 'producer_google_chicago_test')
         control_config = {'bootstrap.servers':'broker:9092', 'schema.registry.url':'http://schema-registry:8081', 'google.key.schema.file':'/avro/google-scraper-key.avsc'
-        ,'google.value.schema.file':'/avro/google-scraper-value.avsc'}
+        ,'google.value.schema.file':'/avro/google-scraper-value.avsc', 'client.id':'producer_google_chicago_test'}
         assert config == control_config
 
     def test_create_kafka_topic(self):
         #topic was already created in circlCI set up (config.yml step 6).  Just checking that it's still up
-        conf = kafka_utils.read_config('producer_google_chicago_1.config')
+        conf = kafka_utils.read_config('producer_google_chicago_1.config', 'producer_google_chicago_test')
         print("config file path is", conf)
         producer_config = {'bootstrap.servers': conf['bootstrap.servers']}
         p = Producer(producer_config)

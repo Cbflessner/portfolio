@@ -13,14 +13,14 @@ services:
       # - broker_2
       # - broker_3
       - schema-registry
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1    
     ports: 
-      - "5432:5432"       
+      - "5431:5431"       
 
   consumer:
     build:
@@ -31,10 +31,10 @@ services:
     depends_on:
       - producer
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1
     ports: 
@@ -48,13 +48,14 @@ services:
     container_name: client
     depends_on:
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: ./ui
-    #     target: /home/portfolio/ui      
+      - postgres
+    volumes:
+      - type: bind
+        source: ./ui
+        target: /home/portfolio/ui      
     environment:
       # SECRET_KEY: my-secret-key
-      # DATABASE_URL:
+      DATABASE_URL: 'postgresql://users:password@postgres:5432/users'
       MAIL_PORT: 587
       MAIL_SERVER: smtp.googlemail.com
       MAIL_USE_TLS: 1
@@ -73,16 +74,16 @@ services:
       - consumer
       - producer
       - client
-    # volumes:
-    #   - type: bind
-    #     source: ./tests
-    #     target: /home/portfolio/tests   
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka   
-    #   - type: bind
-    #     source: ./ui
-    #     target: /home/portfolio/ui   
+    volumes:
+      - type: bind
+        source: ./tests
+        target: /home/portfolio/tests   
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka   
+      - type: bind
+        source: ./ui
+        target: /home/portfolio/ui   
     ports:
       - "9000:9000"   
 
@@ -154,6 +155,7 @@ services:
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
       KAFKA_LOG_CLEANUP_POLICY: compact
       KAFKA_MIN_INSYNC_REPLICAS: 1
+      KAFKA_LOG_MESSAGE_TIMESTAMP_TYPE: 'LogAppendTime'
 
   # broker_2:
   #   image: confluentinc/cp-server:6.0.0
@@ -230,3 +232,15 @@ services:
     ports:
       - 7001:6379
     command: "/etc/init.d/redis_7001 start"
+
+  postgres:
+    build: 
+      context: .
+      dockerfile: postgres/Dockerfile_postgres
+    hostname: postgres
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_MULTIPLE_DATABASES: Ngrams, Users

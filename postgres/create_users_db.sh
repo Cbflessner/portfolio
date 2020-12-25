@@ -1,0 +1,7 @@
+#!/bin/bash
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+    CREATE USER Users;
+    CREATE DATABASE Users;
+    GRANT ALL PRIVILEGES ON DATABASE Users TO Users;
+EOSQL

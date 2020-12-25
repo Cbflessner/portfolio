@@ -27,7 +27,8 @@ if __name__ == '__main__':
     args = kafka_utils.parse_args(sys.argv[1:])
     config_file = args.config_file
     topic = args.topic
-    conf = kafka_utils.read_config(config_file)
+    conf = kafka_utils.read_config(config_file, 'producer_google_chicago_1')
+    print(conf)
 
     # Create topic if needed
     print("connecting to server", conf['bootstrap.servers'])

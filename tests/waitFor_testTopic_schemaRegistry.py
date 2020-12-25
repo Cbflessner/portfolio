@@ -13,7 +13,7 @@ import time
 from confluent_kafka.schema_registry import SchemaRegistryClient
 
 #configure and create the producer we will use to check the status of our new topic 
-conf = kafka_utils.read_config('producer_google_chicago_1.config')
+conf = kafka_utils.read_config('producer_google_chicago_1.config', 'producer_google_chicago_1')
 producer_config = {'bootstrap.servers': conf['bootstrap.servers']}
 topic = 'christian_test'
 kafka_utils.create_topic(conf=producer_config, topic=topic, num_partitions=1, replication_factor=1) 
