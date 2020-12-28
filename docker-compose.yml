@@ -13,10 +13,10 @@ services:
       # - broker_2
       # - broker_3
       - schema-registry
-    volumes:
-      - type: bind
-        source: ./kafka
-        target: /home/portfolio/kafka
+    # volumes:
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1    
     ports: 
@@ -31,10 +31,10 @@ services:
     depends_on:
       - producer
       - redis_1
-    volumes:
-      - type: bind
-        source: ./kafka
-        target: /home/portfolio/kafka
+    # volumes:
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1
     ports: 
@@ -49,10 +49,10 @@ services:
     depends_on:
       - redis_1
       - postgres
-    volumes:
-      - type: bind
-        source: ./ui
-        target: /home/portfolio/ui      
+    # volumes:
+    #   - type: bind
+    #     source: ./ui
+    #     target: /home/portfolio/ui      
     environment:
       # SECRET_KEY: my-secret-key
       DATABASE_URL: 'postgresql://users:password@postgres:5432/users'
@@ -74,16 +74,16 @@ services:
       - consumer
       - producer
       - client
-    volumes:
-      - type: bind
-        source: ./tests
-        target: /home/portfolio/tests   
-      - type: bind
-        source: ./kafka
-        target: /home/portfolio/kafka   
-      - type: bind
-        source: ./ui
-        target: /home/portfolio/ui   
+    # volumes:
+    #   - type: bind
+    #     source: ./tests
+    #     target: /home/portfolio/tests   
+    #   - type: bind
+    #     source: ./kafka
+    #     target: /home/portfolio/kafka   
+    #   - type: bind
+    #     source: ./ui
+    #     target: /home/portfolio/ui   
     ports:
       - "9000:9000"   
 
