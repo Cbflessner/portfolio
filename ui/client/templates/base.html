@@ -10,33 +10,34 @@
 
 
         //This is an example of a keydown jquery event handler
-        $( "#target" ).keyup(function() {
-          alert( "Handler for .keyup() called." );
-        });
+        // $( "#target" ).keyup(function() {
+        //   alert( "Handler for .keyup() called." );
+        // });
 
         //on keyup, start the countdown
         $('#bigInput').keyup(function(){
-            console.log($('#bigInput').length > 0);
+            // console.log($('#bigInput').length > 0);
+            clearTimeout(typingTimer);
             if ($('#bigInput').length > 0) {
-                setTimeout(predict, doneTypingInterval, $("#text").val(), $("#text").val(), 0, $("#text").val().length);
+                typingTimer = setTimeout(predict, doneTypingInterval, $("#text").val(), "pred{{ pred_id }}", 0, 2);
                 //typingTimer = setTimeout(predict, doneTypingInterval, $('bigInput'), $('bigInput'), 0, 2);
             }
         });
 
         //user is "finished typing," do something
         function predict(key, dest, begin, end) {
-            console.log(key);
-            console.log(dest);
-            console.log(begin);
-            console.log(end);
+            // console.log(key);
+            // console.log(dest);
+            // console.log(begin);
+            // console.log(end);
             $.post('/predict', {
                 key: key,
                 begin: begin,
                 end: end
             }).done(function(response) {
-                console.log(response);
-                //$(dest).text(response['prediction'])
-                alert(response)
+                // console.log(response);
+                $(dest).text(response['prediction'])
+                alert(response['prediction'])
             }).fail(function(response) {
                 console.log(response)
                 $(dest).text("{{ ('Error: Could not contact server.') }}");

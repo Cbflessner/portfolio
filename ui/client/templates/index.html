@@ -31,10 +31,13 @@
     {% endfor %}
 
     <h1 style="background: aqua">Let's See It In Action!</h1>
-    <h2>{{ pred_id }}</h2>
-    {% for pr in predictions %}
-    <span id="pred{{ pred_id }}"><b>{{ pr }}</b> </span>
-    {% endfor %}
+    <table id="pred{{ pred_id }}">
+        <tr>
+            {% for pr in predictions %}
+            <th>{{ pr }}</th>
+            {% endfor %}
+        </tr>
+    </table>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
