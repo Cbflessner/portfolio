@@ -19,4 +19,4 @@ ENV FLASK_APP next_word_engine.py
 RUN chown -R nwe:nwe /home/portfolio
 
 EXPOSE 5000
-ENTRYPOINT ["./ui/boot_client.sh"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
