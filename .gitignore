@@ -1,0 +1,7 @@
+# Logs and databases #
+######################
+ui/logs/
+ui/__pycache__/
+*.sql
+*.sqlite
+*.db
