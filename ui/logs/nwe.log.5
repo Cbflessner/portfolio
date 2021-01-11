@@ -1,140 +1,116 @@
-2020-12-17 16:56:04,863 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-17 16:56:05,294 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-17 16:56:05,349 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-17 16:56:05,368 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:38:39,787 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:38:39,787 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:38:39,789 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:38:39,790 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:39:38,634 ERROR: Exception on /login [POST] [in /home/portfolio/venv/lib/python3.8/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2336, in _wrap_pool_connect
-    return fn()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 364, in connect
-    return _ConnectionFairy._checkout(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 778, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 495, in checkout
-    rec = pool._do_get()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 140, in _do_get
-    self._dec_overflow()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
-    compat.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 137, in _do_get
-    return self._create_connection()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 309, in _create_connection
-    return _ConnectionRecord(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 440, in __init__
-    self.__connect(first_connect_check=True)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 661, in __connect
-    pool.logger.debug("Error on connect(): %s", e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
-    compat.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 656, in __connect
-    connection = pool._invoke_creator(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
-    return dialect.connect(*cargs, **cparams)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 493, in connect
-    return self.dbapi.connect(*cargs, **cparams)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-psycopg2.OperationalError: FATAL:  password authentication failed for user "docker"
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/portfolio/ui/client/routes.py", line 41, in login
-    user = User.query.filter_by(username=form.username.data).first()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3429, in first
-    ret = list(self[0:1])
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3203, in __getitem__
-    return list(res)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3535, in __iter__
-    return self._execute_and_instances(context)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3556, in _execute_and_instances
-    conn = self._get_bind_args(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3571, in _get_bind_args
-    return fn(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/query.py", line 3550, in _connection_from_session
-    conn = self.session.connection(**kw)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1138, in connection
-    return self._connection_for_bind(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 1146, in _connection_for_bind
-    return self.transaction._connection_for_bind(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/orm/session.py", line 433, in _connection_for_bind
-    conn = bind._contextual_connect()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2302, in _contextual_connect
-    self._wrap_pool_connect(self.pool.connect, None),
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2339, in _wrap_pool_connect
-    Connection._handle_dbapi_exception_noconnection(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 1583, in _handle_dbapi_exception_noconnection
-    util.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/base.py", line 2336, in _wrap_pool_connect
-    return fn()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 364, in connect
-    return _ConnectionFairy._checkout(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 778, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 495, in checkout
-    rec = pool._do_get()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 140, in _do_get
-    self._dec_overflow()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
-    compat.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/impl.py", line 137, in _do_get
-    return self._create_connection()
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 309, in _create_connection
-    return _ConnectionRecord(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 440, in __init__
-    self.__connect(first_connect_check=True)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 661, in __connect
-    pool.logger.debug("Error on connect(): %s", e)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
-    compat.raise_(
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/util/compat.py", line 182, in raise_
-    raise exception
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/pool/base.py", line 656, in __connect
-    connection = pool._invoke_creator(self)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/strategies.py", line 114, in connect
-    return dialect.connect(*cargs, **cparams)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/sqlalchemy/engine/default.py", line 493, in connect
-    return self.dbapi.connect(*cargs, **cparams)
-  File "/home/portfolio/venv/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) FATAL:  password authentication failed for user "docker"
-
-(Background on this error at: http://sqlalche.me/e/13/e3q8)
-2020-12-25 20:40:09,888 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:55:31,570 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:55:35,380 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:55:35,423 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:55:35,455 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 20:55:35,502 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:00:37,504 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:00:43,404 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:00:49,117 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:00:54,851 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:01:00,510 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:01:06,237 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
-2020-12-25 21:01:11,835 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:31,061 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:36,653 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:42,396 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:48,016 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:53,741 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:56:59,490 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:05,265 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:11,012 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:16,758 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:22,506 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:28,236 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:33,987 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:39,735 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:45,508 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:51,203 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:57:56,824 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:02,581 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:08,329 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:14,083 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:19,834 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:25,609 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:31,212 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:36,816 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:42,571 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:48,322 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:54,014 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:58:59,626 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:05,355 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:11,105 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:16,693 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:22,429 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:28,163 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:33,743 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:39,345 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:45,073 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:50,847 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 21:59:56,592 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:02,191 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:07,782 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:13,405 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:19,159 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:24,933 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:30,681 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:36,442 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:42,031 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:47,783 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:53,377 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:00:58,947 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:04,683 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:10,305 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:16,054 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:21,828 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:27,641 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:33,407 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:39,177 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:44,930 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:50,520 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:01:56,154 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:01,896 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:07,789 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:13,589 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:19,353 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:24,937 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:30,536 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:36,262 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:41,883 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:47,616 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:53,370 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:02:58,968 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:04,718 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:10,490 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:16,227 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:21,965 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:27,644 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:33,414 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:39,178 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:44,935 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:50,529 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:03:56,260 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:02,013 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:07,776 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:13,361 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:19,017 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:24,780 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:30,363 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:36,100 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:41,849 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:47,593 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:53,345 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:04:59,098 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:04,842 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:10,597 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:16,344 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:22,096 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:27,837 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:33,602 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:39,376 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:45,150 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:50,897 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:05:56,648 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:02,399 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:08,173 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:13,941 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:19,695 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:25,458 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:31,066 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:36,806 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:42,554 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:48,165 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:53,923 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:06:59,673 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:07:05,446 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:07:11,194 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:07:16,971 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:07:22,719 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
+2021-01-08 22:07:28,509 INFO: NWE startup [in /home/portfolio/ui/client/__init__.py:49]
