@@ -136,36 +136,26 @@ def send_ngrams_redis(r, url, offset, text, n):
 def send_ngrams_postgres(db, url, offset, text, n):
     grams = np.arange(n)+1
     grams = grams[1:]
-    with r.pipeline() as pipe:
-        error_count = 0
-        while True:
-            try:
-                pipe.watch(url)
-                #check if we've seen this url before
-                if r.hexists('url', url) == 0:
-                    #if not record the url and the offset it came over with
-                    r.hset("url", key=url, value=offset)
-                    #then break the text into n-grams and store them in redis
-                    for i in grams: 
-                        n_grams = create_ngrams(text, i)
-                        for elem in n_grams:
-                            redis_key = ' '.join([str(word) for word in elem[:-1]])
-                            redis_value = elem[-1]
-                            pipe.zincrby(redis_key, 1, redis_value)
-                    pipe.execute()  
-                    print("ngrams sent to redis, offsets committed") 
-                    break 
-                else:
-                    pipe.unwatch()
-                    print('URL has come through redis before, ngrams not sent')
-                    break
-            except WatchError:
-                error_count += 1
-                print("WatchError {} for url {}; retrying",
-                    error_count, url)                
+    for i in grams: 
+        n_grams = create_ngrams(text, i)
+        for elem in n_grams:
+            redis_key = ' '.join([str(word) for word in elem[:-1]])
+            redis_value = elem[-1]
+            pipe.zincrby(redis_key, 1, redis_value)
+                pipe.execute()  
+                print("ngrams sent to redis, offsets committed") 
+                break 
+            else:
+                pipe.unwatch()
+                print('URL has come through redis before, ngrams not sent')
+                break
+        except WatchError:
+            error_count += 1
+            print("WatchError {} for url {}; retrying",
+                error_count, url)                
 
 
-def consume_messages(consumer, r, process_and_send):
+def consume_messages(consumer, conn, process_and_send):
     #setting n=5 means we'll create all coresponding 5 grams, 4 grams, 3 grams, and 2 grams
     #for a given unit of text
     n=5
@@ -183,7 +173,7 @@ def consume_messages(consumer, r, process_and_send):
                 text = value_object.text
                 url = key_object.url
                 print("url is:",url)
-                process_and_send(r, url, msg.offset(), text, n)
+                process_and_send(conn, url, msg.offset(), text, n)
                 consumer.commit(message=msg, asynchronous=True)   
         except KeyboardInterrupt:
             break

@@ -55,7 +55,7 @@ services:
          target: /home/portfolio/ui      
     environment:
       # SECRET_KEY: my-secret-key
-      DATABASE_URL: 'postgresql://users:password@postgres:5432/users'
+      DATABASE_URL: 'postgresql://postgres:password@postgres:5432/users'
       MAIL_PORT: 587
       MAIL_SERVER: smtp.googlemail.com
       MAIL_USE_TLS: 1

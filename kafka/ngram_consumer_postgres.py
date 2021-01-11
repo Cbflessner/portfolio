@@ -46,7 +46,7 @@ if __name__ == '__main__':
     consumer = DeserializingConsumer(consumer_config)
  
     #create the sql interface
-    db_string = "postgres://docker:password@aws-us-east-1-portal.19.dblayer.com:15813/compose"
+    db = "postgres://postgres:password@postgres:5432/ngrams"
 
     #Wait until the kafka topic is up before proceeding
     kafka_utils.wait_topic(consumer, topic)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 
     #there is an infinite loop within this function that won't break until it sees a keyboard interupt
-    msg = kafka_utils.consume_messages(consumer, r, kafka_utils.send_ngrams_postgres) 
+    msg = kafka_utils.consume_messages(consumer, db, kafka_utils.send_ngrams_postgres) 
 
 
     # After you exit the poll loop commit the final offsets and close the consumer
