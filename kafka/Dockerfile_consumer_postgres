@@ -1,0 +1,21 @@
+FROM python:3.8.5
+
+RUN groupadd -g 998 consumer && \
+    useradd -r -u 998 -g consumer consumer -m -d /home/portfolio
+
+WORKDIR /home/portfolio
+
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN apt-get update
+RUN apt-get install nano
+
+COPY kafka kafka
+
+RUN chown -R consumer:consumer ./
+USER consumer
+
+EXPOSE 5433
+ENTRYPOINT ["./kafka/boot_consumer_postgres.sh"]
+

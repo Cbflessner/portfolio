@@ -7,6 +7,10 @@ import pandas as pd
 from redis import Redis, WatchError
 import numpy as np
 import time
+from datetime import datetime, timezone
+from data.ngram_models import Urls, Ngrams
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import IntegrityError
 
 offset = 0
 
@@ -101,7 +105,7 @@ def create_ngrams(input, n):
 
 
 #need more error handling, what happens if we loose our connection to redis
-def send_ngrams_redis(r, url, offset, text, n):
+def send_ngrams_redis(r, url, offset, text, timestamp, n):
     grams = np.arange(n)+1
     grams = grams[1:]
     with r.pipeline() as pipe:
@@ -133,26 +137,39 @@ def send_ngrams_redis(r, url, offset, text, n):
                     error_count, url)
 
 
-def send_ngrams_postgres(db, url, offset, text, n):
+def send_ngrams_postgres(db, url, offset, text, timestamp, n):
+    print(timestamp)
+    #timestamp is returned as number of milisecond from epoch but fromtimestamp 
+    #function expects it to be in seconds from epoch
+    ts = timestamp[1]/1000
+    dt = datetime.fromtimestamp(ts, tz=timezone.utc)
+    Session = sessionmaker(bind = db)
+    session = Session()
+    try:
+        u = Urls(url=url, kafka_offset=offset, kafka_produce_time=dt )
+        session.add(u)
+        session.commit()
+    except IntegrityError:
+        print("url has been skipped because it was processed previously")
+        return
     grams = np.arange(n)+1
     grams = grams[1:]
+    q = session.query(Urls)
+    url_obj = q.filter(Urls.url==u.url).first()
     for i in grams: 
         n_grams = create_ngrams(text, i)
         for elem in n_grams:
-            redis_key = ' '.join([str(word) for word in elem[:-1]])
-            redis_value = elem[-1]
-            pipe.zincrby(redis_key, 1, redis_value)
-                pipe.execute()  
-                print("ngrams sent to redis, offsets committed") 
-                break 
-            else:
-                pipe.unwatch()
-                print('URL has come through redis before, ngrams not sent')
-                break
-        except WatchError:
-            error_count += 1
-            print("WatchError {} for url {}; retrying",
-                error_count, url)                
+            key = ' '.join([str(word) for word in elem[:-1]])
+            prediction = elem[-1]
+            url_id = url_obj.url_id
+            new = Ngrams(key=key, prediction=prediction, n=int(i), url_id=url_id)
+            try:
+                session.add(new)
+                session.commit()
+            except:
+                print("error writing key {} to the database".format(key))
+    print("ngrams sent to postgres")
+              
 
 
 def consume_messages(consumer, conn, process_and_send):
@@ -173,7 +190,8 @@ def consume_messages(consumer, conn, process_and_send):
                 text = value_object.text
                 url = key_object.url
                 print("url is:",url)
-                process_and_send(conn, url, msg.offset(), text, n)
+                print("message offset is", msg.offset())
+                process_and_send(conn, url, msg.offset(), text, msg.timestamp(), n)
                 consumer.commit(message=msg, asynchronous=True)   
         except KeyboardInterrupt:
             break
@@ -205,7 +223,8 @@ def wait_topic(kaf_con, topic):
             print('try {} failed'.format(tries))
             time.sleep(1)
         if tries >= 50:
-            exit('could not connect to kafka topic after 10 tries')     
+            print(topic_info.error)
+            exit('could not connect to kafka topic after 50 tries')     
 
 
 def wait_schemaRegistry(schema_registry_client):

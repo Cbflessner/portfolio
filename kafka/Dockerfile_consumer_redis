@@ -17,5 +17,5 @@ RUN chown -R consumer:consumer ./
 USER consumer
 
 EXPOSE 5433
-ENTRYPOINT ["./kafka/boot_consumer.sh"]
+ENTRYPOINT ["./kafka/boot_consumer_redis.sh"]
 

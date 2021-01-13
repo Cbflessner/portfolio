@@ -46,7 +46,7 @@ if __name__ == '__main__':
     consumer = DeserializingConsumer(consumer_config)
  
     #create the sql interface
-    db = "postgres://postgres:password@postgres:5432/ngrams"
+    db = create_engine("postgres://postgres:password@postgres:5432/ngrams")
 
     #Wait until the kafka topic is up before proceeding
     kafka_utils.wait_topic(consumer, topic)
