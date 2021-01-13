@@ -13,32 +13,50 @@ services:
       # - broker_2
       # - broker_3
       - schema-registry
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1    
     ports: 
       - "5431:5431"       
 
-  consumer:
+  consumer_redis:
     build:
       context: .
-      dockerfile: kafka/Dockerfile_consumer
-    hostname: consumer
-    container_name: consumer
+      dockerfile: kafka/Dockerfile_consumer_redis
+    hostname: consumer_redis
+    container_name: consumer_redis
     depends_on:
       - producer
       - redis_1
-    # volumes:
-    #   - type: bind
-    #     source: ./kafka
-    #     target: /home/portfolio/kafka
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
     environment:
       PYTHONUNBUFFERED: 1
     ports: 
-      - "5433:5433"   
+      - "5433:5433" 
+
+  consumer_postgres:
+    build:
+      context: .
+      dockerfile: kafka/Dockerfile_consumer_postgres
+    hostname: consumer_postgres
+    container_name: consumer_postgres
+    depends_on:
+      - producer
+      - postgres
+    volumes:
+      - type: bind
+        source: ./kafka
+        target: /home/portfolio/kafka
+    environment:
+      PYTHONUNBUFFERED: 1
+    ports: 
+      - "5434:5434" 
 
   client:
     build:
@@ -71,7 +89,7 @@ services:
     hostname: tests
     container_name: tests
     depends_on:
-      - consumer
+      - consumer_redis
       - producer
       - client
     # volumes:
@@ -155,7 +173,7 @@ services:
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
       KAFKA_LOG_CLEANUP_POLICY: compact
       KAFKA_MIN_INSYNC_REPLICAS: 1
-      KAFKA_LOG_MESSAGE_TIMESTAMP_TYPE: 'LogAppendTime'
+      
 
   # broker_2:
   #   image: confluentinc/cp-server:6.0.0

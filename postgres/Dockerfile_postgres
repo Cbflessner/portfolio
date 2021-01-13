@@ -2,4 +2,6 @@ FROM postgres:13.1
 
 COPY postgres/create_ngram_tables.sh ./
 COPY postgres/init_databases.sh /docker-entrypoint-initdb.d
+RUN apt-get update
+RUN apt-get install nano
 EXPOSE 5432
