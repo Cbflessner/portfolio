@@ -13,45 +13,13 @@ CREATE TABLE urls (
     PRIMARY KEY(url_id)
 );
 
-CREATE TABLE fiveGrams (
+CREATE TABLE ngrams (
     fivegram_id UUID DEFAULT uuid_generate_v1(),
     key VARCHAR(145) NOT NULL,
     prediction VARCHAR(45) NOT NULL,
+    n INT NOT NULL,
     url_id UUID NOT NULL,
     PRIMARY KEY(fivegram_id),
-    CONSTRAINT fk_url
-        FOREIGN KEY(url_id)
-            REFERENCES urls(url_id)
-);
-
-CREATE TABLE fourGrams (
-    fourgram_id UUID DEFAULT uuid_generate_v1(),
-    key VARCHAR(145) NOT NULL,
-    prediction VARCHAR(45) NOT NULL,
-    url_id UUID NOT NULL,
-    PRIMARY KEY(fourgram_id),
-    CONSTRAINT fk_url
-        FOREIGN KEY(url_id)
-            REFERENCES urls(url_id)
-);
-
-CREATE TABLE threeGrams (
-    threegram_id UUID DEFAULT uuid_generate_v1(),
-    key VARCHAR(145) NOT NULL,
-    prediction VARCHAR(45) NOT NULL,
-    url_id UUID NOT NULL,
-    PRIMARY KEY(threegram_id),
-    CONSTRAINT fk_url
-        FOREIGN KEY(url_id)
-            REFERENCES urls(url_id)
-);
-
-CREATE TABLE twoGrams (
-    twogram_id UUID DEFAULT uuid_generate_v1(),
-    key VARCHAR(145) NOT NULL,
-    prediction VARCHAR(45) NOT NULL,
-    url_id UUID NOT NULL,
-    PRIMARY KEY(twogram_id),
     CONSTRAINT fk_url
         FOREIGN KEY(url_id)
             REFERENCES urls(url_id)

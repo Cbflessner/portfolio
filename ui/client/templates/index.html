@@ -2,9 +2,11 @@
 
 {% block app_content %}
     <h1>A Few Words Apropos Word Prediction</h1>
-    <p>Hello, {{ current_user.username }}! Welcome to my next word engine, an application that predicts the next word a user is going to type.</p>
-    <p>This is done by scouring the internet for text then converting that text into a data structure called a n-gram.  A n-gram is simply a given number of consecutive words in a sentance.</p>
-    <p>For example, given the sentance "Today is a greate day for baseball!" if the goal is to extract all of the 5-grams out of it the result would be:</p>
+    <p>Hello, {{ current_user.username }}!</p>
+
+    <o>Welcome to my next word engine, an application that predicts the next word a user is going to type.</p>
+    <p>This is done by scouring the internet for text then converting that text into a data structure called a n-gram.  A n-gram is simply a given number of consecutive words in a sentence.</p>
+    <p>For example, given the sentence "Today is a great day for baseball!" if the goal is to extract all of the 5-grams out of it the result would be:</p>
     <ol>
         <li>Today is a great day</li>
         <li>is a great day for</li>
@@ -17,7 +19,7 @@
         <li>a great day for</li>
         <li>great day for baseball</li>
     </ol>        
-    <p>These n-grams can then be used as input for a stupid backoff model which was developed by some linguists at Google in 2007 and can be read about in detail here:</p>
+    <p>These n-grams can then be used as input for a stupid backoff model which was developed by linguists at Google in 2007 and can be read about in detail here:</p>
     <a href="https://www.aclweb.org/anthology/D07-1090.pdf">Large Language Models in Machine Translation</a>
     <p>This model is interested not only in the n-grams found but also in the frequency with which they are found.  Thus, if a user types "Today I feel" and the model has two seperate 4-grams one of which is "Today I feel great" which has occured four times and the other being "Today I feel terrible" which the model has only seen twice a score of four will be given to the word "great" and a score of two to the word "terrible" the word with the highest score becomes the prediction. </p>
     <p>After getting the 4-gram score the model will then "backoff" one word to look at the appropriate 3-grams.  These scores will get multiplied by a factor of 0.4 to reflect the fact that it's easier to find a sequence of three words in a row than four.  For example, if the 3-gram "I feel funky" is present six times, it will still not be the prediction because 6*0.4=2.4 which is less than our highest score of four.  However if "I feel funky" was seen by the model twelve times it would become the prediction as 12*0.4=4.8</p>
@@ -28,15 +30,19 @@
     <b>frequency:</b> {{ n.value }}</p>
     {% endfor %}
 
-    <h1>Let's See It In Action!</h1>
-    {% for pr in predictions %}
-    <span id="pred{{ pred_id }}"><b>{{ pr }}</b> </span>
-    {% endfor %}
+    <h1 style="background: aqua">Let's See It In Action!</h1>
+    <table id="pred{{ pred_id }}">
+        <tr>
+            {% for pr in predictions %}
+            <th>{{ pr }}</th>
+            {% endfor %}
+        </tr>
+    </table>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.text.label }}<br>
-            <span id="input{{ pred_id }}">{{ form.text(cols=50, rows=3) }}</span><br>
+            <span id="bigInput">{{ form.text(cols=50, rows=3) }}</span><br>
             {% for error in form.text.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -44,5 +50,9 @@
         <p>
             {{ form.submit() }}
         </p>
+    </form>
+    <h2>Barley</h2>
+    <form>
+      <input id="target" type="text" value="Hello there">
     </form>
 {% endblock %}
