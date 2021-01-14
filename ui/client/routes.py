@@ -22,6 +22,7 @@ def index():
             "value": 7            
         }
     ]
+    dorts = ["foo", "bar", "xeee"]
     predictions = []
     global pred_id 
     pred_id += 1
@@ -30,7 +31,8 @@ def index():
         key = form.text.data
         predictions = r_ngram.zrange(key, 0, 2)
     return render_template("index.html", title='Home', ngrams=ngrams
-        ,form=form, predictions=predictions, pred_id=pred_id)
+        ,form=form, predictions=predictions, pred_id=pred_id, dorts=dorts)
+
 
 @app.route('/login', methods = ['GET','POST'])
 def login():

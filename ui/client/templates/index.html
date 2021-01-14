@@ -30,7 +30,7 @@
     <b>frequency:</b> {{ n.value }}</p>
     {% endfor %}
 
-    <h1 style="background: aqua">Let's See It In Action!</h1>
+    <h1>Let's See It In Action!</h1>
     <h2>pred{{ pred_id }}</h2>
     <table id="pred{{ pred_id }}">
         <tr>
@@ -39,6 +39,20 @@
             {% endfor %}
         </tr>
     </table>
+
+    <h3>Sample table addition</h3>
+    <p>This is called just by the listener as an example</p>
+    <table id ="dortTable" style="border: 5px solid black;" >
+        <tr style="background-color: aqua">
+            <th>SOME VALUES</th>
+        </tr>
+        {% for d in dorts %}
+        <tr>
+            <td>{{ d }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -52,8 +66,5 @@
             {{ form.submit() }}
         </p>
     </form>
-    <h2>Barley</h2>
-    <form>
-      <input id="target" type="text" value="Hello there">
-    </form>
+
 {% endblock %}

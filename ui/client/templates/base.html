@@ -3,33 +3,35 @@
 
 {% block scripts %}
     {{ super() }}
+    <script type="text/javascript">
+            var dorts = {{ dorts | tojson}};
+            var ngrams = {{ngrams | tojson}}; //<--This is how you'd pass in values from flask to ur script file. Note they're not bound together, so when I push to ngrams array, nothing happens. It would take some rearranging in flask to not jquery-y do what you're intending
+    </script>
     <script>
-        //setup before functions
+        // plain flask really doesn't intend for you to be running scripts continuously on the server side
+        $('#dortTable').append('<tr><td>test on load script</td></tr>')
         var typingTimer;                //timer identifier
         var doneTypingInterval = 2000;  //time in ms (2 seconds)
 
-
-        //This is an example of a keydown jquery event handler
-        // $( "#target" ).keyup(function() {
-        //   alert( "Handler for .keyup() called." );
-        // });
-
         //on keyup, start the countdown
         $('#bigInput').keyup(function(){
-            // console.log($('#bigInput').length > 0);
             clearTimeout(typingTimer);
             if ($('#bigInput').length > 0) {
                 typingTimer = setTimeout(predict, doneTypingInterval, $("#text").val(), "pred{{ pred_id }}", 0, 2);
-                //typingTimer = setTimeout(predict, doneTypingInterval, $('bigInput'), $('bigInput'), 0, 2);
             }
         });
 
         //user is "finished typing," do something
         function predict(key, dest, begin, end) {
-            // console.log(key);
-            console.log(dest);
-            // console.log(begin);
-            // console.log(end);
+            $('#dortTable').append('<tr><td>' + key + '</td></tr>');
+            var fake = {
+                            "ngram": "Don't hard code in routes.py, its a lie then",
+                            "value": 10           
+                        };
+            ngrams.push(fake);
+            console.log(ngrams);
+
+            /*
             $.post('/predict', {
                 key: key,
                 begin: begin,
@@ -42,6 +44,7 @@
                 console.log(response)
                 $(dest).text("{{ ('Error: Could not contact server.') }}");
             });
+            */
         }
     </script>
 {% endblock %}
