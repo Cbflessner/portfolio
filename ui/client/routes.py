@@ -3,7 +3,6 @@ from client.sql_models import User
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from client.forms import LoginForm, NextWordForm, RegistrationForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
-from client.sql_models import User
 from werkzeug.urls import url_parse
 from redis import Redis
 from datetime import datetime, timezone

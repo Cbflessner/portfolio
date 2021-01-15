@@ -21,5 +21,5 @@ if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
     echo "Multiple databases created"
 fi
 
-source /create_ngram_tables.sh
+
 

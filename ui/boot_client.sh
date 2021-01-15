@@ -10,5 +10,6 @@ while true; do
     echo Upgrade command failed, retrying in 5 secs...
     sleep 5
 done
+python add_test_user.py
 exec gunicorn --config gunicorn_config.py next_word_engine:app
 
