@@ -3,3 +3,4 @@
 ui/logs/
 **/__pycache__/
 ui/app.db
+new_user_credentials.csv
