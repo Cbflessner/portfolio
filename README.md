@@ -2,7 +2,13 @@
 
 
 ## Getting Started
-To run this appliction you will need to install both Docker and Docker-Compose. 
+To run this appliction you will need to fork and clone this repo then install both Docker and Docker-Compose. 
+
+- Intrusctions on forking a repo
+    - https://docs.github.com/en/github/getting-started-with-github/fork-a-repo
+
+- Instruction on cloning a repo
+    - https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository
 
 - Instructions for installing Docker can be found here:
   - https://docs.docker.com/get-docker/

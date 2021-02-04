@@ -7,3 +7,4 @@ new_user_credentials.csv
 aws/*.pem
 aws/EC2_user.csv
 *.ipynb
+*.pyc
