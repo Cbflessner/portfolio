@@ -12,10 +12,12 @@ To run this appliction you will need to fork and clone this repo then install bo
 
 - Instructions for installing Docker can be found here:
   - https://docs.docker.com/get-docker/
+  - I installed version 20.10.3
 
 - Instructions for docker-compose here (you must install docker first):
   - https://docs.docker.com/compose/install/
   - This comes with Docker Desktop for Mac and Windows in the previous step
+  - must install version 3.8 to work with this docker-compose file
 
 Once those two components are installed you should be good to go.  The compose file 
 will spin up 7 different docker containers on your local machine.  At the end of 
